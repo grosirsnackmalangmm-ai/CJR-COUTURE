@@ -3,552 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CJR Couture | Haute Couture Catalog</title>
+    <title>Grosir Snack Mickey Mouse | Pusat Jajanan Malang</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <meta property="og:title" content="Grosir Snack Mickey Mouse | Pusat Kulakan Jajanan">
+    <meta property="og:description" content="Pusat grosir snack & jajanan terlengkap di Malang. Harga tangan pertama, bisa beli ecer atau kartonan, siap kirim!">
+    <meta property="og:image" content="https://snackmurahmickeymouse-ilbtmos2n.vercel.app/Homepage1.png">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#E62020">
+
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* === TEMA PUTIH ELEGAN (LIGHT MODE) === */
         :root {
-            --bg-color: #ffffff;
-            --surface-color: #f9f9f9;
-            --surface-card: #ffffff;
-            --text-primary: #111111;
-            --text-muted: #666666;
-            --gold: #b58500; /* Emas yang lebih tajam untuk background putih */
-            --gold-light: #fdfaf0;
-            --font-display: 'Cinzel', serif;
-            --font-body: 'Montserrat', sans-serif;
-            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+            --primary: #E62020;
+            --primary-hover: #cc1b1b;
+            --secondary: #FFD700;
+            --dark: #1A1A1A;
+            --light: #F8FAFC;
+            --white: #FFFFFF;
+            --text-gray: #64748B;
+            --success: #10B981;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--light); color: var(--dark); overflow-x: hidden; }
+        h1, h2, h3, h4, .logo { font-family: 'Fredoka', sans-serif; }
+        
+        /* NAVBAR */
+        nav { background-color: var(--white); display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 5%; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: all 0.3s ease; }
+        nav.scrolled { box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 0.8rem 5%; }
+        .logo { font-size: 1.8rem; color: var(--dark); text-decoration: none; letter-spacing: 0.5px; font-weight: 600; }
+        .logo span { color: var(--primary); }
+        .nav-links { list-style: none; display: flex; gap: 25px; transition: all 0.3s ease; }
+        .nav-links a { color: var(--text-gray); text-decoration: none; font-weight: 700; font-size: 1.05rem; transition: all 0.3s ease; }
+        .nav-links a:hover { color: var(--primary); }
+        .menu-toggle { display: none; font-size: 1.8rem; cursor: pointer; color: var(--dark); }
+
+        @media (max-width: 768px) {
+            .menu-toggle { display: block; }
+            .nav-links { position: absolute; top: 100%; left: 0; width: 100%; background: var(--white); flex-direction: column; gap: 0; box-shadow: 0 10px 20px rgba(0,0,0,0.08); display: none; }
+            .nav-links.active { display: flex; }
+            .nav-links li { text-align: center; border-bottom: 1px solid #f1f5f9; }
+            .nav-links a { display: block; padding: 18px; }
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+        /* FLOATING BUTTONS */
+        .floating-cart { position: fixed; bottom: 30px; right: 30px; background-color: var(--primary); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.6rem; cursor: pointer; box-shadow: 0 8px 25px rgba(230, 32, 32, 0.4); z-index: 1500; border: none; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .floating-cart:hover { transform: scale(1.1) translateY(-5px); background-color: var(--primary-hover); }
+        .badge-qty { position: absolute; top: -5px; right: -5px; background: var(--secondary); color: var(--dark); width: 26px; height: 26px; border-radius: 50%; font-size: 0.9rem; font-weight: 800; display: flex; justify-content: center; align-items: center; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+        @keyframes jiggle { 0% { transform: scale(1); } 25% { transform: scale(1.2) rotate(-10deg); } 50% { transform: scale(1.2) rotate(10deg); } 75% { transform: scale(1.2) rotate(-10deg); } 100% { transform: scale(1); } }
+        .cart-animate { animation: jiggle 0.5s ease-in-out; }
 
-        /* Loader Cepat */
-        #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s ease-out; }
-        .spinner { width: 45px; height: 45px; border: 2px solid rgba(181, 133, 0, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loader-text { font-family: var(--font-display); letter-spacing: 5px; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; font-weight: 600; }
+        .btn-back-top { position: fixed; bottom: 30px; left: 30px; background-color: var(--dark); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 1400; border: none; opacity: 0; visibility: hidden; transition: all 0.3s ease; transform: translateY(20px); }
+        .btn-back-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .btn-back-top:hover { background-color: var(--primary); transform: translateY(-3px); }
 
-        /* Header Tema Putih */
-        header { background-color: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 25px 40px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0, 0, 0, 0.05); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
-        .header-left { width: 60px; } 
-        .header-center { text-align: center; }
-        .brand-logo { font-family: var(--font-display); font-size: 2.4rem; letter-spacing: 14px; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 2px; }
-        .brand-subtitle { font-size: 0.65rem; letter-spacing: 10px; color: var(--gold); text-transform: uppercase; font-weight: 500; }
-        .header-right { width: 60px; text-align: right; }
+        /* HERO & BASIC SECTIONS */
+        #home { width: 100%; text-align: center; background-color: var(--white); position: relative; }
+        #home img { width: 100%; max-width: 1793px; height: auto; aspect-ratio: 1793 / 592; object-fit: cover; display: block; margin: 0 auto; }
+        .section { padding: 4rem 5%; max-width: 1300px; margin: auto; }
+        h2.title { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; color: var(--dark); }
+        h2.title span { color: var(--primary); position: relative; }
+        h2.title span::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 4px; background: var(--secondary); border-radius: 2px; }
+
+        /* TRUST SIGNALS */
+        .trust-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; padding: 2.5rem 5%; max-width: 1300px; margin: -2rem auto 2rem auto; position: relative; z-index: 10; }
+        .trust-card { background: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); display: flex; align-items: center; gap: 15px; border: 1px solid #f1f5f9; transition: transform 0.3s; }
+        .trust-card:hover { transform: translateY(-5px); border-color: var(--secondary); }
+        .trust-icon { width: 55px; height: 55px; border-radius: 14px; background: #fff8f8; color: var(--primary); display: flex; justify-content: center; align-items: center; font-size: 1.8rem; flex-shrink: 0; }
+        .trust-text h4 { font-size: 1.1rem; color: var(--dark); margin-bottom: 4px; }
+        .trust-text p { font-size: 0.85rem; color: var(--text-gray); line-height: 1.4; font-weight: 500; }
+
+        /* PENCARIAN & KATEGORI */
+        .search-filter-box { background: var(--white); padding: 1.5rem 2rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); margin-bottom: 2.5rem; border: 1px solid #f1f5f9; position: relative; z-index: 10; }
+        .search-wrapper { position: relative; margin-bottom: 1.5rem; display: flex; align-items: center; }
+        .search-wrapper i.fa-magnifying-glass { position: absolute; left: 22px; color: #a0aec0; font-size: 1.3rem; }
+        .search-input { width: 100%; padding: 16px 50px 16px 60px; border: 2px solid #e2e8f0; border-radius: 50px; font-size: 1.05rem; font-weight: 600; outline: none; transition: all 0.3s ease; background-color: var(--light); color: var(--dark); }
+        .search-input:focus { border-color: var(--primary); background-color: var(--white); box-shadow: 0 0 0 4px rgba(230,32,32,0.1); }
+        .btn-clear-search { position: absolute; right: 20px; color: #a0aec0; background: none; border: none; font-size: 1.2rem; cursor: pointer; display: none; }
+        .btn-clear-search:hover { color: var(--primary); }
         
-        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; position: relative; transition: var(--transition); }
-        .cart-icon-btn:hover { color: var(--gold); transform: scale(1.05); }
-        .cart-badge { position: absolute; top: -6px; right: -12px; background: var(--gold); color: #fff; font-size: 0.6rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(181, 133, 0, 0.3); }
+        .kategori-menu { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 10px; justify-content: flex-start; scroll-behavior: smooth; }
+        .kategori-menu::-webkit-scrollbar { height: 0px; } 
+        @media (min-width: 768px) { .kategori-menu { flex-wrap: wrap; justify-content: center; } }
+        .kategori-btn { background-color: #f1f5f9; border: 1px solid #e2e8f0; color: var(--text-gray); padding: 0.7rem 1.6rem; border-radius: 50px; cursor: pointer; font-weight: 700; font-size: 0.95rem; transition: all 0.2s ease; white-space: nowrap; }
+        .kategori-btn.active, .kategori-btn:hover { background-color: var(--primary); border-color: var(--primary); color: white; box-shadow: 0 6px 15px rgba(230, 32, 32, 0.25); transform: translateY(-2px); }
+        .btn-promo-special { color: #e63946; border-color: #ffccd5; background: #fff0f3; }
+        .btn-baru-special { color: #d97706; border-color: #fde68a; background: #fffbeb; }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 80px; }
-        
-        /* Section New Arrival */
-        .new-arrival-section { padding: 60px 20px 40px; background: #fdfdfd; border-bottom: 1px solid rgba(0, 0, 0, 0.03); }
-        .swiper { width: 100%; padding-bottom: 50px !important; }
-        .swiper-slide { height: auto; }
-        .swiper-pagination-bullet { background: #ccc !important; transition: 0.3s; }
-        .swiper-pagination-bullet-active { background: var(--gold) !important; transform: scale(1.2); }
+        .section-subtitle { font-size: 1.6rem; color: var(--dark); margin: 2rem 0 1.2rem 0; display: flex; align-items: center; gap: 10px; }
+        .section-subtitle::after { content: ""; flex-grow: 1; height: 2px; background: #e2e8f0; margin-left: 15px; border-radius: 2px; }
 
-        /* Filter Kategori Putih */
-        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; }
-        .filter-btn { background: transparent; border: 1px solid #ddd; color: var(--text-muted); padding: 10px 24px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); border-radius: 3px; font-weight: 500; }
-        .filter-btn:hover, .filter-btn.active { color: var(--gold); border-color: var(--gold); background-color: var(--gold-light); }
+        /* GRID & HORIZONTAL SCROLL */
+        .katalog-horizontal { display: flex; overflow-x: auto; gap: 1.5rem; padding: 10px 10px 1.5rem 10px; scroll-behavior: smooth; scroll-snap-type: x mandatory; }
+        .katalog-horizontal::-webkit-scrollbar { height: 8px; }
+        .katalog-horizontal::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 10px; }
+        .katalog-horizontal::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .katalog-horizontal::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+        .katalog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; padding: 10px; }
 
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 8px; text-transform: uppercase; font-weight: 500; padding-bottom: 15px; display: inline-block; position: relative; color: var(--text-primary); }
-        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 2px; background-color: var(--gold); }
+        /* KARTU PRODUK & GAMBAR */
+        .produk-card { background: var(--white); border-radius: 20px; padding: 1.2rem; box-shadow: 0 8px 20px rgba(0,0,0,0.03); transition: all 0.3s ease; position: relative; display: flex; flex-direction: column; border: 1px solid #f1f5f9; }
+        .katalog-horizontal .produk-card { min-width: 250px; max-width: 250px; flex-shrink: 0; scroll-snap-align: start; }
+        .produk-card:hover { transform: translateY(-6px); box-shadow: 0 15px 35px rgba(0,0,0,0.08); border-color: #cbd5e1; }
+        .produk-card.highlight-promo { border: 2px solid var(--secondary); background: #fffdf5; }
+        
+        .produk-img-wrapper { width: 100%; aspect-ratio: 1/1; border-radius: 16px; margin-bottom: 15px; background-color: var(--light); position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center; }
+        .produk-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; display: block; }
+        .produk-card:hover .produk-img { transform: scale(1.08); }
+        .kategori-badge { background: var(--dark); color: white; font-size: 0.75rem; padding: 6px 14px; border-radius: 50px; position: absolute; top: 12px; left: 12px; font-weight: 700; z-index: 5; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        
+        .btn-plus-img { position: absolute; bottom: 10px; right: 10px; background-color: var(--primary); color: white; border: 3px solid white; width: 44px; height: 44px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.3rem; cursor: pointer; z-index: 10; transition: all 0.2s ease; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .btn-plus-img:hover { transform: scale(1.15); }
 
-        /* Kartu Katalog Bersih & Cerah */
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px 30px; }
-        .product-card { background-color: var(--surface-card); border: 1px solid #eee; display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; box-shadow: 0 10px 25px rgba(0,0,0,0.03); border-radius: 4px; overflow: hidden; }
-        .product-card:hover { transform: translateY(-8px); border-color: rgba(181, 133, 0, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.08); }
-        
-        .image-container { position: relative; width: 100%; padding-top: 140%; background-color: #f5f5f5; overflow: hidden; }
-        .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
-        .product-card:hover .product-image { transform: scale(1.05); }
-        
-        /* Watermark Transparan (Ada bayangan halus agar aman di background putih gaun) */
-        .watermark { position: absolute; bottom: 12px; right: 15px; font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; color: rgba(255, 255, 255, 0.7); letter-spacing: 6px; z-index: 5; pointer-events: none; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); user-select: none; }
-        
-        .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; padding: 5px 12px; letter-spacing: 2px; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border-radius: 2px; }
+        .produk-card h3 { font-size: 1.1rem; margin-bottom: 6px; line-height: 1.4; height: 44px; color: var(--dark); font-weight: 700; text-align: left; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .harga-tampil { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 12px; }
+        .harga-tampil span { font-size: 0.85rem; color: var(--text-gray); font-weight: 600; }
 
-        .card-details { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; }
-        .product-category { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; font-weight: 600; }
-        .product-title { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 1px; font-weight: 600; }
-        .product-price { font-size: 0.95rem; margin-top: auto; border-top: 1px solid #eee; padding-top: 15px; color: var(--text-muted); font-weight: 500; letter-spacing: 1px; }
+        .select-varian { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.85rem; outline: none; font-weight: 700; background-color: #f8fafc; color: var(--dark); cursor: pointer; margin-top: auto; transition: all 0.2s; }
+        .select-varian:focus { border-color: var(--primary); }
 
-        /* Modal Pop-up Terang */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
-        .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-wrapper { background-color: #fff; border: 1px solid #ddd; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.2); border-radius: 5px; }
-        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 400px; } }
+        .img-kosong { filter: grayscale(100%) opacity(0.6); transition: all 0.3s ease; }
+        .badge-habis { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(4px); color: #ffffff; padding: 10px 22px; border-radius: 50px; font-weight: 700; font-size: 1rem; z-index: 10; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.2); white-space: nowrap; }
+        .btn-habis { background-color: #cbd5e1 !important; cursor: not-allowed !important; box-shadow: none !important; color: white !important; transform: none !important; }
+
+        /* SKELETON LOADING */
+        .skeleton { background: #e2e8f0; background-image: linear-gradient(90deg, #e2e8f0 0px, #f1f5f9 40px, #e2e8f0 80px); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 8px; }
+        @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+        .skel-card { background: white; border-radius: 20px; padding: 1.2rem; border: 1px solid #f1f5f9; height: 360px; display: flex; flex-direction: column; gap: 12px; }
+        .skel-img { aspect-ratio: 1/1; width: 100%; border-radius: 16px; }
+        .skel-text { height: 22px; width: 90%; }
+        .skel-text-short { height: 22px; width: 60%; }
+        .skel-btn { height: 42px; width: 100%; margin-top: auto; border-radius: 12px; }
+
+        .highlight-text { background-color: var(--secondary); color: var(--dark); padding: 0 4px; border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+        /* PROMO & INFO SECTIONS */
+        .promo-banner { background: linear-gradient(135deg, var(--primary), #a80f0f); border-radius: 24px; padding: 3rem; color: white; display: flex; align-items: center; gap: 2rem; box-shadow: 0 15px 40px rgba(230, 32, 32, 0.2); margin-bottom: 4rem; flex-wrap: wrap; position: relative; overflow: hidden; }
+        .promo-banner::before { content: ''; position: absolute; top: -50%; right: -20%; width: 50%; height: 200%; background: rgba(255,255,255,0.1); transform: rotate(30deg); }
+        .promo-content { flex: 1; min-width: 300px; position: relative; z-index: 2; }
+        .promo-badge { background: var(--secondary); color: var(--dark); font-weight: 800; padding: 8px 16px; border-radius: 50px; display: inline-block; margin-bottom: 1rem; font-size: 0.95rem; }
+        .promo-banner h3 { font-size: 2.2rem; margin-bottom: 1rem; line-height: 1.2; }
+        .promo-banner p { font-size: 1.05rem; opacity: 0.9; margin-bottom: 1.5rem; line-height: 1.6; font-weight: 500; }
         
-        .modal-image-side { flex: 1; background-color: #f9f9f9; position: relative; display: flex; justify-content: center; align-items: center; padding: 25px; border-right: 1px solid #eee; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .info-card { background: var(--white); padding: 2.5rem; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.03); text-align: center; border: 1px solid #f1f5f9; transition: transform 0.3s; }
+        .info-card:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.05); }
+        .info-card i { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.2rem; }
+        .map-container iframe { width: 100%; height: 250px; border: none; border-radius: 14px; margin-top: 1.2rem; }
         
-        .modal-image-side img { 
-            width: 100%; height: 100%; max-height: 550px; object-fit: contain; border: 2px solid rgba(181, 133, 0, 0.2); padding: 5px; background: #fff;
+        .social-btn { display: inline-block; margin-top: 15px; padding: 12px 30px; border-radius: 50px; color: white; text-decoration: none; font-weight: 700; transition: all 0.2s; font-size: 1rem; }
+        .btn-tiktok { background-color: #000; }
+        .btn-tiktok:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .btn-whatsapp { background-color: #25D366; animation: pulse-wa 2s infinite; }
+        .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4); animation: none; }
+
+        @keyframes pulse-wa { 0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); } }
+
+        /* FOOTER */
+        footer { background-color: var(--white); border-top: 1px solid #e2e8f0; padding: 4rem 5% 2rem 5%; }
+        .footer-content { max-width: 1300px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 3rem; margin-bottom: 2rem; }
+        .footer-col h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 1.2rem; }
+        .footer-col p { color: var(--text-gray); font-size: 0.95rem; font-weight: 500; line-height: 1.6; margin-bottom: 12px; }
+        .footer-col a { color: var(--text-gray); font-size: 0.95rem; font-weight: 600; text-decoration: none; display: block; margin-bottom: 10px; transition: 0.2s; }
+        .footer-col a:hover { color: var(--primary); padding-left: 5px; }
+        .footer-bottom { text-align: center; padding-top: 2rem; border-top: 1px solid #f1f5f9; color: var(--text-gray); font-weight: 600; font-size: 0.9rem; }
+
+        /* MODAL KERANJANG */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); z-index: 2000; justify-content: center; align-items: center; }
+        .modal-content { background: var(--white); width: 90%; max-width: 520px; border-radius: 24px; padding: 2.5rem; position: relative; max-height: 85vh; overflow-y: auto; }
+        .btn-close { position: absolute; top: 20px; right: 20px; font-size: 1.8rem; cursor: pointer; color: #a0aec0; background: none; border: none; transition: color 0.2s; }
+        .btn-close:hover { color: var(--primary); }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid #f1f5f9; }
+        .cart-info h4 { margin-bottom: 4px; font-size: 1rem; color: var(--dark); font-weight: 700; }
+        .cart-controls { display: flex; align-items: center; gap: 10px; }
+        .btn-qty { background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-weight: bold; color: var(--dark); font-size: 1.1rem; }
+        .btn-qty:hover { background: #e2e8f0; }
+        .btn-hapus { color: #cbd5e1; background: none; border: none; cursor: pointer; font-size: 1.3rem; margin-left: 8px; transition: color 0.2s; }
+        .btn-hapus:hover { color: var(--primary); }
+        .total-harga { font-size: 1.5rem; font-weight: 800; text-align: right; margin: 1.5rem 0; color: var(--primary); display: flex; justify-content: space-between; align-items: center;}
+        
+        .btn-clear-cart { background: #fee2e2; color: var(--primary); border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: 0.2s; }
+        .btn-clear-cart:hover { background: var(--primary); color: white; }
+
+        .checkout-form { background: var(--light); padding: 20px; border-radius: 16px; margin-bottom: 20px; }
+        .checkout-form input, .checkout-form select, .checkout-form textarea { width: 100%; padding: 14px; margin-bottom: 12px; border: 1px solid #e2e8f0; border-radius: 12px; font-size: 0.95rem; font-weight: 600; outline: none; transition: border 0.2s; }
+        .checkout-form input:focus, .checkout-form select:focus, .checkout-form textarea:focus { border-color: var(--primary); }
+        .btn-wa { background-color: #25D366; color: white; border: none; padding: 1.2rem; border-radius: 16px; width: 100%; font-size: 1.15rem; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; }
+        .btn-wa:hover { background-color: #1ebd57; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(37, 211, 102, 0.3); }
+        
+        #toast { visibility: hidden; min-width: 280px; background-color: var(--success); color: #fff; text-align: center; border-radius: 50px; padding: 16px 24px; position: fixed; z-index: 4000; left: 50%; transform: translateX(-50%) translateY(50px); bottom: 120px; font-size: 1.05rem; font-weight: 700; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4); opacity: 0; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); display: flex; align-items: center; justify-content: center; gap: 10px; }
+        #toast.show { visibility: visible; opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        @media (max-width: 768px) { 
+            h2.title { font-size: 2rem; } 
+            .promo-banner { padding: 2rem; text-align: center; } 
+            .btn-back-top { left: 20px; bottom: 20px; width: 45px; height: 45px; }
+            .trust-section { padding: 1.5rem 5%; margin-top: -1rem; }
+            .search-filter-box { padding: 1.2rem; margin-bottom: 1.5rem; }
+            .total-harga { flex-direction: column; align-items: flex-end; gap: 10px; }
         }
-
-        /* === MODAL WATERMARK BESAR & LEBIH KE KIRI === */
-        .modal-watermark { right: 20%; bottom: 35px; font-size: 3rem; letter-spacing: 12px; color: rgba(255, 255, 255, 0.8); text-shadow: 2px 3px 6px rgba(0,0,0,0.4); }
-        @media (max-width: 768px) { .modal-watermark { right: 15%; bottom: 30px; font-size: 2rem; } }
-
-        .modal-info-side { flex: 1.2; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
-        .close-modal-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #333; font-size: 1.6rem; cursor: pointer; z-index: 10; opacity: 0.7; transition: 0.3s; }
-        .close-modal-btn:hover { color: var(--gold); opacity: 1; transform: rotate(90deg); }
-        .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 12px; font-weight: 600; }
-        .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 1px; font-weight: 600; }
-        .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; }
-        .modal-price { font-size: 1.3rem; font-weight: 600; margin-bottom: 30px; color: var(--gold); letter-spacing: 1px; }
-        
-        .btn-gold { background-color: var(--gold); color: #fff; border: 1px solid var(--gold); padding: 16px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); width: 100%; border-radius: 3px; }
-        .btn-gold:hover { background-color: transparent; color: var(--gold); }
-
-        /* Sidebar Tas Belanja / Wishlist */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
-        .cart-overlay.active { opacity: 1; pointer-events: auto; }
-        
-        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 100%; max-width: 420px; height: 100vh; background: #ffffff; z-index: 1002; transition: 0.5s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; border-left: 1px solid #eee; box-shadow: -10px 0 30px rgba(0,0,0,0.1); }
-        .cart-sidebar.open { right: 0; }
-        
-        .cart-header { padding: 30px 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; background: #fafafa; }
-        .cart-header h3 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 3px; color: var(--gold); font-weight: 600; }
-        .close-cart-btn { background: none; border: none; color: #333; font-size: 1.3rem; cursor: pointer; opacity: 0.6; transition: 0.3s; }
-        .close-cart-btn:hover { color: var(--gold); opacity: 1; transform: rotate(90deg); }
-
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 25px 20px; }
-        .cart-item { display: flex; gap: 15px; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #f1f1f1; }
-        .cart-item-img { width: 75px; height: 100px; object-fit: cover; border: 1px solid #eee; border-radius: 3px; }
-        .cart-item-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .cart-item-title { font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); letter-spacing: 1px; margin-bottom: 5px; font-weight: 600; }
-        .cart-item-category { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
-        
-        .cart-item-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
-        .exclusive-badge { font-size: 0.6rem; color: var(--gold); border: 1px solid rgba(181, 133, 0, 0.3); padding: 3px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; background: var(--gold-light); }
-        .remove-btn { color: #999; background: none; border: none; cursor: pointer; font-size: 0.8rem; transition: 0.3s; display: flex; align-items: center; gap: 5px; font-weight: 500; }
-        .remove-btn:hover { color: #ff4d4d; }
-
-        .cart-footer { padding: 30px 20px; border-top: 1px solid #eee; background: #fafafa; }
-        
-        .checkout-wa-btn { background: #25D366; color: #fff; border: none; width: 100%; padding: 18px; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: var(--transition); border-radius: 4px; }
-        .checkout-wa-btn:hover { background: #1ebe57; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
-
-        .empty-cart { text-align: center; color: #888; font-size: 0.85rem; padding-top: 80px; letter-spacing: 1px; }
-        .empty-cart i { font-size: 3rem; color: #ddd; margin-bottom: 20px; display: block; }
-
-        /* === TOMBOL KEMBALI KE ATAS (SEBELAH KIRI) === */
-        #backToTop {
-            position: fixed;
-            bottom: 30px;
-            left: 30px; /* Di sebelah kiri */
-            background-color: var(--surface-card);
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 999;
-            opacity: 0;
-            pointer-events: none;
-            transition: var(--transition);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        }
-        #backToTop.show {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        #backToTop:hover {
-            background-color: var(--gold);
-            color: #fff;
-        }
-
-        .hide { display: none !important; }
     </style>
 </head>
 <body>
 
-    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
+    <div id="toast"><i class="fa-solid fa-circle-check" style="font-size: 1.2rem;"></i> <span id="toast-msg">Produk ditambahkan!</span></div>
+
+    <nav id="navbar-main">
+        <a href="#home" class="logo">Snack<span>MickeyMouse</span></a>
+        <div class="menu-toggle" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
+        <ul class="nav-links">
+            <li><a href="#home" onclick="toggleMenu()">Home</a></li>
+            <li><a href="#pesan" onclick="toggleMenu()">Katalog Produk</a></li>
+            <li><a href="#about" onclick="toggleMenu()">Tentang Kami</a></li>
+            <li><a href="#contact" onclick="toggleMenu()">Kontak</a></li>
+        </ul>
+    </nav>
+
+    <button class="btn-back-top" id="btn-back-top" onclick="window.scrollTo(0,0)" title="Kembali ke atas">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
-    <header>
-        <div class="header-left"></div>
-        <div class="header-center">
-            <a href="#" class="brand-logo">CJR</a>
-            <div class="brand-subtitle">Couture</div>
-        </div>
-        <div class="header-right">
-            <button class="cart-icon-btn" onclick="toggleCart()">
-                <i class="fa-solid fa-bag-shopping"></i>
-                <span class="cart-badge" id="cart-count">0</span>
-            </button>
-        </div>
-    </header>
+    <button class="floating-cart" onclick="toggleCart()" id="btn-cart-main">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="badge-qty" id="cart-badge">0</span>
+    </button>
 
-    <div id="loader-panel">
-        <div class="spinner"></div>
-        <div class="loader-text">Loading Collection...</div>
+    <section id="home">
+        <img src="Homepage1.png" alt="Spanduk Grosir Snack Mickey Mouse" onerror="this.onerror=null; this.src='https://placehold.co/1200x400/F8FAFC/E62020?text=Grosir+Snack+Mickey+Mouse';">
+    </section>
+
+    <div class="trust-section">
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fa-solid fa-tags"></i></div>
+            <div class="trust-text">
+                <h4>Harga Tangan Pertama</h4>
+                <p>Spesialis grosir B2B, beli ecer atau kartonan sama-sama cuan maksimal.</p>
+            </div>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fa-solid fa-box-open"></i></div>
+            <div class="trust-text">
+                <h4>Stok Selalu Fresh</h4>
+                <p>Perputaran barang sangat cepat, jaminan masa expired selalu panjang.</p>
+            </div>
+        </div>
+        <div class="trust-card">
+            <div class="trust-icon"><i class="fa-solid fa-truck-fast"></i></div>
+            <div class="trust-text">
+                <h4>Kirim Area Malang Raya</h4>
+                <p>Siap bantu kirim ke toko Anda atau bisa ambil langsung ke gudang kami.</p>
+            </div>
+        </div>
     </div>
 
-    <section class="new-arrival-section hide" id="new-arrival-section">
-        <div class="section-header" style="margin-bottom: 30px;">
-            <h2>New Arrival</h2>
+    <section id="pesan" class="section">
+        <h2 class="title">Katalog <span>Produk Terlengkap</span></h2>
+        
+        <div class="search-filter-box">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" class="search-input" placeholder="Cari jajanan untuk isi toko Anda... (misal: Taro, Yupi)" oninput="jalankanFilter()">
+                <button class="btn-clear-search" id="btn-clear-search" onclick="resetPencarian()"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="kategori-menu" id="kategori-container">
+                <button class="kategori-btn active" id="btn-cat-Semua" onclick="gantiKategori('Semua')">Semua Etalase</button>
+            </div>
         </div>
-        <div style="max-width: 1400px; margin: 0 auto;">
-            <div class="swiper newArrivalSwiper">
-                <div class="swiper-wrapper" id="new-arrival-wrapper"></div>
-                <div class="swiper-pagination"></div>
+
+        <div id="katalog-produk"></div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="promo-banner">
+            <div class="promo-content">
+                <div class="promo-badge">🎉 Dipercaya Sejak 2006</div>
+                <h3>Pusat Kulakan Jajanan Paling Menguntungkan di Malang!</h3>
+                <p>Lebih dari 20 Tahun Grosir Snack Mickey Mouse dipercaya oleh ribuan pemilik toko kelontong, agen, dan reseller. Saatnya gabung dan tingkatkan omset toko Anda bersama kami!</p>
+                <div style="font-size: 1.1rem; font-weight: 700; color: var(--secondary); background: rgba(0,0,0,0.2); display: inline-block; padding: 10px 20px; border-radius: 12px; backdrop-filter: blur(5px);">
+                    <i class="fa-solid fa-clock"></i> Buka Tiap Hari (08.00 - 17.00 WIB)
+                </div>
+            </div>
+        </div>
+        <div class="info-grid">
+            <div class="info-card map-container">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h3>Alamat Gudang / Toko Fisik</h3>
+                <p style="color: var(--text-gray); margin-top: 5px; font-size: 0.95rem; font-weight: 500;">Jl. Mayjen Sungkono No.38, Arjowinangun, Kec. Kedungkandang, Kota Malang</p>
+                <iframe src="https://www.google.com/maps?q=Grosir+Snack+Mickey+Mouse+Malang&output=embed" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
     </section>
 
-    <main class="container" style="padding-top: 40px;">
-        <div class="filter-container" id="filter-wrapper">
-            <button class="filter-btn active" onclick="filterCategory('all')">All Collection</button>
-            <button class="filter-btn" onclick="filterCategory('cocktail dress')">Cocktail Dress</button>
-            <button class="filter-btn" onclick="filterCategory('evening dress')">Evening Dress</button>
-            <button class="filter-btn" onclick="filterCategory('engagement dress')">Engagement Dress</button>
-            <button class="filter-btn" onclick="filterCategory('brides robe')">Brides Robe</button>
-            <button class="filter-btn" onclick="filterCategory('wedding gown')">Wedding Gown</button>
-            <button class="filter-btn" onclick="filterCategory('moms gown')">Mom's Gown</button>
-        </div>
-
-        <div class="section-header">
-            <h2>The Masterpiece</h2>
-        </div>
-
-        <div class="catalog-grid" id="catalog-wrapper"></div>
-    </main>
-
-    <div class="modal" id="product-modal" onclick="closeModal(event)">
-        <div class="modal-wrapper" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeModal(null)"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-image-side">
-                <div class="watermark modal-watermark">CJR</div>
-                <img id="modal-img" src="" alt="Koleksi Gambar">
+    <section id="contact" class="section" style="padding-top: 0;">
+        <h2 class="title">Butuh <span>Bantuan</span></h2>
+        <div class="info-grid" style="max-width: 900px; margin: auto;">
+            <div class="info-card">
+                <i class="fa-brands fa-whatsapp"></i>
+                <h3>Tanya Admin</h3>
+                <p style="color: var(--text-gray); margin-bottom: 15px; font-size: 0.95rem;">Tanya ketersediaan stok grosir atau panduan kirim ke luar kota, kami siap bantu.</p>
+                <a href="https://wa.me/6285100116986" class="social-btn btn-whatsapp" target="_blank">Chat Admin via WhatsApp</a>
             </div>
-            <div class="modal-info-side">
-                <span class="modal-cat" id="modal-cat">Kategori</span>
-                <h3 class="modal-title" id="modal-title">Nama Gaun</h3>
-                <p class="modal-desc" id="modal-desc">Deskripsi gaun</p>
-                <div class="modal-price" id="modal-price">Harga</div> <button id="modal-add-btn" class="btn-gold" onclick="addToCartFromModal()">
-                    <i class="fa-solid fa-plus"></i> Tambah ke Wishlist
-                </button>
+            <div class="info-card">
+                <i class="fa-brands fa-tiktok" style="color: #000;"></i>
+                <h3>Review Jajanan Viral</h3>
+                <p style="color: var(--text-gray); margin-bottom: 15px; font-size: 0.95rem;">Intip keramaian toko offline dan cek bocoran jajanan viral terbaru minggu ini.</p>
+                <a href="https://tiktok.com/@grosirsnackmm" class="social-btn btn-tiktok" target="_blank">Follow TikTok Kami</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-col" style="flex: 2;">
+                <h3 class="logo" style="font-size: 1.6rem; margin-bottom: 15px;">Snack<span>MickeyMouse</span></h3>
+                <p style="font-size: 1rem; color: #475569;">Pusat kulakan snack & jajanan terlengkap di Malang Raya. Kami berkomitmen memberikan <strong>harga tangan pertama</strong> dan <strong>stok terbaru</strong> untuk dukung usaha toko Anda semakin laris manis.</p>
+                <p style="margin-top: 15px; font-size: 0.95rem; color: var(--primary); font-weight: 700; background: #fff1f1; display: inline-block; padding: 8px 15px; border-radius: 8px;"><i class="fa-solid fa-shield-halved"></i> Garansi Barang Hancur / Kadaluarsa</p>
+            </div>
+            <div class="footer-col">
+                <h4>Belanja Cepat</h4>
+                <a href="#pesan" onclick="gantiKategori('Semua')">Jajanan Viral Promo</a>
+                <a href="#pesan" onclick="gantiKategori('Semua')">Snack Kiloan Grosir</a>
+                <a href="#pesan" onclick="gantiKategori('Semua')">Minuman Dus</a>
+            </div>
+            <div class="footer-col">
+                <h4>Hubungi Kami</h4>
+                <p><i class="fa-solid fa-location-dot" style="width: 20px; color: var(--primary);"></i> Arjowinangun, Malang</p>
+                <p><i class="fa-solid fa-phone" style="width: 20px; color: var(--primary);"></i> 0851-0011-6986</p>
+                <p><i class="fa-solid fa-calendar-days" style="width: 20px; color: var(--primary);"></i> Buka Setiap Hari (08:00 - 17:00)</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Grosir Snack Mickey Mouse. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="cart-modal">
+        <div class="modal-content">
+            <button class="btn-close" onclick="toggleCart()">×</button>
+            <h2 style="margin-bottom: 1.5rem; border-bottom: 2px solid #f1f5f9; padding-bottom: 15px;"><i class="fa-solid fa-cart-shopping" style="color: var(--primary);"></i> Keranjang Belanja</h2>
+            <div id="cart-items-container" style="max-height: 280px; overflow-y: auto; margin-bottom: 15px; padding-right: 5px;"></div>
+            
+            <div class="total-harga">
+                <button class="btn-clear-cart" onclick="kosongkanKeranjang()" id="btn-clear" style="display:none;"><i class="fa-solid fa-trash-can"></i> Kosongkan</button>
+                <div>Total: Rp <span id="cart-total-price">0</span></div>
+            </div>
+
+            <div class="checkout-form">
+                <input type="text" id="cust-name" placeholder="Nama Lengkap / Nama Toko" required>
+                <select id="delivery-method" onchange="toggleAddress()">
+                    <option value="ambil">Diambil di Toko (Gratis)</option>
+                    <option value="kirim_free">Dikirim ke Alamat (Free Ongkir, Min. Belanja 5 Juta)</option>
+                    <option value="kirim_kurir">Dikirim via Jasa Kurir (Ada Tambahan Ongkir)</option>
+                </select>
+                <textarea id="cust-address" placeholder="Tuliskan Alamat Lengkap Pengiriman (Kecamatan, Kota, Patokan Rumah)..." style="display: none; height: 90px; resize: none;"></textarea>
+                <div style="font-size: 0.85rem; color: var(--primary); font-weight: 700; margin-top: 8px; display: none; padding: 10px; background: #ffebeb; border-radius: 8px;" id="info-ongkir">
+                    </div>
+            </div>
+            <button class="btn-wa" onclick="checkoutWA()"><i class="fa-brands fa-whatsapp"></i> Pesan via WhatsApp</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="qty-modal" style="z-index: 2500;">
+        <div class="modal-content" style="max-width: 340px; text-align: center; padding: 2rem;">
+            <h3 style="margin-bottom: 0.5rem; color: var(--dark);">Berapa Banyak</h3>
+            <h4 id="qty-item-name" style="color: var(--primary); margin-bottom: 1.5rem; font-size: 1rem; font-weight: 600;"></h4>
+            
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 2rem;">
+                <button onclick="changeQtyInput(-1)" style="width: 50px; height: 50px; border-radius: 12px; border: none; background: #f1f5f9; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: var(--dark); transition: 0.2s;">-</button>
+                <input type="number" id="qty-input-val" value="1" min="1" inputmode="numeric" style="width: 80px; height: 50px; text-align: center; font-size: 1.5rem; font-weight: 800; border: 2px solid #e2e8f0; border-radius: 12px; outline: none; color: var(--dark);">
+                <button onclick="changeQtyInput(1)" style="width: 50px; height: 50px; border-radius: 12px; border: none; background: #f1f5f9; font-size: 1.8rem; font-weight: bold; cursor: pointer; color: var(--dark); transition: 0.2s;">+</button>
+            </div>
+            
+            <div style="display: flex; gap: 12px;">
+                <button onclick="closeQtyModal()" style="flex: 1; padding: 14px; border: none; border-radius: 12px; background: #e2e8f0; color: var(--text-gray); font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.2s;">Batal</button>
+                <button onclick="confirmAddCart()" style="flex: 1.5; padding: 14px; border: none; border-radius: 12px; background: var(--primary); color: white; font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.2s; box-shadow: 0 4px 15px rgba(230,32,32,0.3);">Masukkan <i class="fa-solid fa-cart-arrow-down" style="margin-left:5px;"></i></button>
             </div>
         </div>
     </div>
 
-    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
-    <div class="cart-sidebar" id="cart-sidebar">
-        <div class="cart-header">
-            <h3><i class="fa-regular fa-heart"></i> My Wishlist</h3>
-            <button class="close-cart-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="cart-items" id="cart-items"></div>
-        <div class="cart-footer">
-            <button class="checkout-wa-btn" onclick="checkoutWA()">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Hubungi CJR Couture
-            </button>
-            <p style="font-size: 0.65rem; color: #777; text-align: center; margin-top: 15px; letter-spacing: 1px;">
-                Eksklusivitas terjamin. Mari berdiskusi lebih lanjut bersama tim kami.
-            </p>
-        </div>
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // === PENGATURAN ===
-        const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
-        const whatsappNumber = "6282336975199"; 
-        const placeholderImg = "https://placehold.co/600x800/eeeeee/b58500?text=CJR+Couture";
+        let produkBase = [];
+        let keranjang = [];
+        let kategoriAktif = "Semua";
+        let totalHargaGlobal = 0;
+        let tempCartItem = null;
 
-        let globalProductsData = [];
-        let currentModalProductId = null;
-        let cart = JSON.parse(localStorage.getItem('cjr_cart')) || [];
-
-        updateCartUI();
-
-        // MENGAKTIFKAN TOMBOL KEMBALI KE ATAS (SCROLL LISTENER)
-        window.addEventListener('scroll', () => {
-            const btn = document.getElementById('backToTop');
-            if (window.scrollY > 300) {
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-            }
-        });
-
-        function parseImageUrl(url) {
-            if (!url || url.trim() === "") return placeholderImg;
-            let str = url.trim();
-            let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
-            if (match && match[1]) {
-                return `https://lh3.googleusercontent.com/d/$$${match[1]}`;
-            }
-            return str;
+        function renderSkeleton() {
+            let skels = Array(8).fill('<div class="skel-card"><div class="skeleton skel-img"></div><div class="skeleton skel-text"></div><div class="skeleton skel-text-short"></div><div class="skeleton skel-btn"></div></div>').join('');
+            document.getElementById('katalog-produk').innerHTML = `<div class="katalog-grid">${skels}</div>`;
         }
 
-        function extractPriceNumber(priceStr) {
-            if (!priceStr) return 0;
-            let cleanStr = priceStr.toLowerCase().replace(/rp|idr/g, '').replace(/[^0-9]/g, '');
-            return parseInt(cleanStr) || 0;
+        function loadCartFromStorage() {
+            const savedCart = localStorage.getItem('grosirMickeyCart');
+            if (savedCart) { keranjang = JSON.parse(savedCart); updateKeranjang(); }
+        }
+        function saveCartToStorage() { localStorage.setItem('grosirMickeyCart', JSON.stringify(keranjang)); }
+
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            if(window.innerWidth <= 768) { navLinks.classList.toggle('active'); }
         }
 
-        function fetchData() {
-            fetch(rawSheetUrl)
-                .then(res => res.text())
-                .then(csvText => {
-                    Papa.parse(csvText, {
-                        header: false,
-                        skipEmptyLines: true,
-                        complete: function(results) {
-                            const rows = results.data;
-                            if (rows.length > 1) {
-                                buildDatabase(rows.slice(1));
-                            } else {
-                                closeLoader();
-                            }
-                        }
-                    });
-                })
-                .catch(err => closeLoader());
-        }
-
-        function buildDatabase(rows) {
-            globalProductsData = rows.map((row, index) => {
-                const nama = row[0] ? row[0].trim() : '';
-                if (!nama) return null;
-
-                // === LOGIKA SEMBUNYI (Jika kolom G = kosong) ===
-                let statusSembunyi = '';
-                if(row.length > 6 && row[6]) {
-                    statusSembunyi = row[6].toString().trim().toLowerCase();
-                }
-                if (statusSembunyi === 'kosong' || statusSembunyi === 'sold' || statusSembunyi === 'sembunyi') return null;
-
-                // === HARGA (Kolom E) DITAMPILKAN ===
-                let hargaText = row[4] ? row[4].trim() : '';
-                if (hargaText === '' || hargaText.toLowerCase().includes('request')) {
-                    hargaText = 'Bespoke Inquiry';
-                }
-
-                return {
-                    id: index,
-                    nama: nama,
-                    kategori: row[1] ? row[1].trim() : 'Exclusive',
-                    deskripsi: row[2] ? row[2].trim() : '-',
-                    statusNew: row[3] ? row[3].trim().toLowerCase() : '',
-                    harga: hargaText, // Harga dimasukkan ke variabel
-                    gambar: parseImageUrl(row[5])
-                };
-            }).filter(item => item !== null);
-
-            renderNewArrivals();
-            renderCatalog(globalProductsData);
-            closeLoader();
-        }
-
-        function createCardHTML(product) {
-            const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
-            return `
-                <div class="product-card" onclick="openModal(${product.id})">
-                    <div class="image-container">
-                        ${isNew}
-                        <div class="watermark">CJR</div>
-                        <img class="product-image" src="${product.gambar}" alt="${product.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                    </div>
-                    <div class="card-details">
-                        <span class="product-category">${product.kategori}</span>
-                        <h3 class="product-title">${product.nama}</h3>
-                        <div class="product-price">${product.harga}</div> </div>
-                </div>
-            `;
-        }
-
-        function renderNewArrivals() {
-            const newArrivals = globalProductsData.filter(p => p.statusNew.includes('new'));
-            const section = document.getElementById('new-arrival-section');
-            const wrapper = document.getElementById('new-arrival-wrapper');
-            wrapper.innerHTML = '';
-
-            if(newArrivals.length > 0) {
-                section.classList.remove('hide');
-                newArrivals.forEach(product => {
-                    wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(product)}</div>`;
-                });
-
-                new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 1,
-                    spaceBetween: 25,
-                    autoplay: { delay: 4000, disableOnInteraction: false },
-                    pagination: { el: ".swiper-pagination", clickable: true },
-                    breakpoints: {
-                        500: { slidesPerView: 2 },
-                        900: { slidesPerView: 3 },
-                        1200: { slidesPerView: 4 }
-                    }
-                });
-            } else {
-                section.classList.add('hide');
-            }
-        }
-
-        function renderCatalog(items) {
-            const wrapper = document.getElementById('catalog-wrapper');
-            wrapper.innerHTML = '';
-            items.forEach(product => {
-                wrapper.innerHTML += createCardHTML(product);
-            });
-        }
-
-        function filterCategory(cat) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (event) event.target.classList.add('active');
+        window.onscroll = function() {
+            const backTopBtn = document.getElementById("btn-back-top");
+            const nav = document.getElementById("navbar-main");
             
-            if (cat === 'all') {
-                renderCatalog(globalProductsData);
-            } else {
-                const filtered = globalProductsData.filter(p => {
-                    let pCat = p.kategori.toLowerCase().replace(/['"’]/g, '');
-                    let targetCat = cat.toLowerCase().replace(/['"’]/g, '');
-                    return pCat.includes(targetCat);
-                });
-                renderCatalog(filtered);
-            }
-        }
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                nav.classList.add("scrolled");
+            } else { nav.classList.remove("scrolled"); }
 
-        function openModal(id) {
-            const prod = globalProductsData.find(p => p.id === id);
-            if(!prod) return;
-            currentModalProductId = id;
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backTopBtn.classList.add("show");
+            } else { backTopBtn.classList.remove("show"); }
+        };
 
-            const modalImg = document.getElementById('modal-img');
-            modalImg.src = prod.gambar;
-            modalImg.onerror = function() { this.onerror=null; this.src=placeholderImg; };
-
-            document.getElementById('modal-cat').innerText = prod.kategori;
-            document.getElementById('modal-title').innerText = prod.nama;
-            document.getElementById('modal-desc').innerText = prod.deskripsi;
-            document.getElementById('modal-price').innerText = prod.harga; // MENAMPILKAN HARGA DI MODAL
-
-            document.getElementById('product-modal').classList.add('active');
-        }
-
-        function closeModal(e) {
-            document.getElementById('product-modal').classList.remove('active');
-        }
-
-        function closeLoader() {
-            const loader = document.getElementById('loader-panel');
-            if(loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.classList.add('hide'), 400);
-            }
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('open');
-            document.getElementById('cart-overlay').classList.toggle('active');
-        }
-
-        function addToCartFromModal() {
-            if(currentModalProductId === null) return;
-            const product = globalProductsData.find(p => p.id === currentModalProductId);
-            if(!product) return;
-
-            const itemAda = cart.find(item => item.id === product.id);
-            if(itemAda) {
-                alert("Koleksi ini sudah ada di dalam daftar Wishlist Anda.");
-            } else {
-                cart.push({ ...product });
-                saveCart();
-                closeModal(null);
-                toggleCart();
-            }
-        }
-
-        function removeFromCart(id) {
-            cart = cart.filter(item => item.id !== id);
-            saveCart();
-        }
-
-        function saveCart() {
-            localStorage.setItem('cjr_cart', JSON.stringify(cart));
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const containerItem = document.getElementById('cart-items');
-            const penandaJumlah = document.getElementById('cart-count');
+        function showToast(msg) {
+            const toast = document.getElementById("toast");
+            document.getElementById("toast-msg").innerText = msg;
+            toast.classList.add("show");
             
-            containerItem.innerHTML = '';
-
-            if(cart.length === 0) {
-                containerItem.innerHTML = `
-                    <div class="empty-cart">
-                        <i class="fa-regular fa-heart"></i>
-                        <p>Daftar koleksi impian Anda masih kosong.</p>
-                    </div>
-                `;
-            } else {
-                cart.forEach(item => {
-                    containerItem.innerHTML += `
-                        <div class="cart-item">
-                            <img src="${item.gambar}" class="cart-item-img" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                            <div class="cart-item-info">
-                                <div>
-                                    <div class="cart-item-title">${item.nama}</div>
-                                    <div class="cart-item-category">${item.kategori}</div>
-                                </div>
-                                <div class="cart-item-actions">
-                                    <span class="exclusive-badge">1 Pcs Only</span>
-                                    <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-xmark"></i> Hapus</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-            penandaJumlah.innerText = cart.length; 
-        }
-
-        function checkoutWA() {
-            if(cart.length === 0) {
-                alert("Daftar Wishlist Anda masih kosong.");
-                return;
-            }
-
-            let isiPesan = `Halo CJR Couture, saya tertarik dengan koleksi eksklusif berikut:\n\n`;
-            
-            cart.forEach((item, index) => {
-                isiPesan += `${index + 1}. *${item.nama}* (${item.kategori})\n`;
-            });
-
-            isiPesan += `\nMohon informasi lebih lanjut. Terima kasih.`;
-
-            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
-            window.open(linkWhatsApp, '_blank');
-        }
-
-        window.onload = fetchData;
-    </script>
-</body>
-</html>
+            const cartBtn = document.getElementById('btn-cart-main');
+            cartBtn.classList.remove('cart-animate');
+            void cartBtn.offsetWidth; 
+            cartBtn.classList.add('cart-animate
