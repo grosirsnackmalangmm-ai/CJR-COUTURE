@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
         :root {
@@ -24,7 +26,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; }
+        body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
         
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #0b0b0b; }
@@ -36,26 +38,39 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loader-text { font-family: var(--font-display); letter-spacing: 4px; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; }
 
-        /* Header */
-        .announcement-bar { background-color: #000; text-align: center; padding: 8px; font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; border-bottom: 1px solid rgba(197, 160, 89, 0.15); }
-        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(10px); padding: 30px 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-        .brand-logo { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 12px; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 5px; }
-        .brand-subtitle { font-size: 0.7rem; letter-spacing: 8px; color: var(--gold); text-transform: uppercase; }
+        /* Header Utama */
+        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(10px); padding: 25px 40px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255, 255, 255, 0.03); display: flex; justify-content: space-between; align-items: center; }
+        .header-left { width: 60px; } 
+        .header-center { text-align: center; }
+        .brand-logo { font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 12px; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 2px; }
+        .brand-subtitle { font-size: 0.65rem; letter-spacing: 8px; color: var(--gold); text-transform: uppercase; }
+        .header-right { width: 60px; text-align: right; }
+        
+        /* Tombol Tas Belanja */
+        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; position: relative; transition: var(--transition); }
+        .cart-icon-btn:hover { color: var(--gold); }
+        .cart-badge { position: absolute; top: -5px; right: -10px; background: var(--gold); color: #000; font-size: 0.65rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 80px; }
         
+        /* New Arrival Section (Paling Atas) */
+        .new-arrival-section { padding: 50px 20px 30px; background: linear-gradient(180deg, #060606 0%, #0b0b0b 100%); border-bottom: 1px solid rgba(197, 160, 89, 0.08); }
+        .swiper { width: 100%; padding-bottom: 45px !important; }
+        .swiper-slide { height: auto; }
+        .swiper-pagination-bullet-active { background: var(--gold) !important; }
+
         /* Filter */
-        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; }
-        .filter-btn { background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted); padding: 10px 20px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); }
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+        .filter-btn { background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted); padding: 8px 20px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); }
         .filter-btn:hover, .filter-btn.active { color: var(--text-primary); border-color: var(--gold); background-color: rgba(197, 160, 89, 0.05); }
 
         .section-header { text-align: center; margin-bottom: 40px; }
-        .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 15px; display: inline-block; position: relative; }
+        .section-header h2 { font-family: var(--font-display); font-size: 1.6rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 15px; display: inline-block; position: relative; }
         .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 1px; background-color: var(--gold); }
 
-        /* Grid & Cards */
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 30px; }
-        .product-card { background-color: var(--surface-card); border: 1px solid rgba(255, 255, 255, 0.02); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; }
+        /* Grid & Cards Katalog */
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px 25px; }
+        .product-card { background-color: var(--surface-card); border: 1px solid rgba(255, 255, 255, 0.02); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; }
         .product-card:hover { transform: translateY(-8px); border-color: rgba(197, 160, 89, 0.3); box-shadow: 0 15px 30px rgba(0,0,0,0.6); }
         
         .image-container { position: relative; width: 100%; padding-top: 135%; background-color: #050505; overflow: hidden; }
@@ -63,42 +78,95 @@
         .product-card:hover .product-image { transform: scale(1.05); }
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #000; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; padding: 4px 12px; letter-spacing: 2px; z-index: 2; }
 
-        .card-details { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
+        .card-details { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
         .product-category { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
-        .product-title { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff; }
-        .product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-title { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 12px; color: #fff; }
         .product-price { font-size: 0.95rem; margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 15px; color: #fff; }
 
-        /* Modal Pop-up */
+        /* Pop-up Modal Fix Resolusi & Efek Bingkai Emas */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-wrapper { background-color: var(--surface-color); border: 1px solid rgba(197, 160, 89, 0.3); max-width: 900px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; }
-        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 350px; } }
+        .modal-wrapper { background-color: var(--surface-color); border: 1px solid rgba(197, 160, 89, 0.2); max-width: 900px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; }
+        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 380px; } }
         
-        .modal-image-side { flex: 1; background-color: #000; position: relative; }
-        .modal-image-side img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
+        .modal-image-side { flex: 1; background-color: #050505; position: relative; display: flex; justify-content: center; align-items: center; padding: 25px; }
+        
+        /* FIX RESOLUSI & BORDER EMAS INDAH */
+        .modal-image-side img { 
+            width: 100%; 
+            height: 100%; 
+            max-height: 520px;
+            object-fit: contain; /* Menjaga agar resolusi tidak gepeng / terpotong */
+            border: 3px solid var(--gold); /* Bingkai Emas Solid */
+            box-shadow: 0 0 25px rgba(197, 160, 89, 0.3); /* Pendaran Glow Mewah */
+            padding: 4px;
+            background: #000;
+        }
+
         .modal-info-side { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
-        
         .close-modal-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 10; }
         .close-modal-btn:hover { color: var(--gold); }
         .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
-        .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
+        .modal-title { font-family: var(--font-display); font-size: 1.6rem; margin-bottom: 15px; color: #fff; }
         .modal-desc { font-size: 0.85rem; color: #ccc; margin-bottom: 30px; line-height: 1.6; }
         .modal-price { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; color: #fff; }
         
-        .cta-button { background-color: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 15px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); }
-        .cta-button:hover { background-color: var(--gold); color: #000; }
+        .btn-gold { background-color: var(--gold); color: #000; border: 1px solid var(--gold); padding: 15px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; font-weight: 600; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); width: 100%; }
+        .btn-gold:hover { background-color: transparent; color: var(--gold); }
+
+        /* Sistem Keranjang Belanja Belakang Layer (Sidebar Drawer) */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
+        .cart-overlay.active { opacity: 1; pointer-events: auto; }
+        
+        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 100%; max-width: 420px; height: 100vh; background: #121212; z-index: 1002; transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1); display: flex; flex-direction: column; border-left: 1px solid rgba(197, 160, 89, 0.15); }
+        .cart-sidebar.open { right: 0; }
+        
+        .cart-header { padding: 25px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header h3 { font-family: var(--font-display); font-size: 1.1rem; letter-spacing: 2px; color: var(--gold); }
+        .close-cart-btn { background: none; border: none; color: #fff; font-size: 1.2rem; cursor: pointer; }
+        .close-cart-btn:hover { color: var(--gold); }
+
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 20px; }
+        .cart-item { display: flex; gap: 15px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .cart-item-img { width: 70px; height: 95px; object-fit: cover; border: 1px solid rgba(197, 160, 89, 0.2); }
+        .cart-item-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .cart-item-title { font-family: var(--font-display); font-size: 0.95rem; color: #fff; }
+        .cart-item-price { color: var(--gold); font-size: 0.85rem; margin-top: 2px; }
+        .cart-item-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+        .qty-control { display: flex; align-items: center; gap: 12px; background: #1a1a1a; padding: 3px 10px; border-radius: 2px; border: 1px solid rgba(255,255,255,0.05); }
+        .qty-btn { background: none; border: none; color: #fff; cursor: pointer; font-size: 0.85rem; }
+        .qty-btn:hover { color: var(--gold); }
+        .remove-btn { color: #ff4d4d; background: none; border: none; cursor: pointer; font-size: 0.8rem; opacity: 0.7; transition: 0.3s; }
+        .remove-btn:hover { opacity: 1; }
+
+        .cart-footer { padding: 25px 20px; border-top: 1px solid rgba(255,255,255,0.05); background: #0a0a0a; }
+        .cart-total { display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 1.1rem; color: #fff; }
+        .cart-total span:last-child { color: var(--gold); font-weight: 500; }
+        
+        /* Tombol Integrasi Hijau WhatsApp */
+        .checkout-wa-btn { background: #25D366; color: #fff; border: none; width: 100%; padding: 15px; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.3s; }
+        .checkout-wa-btn:hover { background: #1ebe57; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3); }
+
+        .empty-cart { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding-top: 60px; }
+        .empty-cart i { font-size: 2.5rem; color: rgba(197, 160, 89, 0.2); margin-bottom: 15px; display: block; }
 
         .hide { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div class="announcement-bar">Bespoke Haute Couture — By Appointment Only</div>
-
     <header>
-        <a href="#" class="brand-logo">CJR</a>
-        <div class="brand-subtitle">Couture</div>
+        <div class="header-left"></div>
+        <div class="header-center">
+            <a href="#" class="brand-logo">CJR</a>
+            <div class="brand-subtitle">Couture</div>
+        </div>
+        <div class="header-right">
+            <button class="cart-icon-btn" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </button>
+        </div>
     </header>
 
     <div id="loader-panel">
@@ -106,7 +174,20 @@
         <div class="loader-text">Loading Collection...</div>
     </div>
 
-    <main class="container">
+    <section class="new-arrival-section hide" id="new-arrival-section">
+        <div class="section-header" style="margin-bottom: 25px;">
+            <h2>New Arrival</h2>
+        </div>
+        <div style="max-width: 1400px; margin: 0 auto;">
+            <div class="swiper newArrivalSwiper">
+                <div class="swiper-wrapper" id="new-arrival-wrapper">
+                    </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </section>
+
+    <main class="container" style="padding-top: 35px;">
         <div class="filter-container" id="filter-wrapper">
             <button class="filter-btn active" onclick="filterCategory('all')">All Collection</button>
             <button class="filter-btn" onclick="filterCategory('cocktail dress')">Cocktail Dress</button>
@@ -129,57 +210,86 @@
         <div class="modal-wrapper" onclick="event.stopPropagation()">
             <button class="close-modal-btn" onclick="closeModal(null)"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-image-side">
-                <img id="modal-img" src="" alt="Detail Gambar">
+                <img id="modal-img" src="" alt="Koleksi Gambar">
             </div>
             <div class="modal-info-side">
                 <span class="modal-cat" id="modal-cat">Kategori</span>
-                <h3 class="modal-title" id="modal-title">Nama Produk</h3>
-                <p class="modal-desc" id="modal-desc">Deskripsi produk</p>
-                <div class="modal-price" id="modal-price">Harga Produk</div>
-                <a id="modal-wa-btn" href="#" target="_blank" class="cta-button">
-                    <i class="fa-brands fa-whatsapp"></i> Konsultasi via WhatsApp
-                </a>
+                <h3 class="modal-title" id="modal-title">Nama Gaun</h3>
+                <p class="modal-desc" id="modal-desc">Deskripsi pengerjaan</p>
+                <div class="modal-price" id="modal-price">Harga</div>
+                
+                <button id="modal-add-btn" class="btn-gold" onclick="addToCartFromModal()">
+                    <i class="fa-solid fa-bag-shopping"></i> Tambah ke Keranjang
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-    <script>
-        // === KONFIGURASI LINK ===
-        // Link CSV Google Sheets Anda yang Valid
-        const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
-        const whatsappNumber = "6281234567890"; // <- Ganti dengan nomor WA asli Anda
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fa-solid fa-bag-shopping"></i> Shopping Bag</h3>
+            <button class="close-cart-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         
-        // Placeholder Elegan jika foto kosong
+        <div class="cart-items" id="cart-items">
+            </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total Estimasi:</span>
+                <span id="cart-total-price">Rp 0</span>
+            </div>
+            <button class="checkout-wa-btn" onclick="checkoutWA()">
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.1rem;"></i> Kirim Pesanan ke WhatsApp
+            </button>
+            <p style="font-size: 0.65rem; color: #666; text-align: center; margin-top: 12px; line-height: 1.4;">
+                *Harga kustomisasi akhir dikonfirmasi oleh desainer saat sesi fitting.
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        // === PENGATURAN INTEGRASI UTAMA ===
+        const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
+        const whatsappNumber = "6281234567890"; // <-- MASUKKAN NOMOR TELEPON WA ANDA DI SINI
         const placeholderImg = "https://placehold.co/600x800/121212/c5a059?text=CJR+Couture";
 
         let globalProductsData = [];
+        let currentModalProductId = null;
+        let cart = JSON.parse(localStorage.getItem('cjr_cart')) || [];
 
-        // ========================================================
-        // TRIK RAHASIA BYPASS GOOGLE DRIVE DARI WEB SNACK V18
-        // ========================================================
+        // Muat Keranjang Saat Load Awal
+        updateCartUI();
+
+        // Rahasia Menembus Blokir Server Gambar Google Drive
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
             let id = "";
-            
-            // Ekstrak ID dari link Google Drive biasa
             if (str.includes("drive.google.com/file/d/")) {
                 let match = str.match(/\/d\/([a-zA-Z0-9_-]+)/);
                 if (match && match[1]) id = match[1];
             } else if (str.includes("drive.google.com/open?id=")) {
                 id = str.split("id=")[1].split("&")[0];
             }
-
-            // Gunakan server thumbnail LH3 Google (Anti-Blokir)
-            if (id) {
-                return `https://lh3.googleusercontent.com/d/${id}=s1000`;
-            }
-            
-            return str; // Jika bukan link google drive, kembalikan link aslinya
+            if (id) return `https://lh3.googleusercontent.com/d/${id}=s1000`;
+            return str;
         }
 
-        // Ambil Data CSV
+        // Pembersihan Teks Mata Uang untuk Formula Matematika Total Belanja
+        function extractPriceNumber(priceStr) {
+            if (!priceStr) return 0;
+            let cleanStr = priceStr.toLowerCase().replace(/rp|idr/g, '').replace(/[^0-9]/g, '');
+            return parseInt(cleanStr) || 0;
+        }
+
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString('id-ID');
+        }
+
         function fetchData() {
             fetch(rawSheetUrl)
                 .then(res => res.text())
@@ -206,7 +316,10 @@
         function buildDatabase(rows) {
             globalProductsData = rows.map((row, index) => {
                 const nama = row[0] ? row[0].trim() : '';
-                if (!nama) return null; // lewati jika nama kosong
+                if (!nama) return null;
+
+                const hargaText = row[4] ? row[4].trim() : 'Price by Request';
+                const hargaAngka = extractPriceNumber(hargaText);
 
                 return {
                     id: index,
@@ -214,22 +327,69 @@
                     kategori: row[1] ? row[1].trim() : 'Lainnya',
                     deskripsi: row[2] ? row[2].trim() : '-',
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
-                    harga: row[4] ? row[4].trim() : 'Price by Request',
-                    gambar: parseImageUrl(row[5]) // Eksekusi trik bypass gambar
+                    harga: hargaText,
+                    hargaAngka: hargaAngka,
+                    gambar: parseImageUrl(row[5])
                 };
             }).filter(item => item !== null);
 
+            renderNewArrivals();
             renderCatalog(globalProductsData);
             closeLoader();
         }
 
+        // Membangun slider New Arrival di area paling atas website
+        function renderNewArrivals() {
+            const newArrivals = globalProductsData.filter(p => p.statusNew.includes('new'));
+            const section = document.getElementById('new-arrival-section');
+            const wrapper = document.getElementById('new-arrival-wrapper');
+            wrapper.innerHTML = '';
+
+            if(newArrivals.length > 0) {
+                section.classList.remove('hide');
+                newArrivals.forEach(product => {
+                    const html = `
+                        <div class="swiper-slide">
+                            <div class="product-card" onclick="openModal(${product.id})">
+                                <div class="image-container">
+                                    <span class="badge-new">New Arrival</span>
+                                    <img class="product-image" src="${product.gambar}" alt="${product.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                                </div>
+                                <div class="card-details">
+                                    <span class="product-category">${product.kategori}</span>
+                                    <h3 class="product-title">${product.nama}</h3>
+                                    <div class="product-price">${product.harga}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    wrapper.innerHTML += html;
+                });
+
+                // Inisialisasi Ulang Slider Gerak Swiper
+                new Swiper(".newArrivalSwiper", {
+                    slidesPerView: 1,
+                    spaceBetween: 20,
+                    autoplay: { delay: 4000, disableOnInteraction: false },
+                    pagination: { el: ".swiper-pagination", clickable: true },
+                    breakpoints: {
+                        500: { slidesPerView: 2, spaceBetween: 15 },
+                        900: { slidesPerView: 3, spaceBetween: 20 },
+                        1200: { slidesPerView: 4, spaceBetween: 25 }
+                    }
+                });
+            } else {
+                section.classList.add('hide');
+            }
+        }
+
+        // Memasukkan catalog reguler ke grid bawah
         function renderCatalog(items) {
             const wrapper = document.getElementById('catalog-wrapper');
             wrapper.innerHTML = '';
 
             items.forEach(product => {
                 const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
-                
                 const html = `
                     <div class="product-card" onclick="openModal(${product.id})">
                         <div class="image-container">
@@ -239,7 +399,6 @@
                         <div class="card-details">
                             <span class="product-category">${product.kategori}</span>
                             <h3 class="product-title">${product.nama}</h3>
-                            <p class="product-desc">${product.deskripsi}</p>
                             <div class="product-price">${product.harga}</div>
                         </div>
                     </div>
@@ -250,7 +409,7 @@
 
         function filterCategory(cat) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
+            if (event) event.target.classList.add('active');
             
             if (cat === 'all') {
                 renderCatalog(globalProductsData);
@@ -267,6 +426,7 @@
         function openModal(id) {
             const prod = globalProductsData.find(p => p.id === id);
             if(!prod) return;
+            currentModalProductId = id;
 
             const modalImg = document.getElementById('modal-img');
             modalImg.src = prod.gambar;
@@ -277,9 +437,6 @@
             document.getElementById('modal-desc').innerText = prod.deskripsi;
             document.getElementById('modal-price').innerText = prod.harga;
 
-            const msg = encodeURIComponent(`Halo CJR Couture, saya tertarik untuk melihat koleksi ini:\n\n*Nama Baju:* ${prod.nama}\n*Harga:* ${prod.harga}`);
-            document.getElementById('modal-wa-btn').href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${msg}`;
-            
             document.getElementById('product-modal').classList.add('active');
         }
 
@@ -289,8 +446,158 @@
 
         function closeLoader() {
             const loader = document.getElementById('loader-panel');
-            loader.style.opacity = '0';
-            setTimeout(() => loader.classList.add('hide'), 400);
+            if(loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => loader.classList.add('hide'), 450);
+            }
+        }
+
+        // ========================================================
+        // ENGINE LOGIK SISTEM KERANJANG BELANJA WA
+        // ========================================================
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
+            document.getElementById('cart-overlay').classList.toggle('active');
+        }
+
+        function addToCartFromModal() {
+            if(currentModalProductId === null) return;
+            
+            const product = globalProductsData.find(p => p.id === currentModalProductId);
+            if(!product) return;
+
+            const itemAda = cart.find(item => item.id === product.id);
+            if(itemAda) {
+                itemAda.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            saveCart();
+            closeModal(null);
+            toggleCart();
+        }
+
+        function updateQty(id, ubah) {
+            const item = cart.find(i => i.id === id);
+            if(!item) return;
+            
+            item.qty += ubah;
+            if(item.qty <= 0) {
+                removeFromCart(id);
+            } else {
+                saveCart();
+            }
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            saveCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem('cjr_cart', JSON.stringify(cart));
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const containerItem = document.getElementById('cart-items');
+            const penandaJumlah = document.getElementById('cart-count');
+            const teksTotal = document.getElementById('cart-total-price');
+
+            let totalKuantitas = 0;
+            let akumulasiHarga = 0;
+            let adaPriceByRequest = false;
+            
+            containerItem.innerHTML = '';
+
+            if(cart.length === 0) {
+                containerItem.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fa-solid fa-bag-shopping"></i>
+                        <p>Shopping bag Anda kosong.</p>
+                    </div>
+                `;
+            } else {
+                cart.forEach(item => {
+                    totalKuantitas += item.qty;
+                    if(item.hargaAngka > 0) {
+                        akumulasiHarga += (item.hargaAngka * item.qty);
+                    } else {
+                        adaPriceByRequest = true;
+                    }
+
+                    containerItem.innerHTML += `
+                        <div class="cart-item">
+                            <img src="${item.gambar}" class="cart-item-img" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                            <div class="cart-item-info">
+                                <div>
+                                    <div class="cart-item-title">${item.nama}</div>
+                                    <div class="cart-item-price">${item.harga}</div>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <div class="qty-control">
+                                        <button class="qty-btn" onclick="updateQty(${item.id}, -1)"><i class="fa-solid fa-minus"></i></button>
+                                        <span style="font-size: 0.85rem; font-weight: 500;">${item.qty}</span>
+                                        <button class="qty-btn" onclick="updateQty(${item.id}, 1)"><i class="fa-solid fa-plus"></i></button>
+                                    </div>
+                                    <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            penandaJumlah.innerText = totalKuantitas;
+            
+            if(akumulasiHarga > 0) {
+                teksTotal.innerText = formatRupiah(akumulasiHarga) + (adaPriceByRequest ? " + Hubungi Admin" : "");
+            } else if (cart.length > 0) {
+                teksTotal.innerText = "Price by Request";
+            } else {
+                teksTotal.innerText = "Rp 0";
+            }
+        }
+
+        function checkoutWA() {
+            if(cart.length === 0) {
+                alert("Shopping bag Anda masih kosong.");
+                return;
+            }
+
+            let isiPesan = `Halo CJR Couture, saya ingin berkonsultasi & memesan koleksi berikut:\n\n`;
+            isiPesan += `*DAFTAR DETAIL PESANAN:*\n`;
+            isiPesan += `------------------------------------------\n`;
+            
+            let totalBiaya = 0;
+            let statusTanyaHarga = false;
+
+            cart.forEach((item, index) => {
+                isiPesan += `${index + 1}. *${item.nama}*\n`;
+                isiPesan += `   Kategori: ${item.kategori}\n`;
+                isiPesan += `   Jumlah: ${item.qty} pcs\n`;
+                isiPesan += `   Katalog: ${item.harga}\n\n`;
+                
+                if(item.hargaAngka > 0) {
+                    totalBiaya += (item.hargaAngka * item.qty);
+                } else {
+                    statusTanyaHarga = true;
+                }
+            });
+
+            isiPesan += `------------------------------------------\n`;
+            if(totalBiaya > 0) {
+                isiPesan += `*Estimasi Total: ${formatRupiah(totalBiaya)}*\n`;
+                if(statusTanyaHarga) isiPesan += `*(Belum termasuk item Price by Request)*\n`;
+            } else {
+                isiPesan += `*Total: Price by Request*\n`;
+            }
+            isiPesan += `------------------------------------------\n\n`;
+            isiPesan += `Mohon diatur jadwal untuk konsultasi desain, pengukuran badan, beserta fiting. Terima kasih.`;
+
+            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
+            window.open(linkWhatsApp, '_blank');
         }
 
         window.onload = fetchData;
