@@ -52,7 +52,7 @@
         .brand-subtitle { font-size: 0.65rem; letter-spacing: 12px; color: var(--gold); text-transform: uppercase; font-weight: 500; text-indent: 12px; margin-top: 4px; }
         .header-right { text-align: right; }
         
-        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.3rem; cursor: pointer; position: relative; transition: var(--transition); pading: 5px; }
+        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.3rem; cursor: pointer; position: relative; transition: var(--transition); padding: 5px; }
         .cart-icon-btn:hover { color: var(--gold); transform: translateY(-2px); }
         .cart-badge { position: absolute; top: -4px; right: -8px; background: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 8px rgba(197, 155, 39, 0.3); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .cart-badge.bump { transform: scale(1.3); }
@@ -274,7 +274,7 @@
         // Inisialisasi awal UI Keranjang
         updateCartUI();
 
-        // Control Tombol Back to Top & Efek Header Scroll
+        // Control Tombol Back to Top
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
             if (window.scrollY > 400) {
@@ -284,13 +284,17 @@
             }
         });
 
-        // FIXED: Parser Gambar Google Drive Terbaru & Terstabil
+        // FIXED & UPGRADED: Bypass keamanan Google Drive terbaru menggunakan link direktori 'lh3'
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
+            
+            // Mencari ID file unik dari link Google Drive biasa maupun link sharing
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
+            
             if (match && match[1]) {
-                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+                // Endpoint LH3 terbukti sangat tangguh melewati pemblokiran hotlinking Google terbaru
+                return `https://lh3.googleusercontent.com/d/${match[1]}`;
             }
             return str;
         }
@@ -333,13 +337,13 @@
                 });
         }
 
-        // Memproses baris spreadsheet menjadi array objek JSON
+        // Memproses baris spreadsheet menjadi objek JSON
         function buildDatabase(rows) {
             globalProductsData = rows.map((row, index) => {
                 const nama = row[0] ? row[0].trim() : '';
                 if (!nama) return null;
 
-                // Logika Sembunyikan Item otomatis
+                // Logika Sembunyikan Item otomatis jika stok kosong/sold
                 let statusSembunyi = '';
                 if(row.length > 6 && row[6]) {
                     statusSembunyi = row[6].toString().trim().toLowerCase();
@@ -424,7 +428,7 @@
             });
         }
 
-        // FIXED: Kontrol Filter Kategori yang bebas bug
+        // Kontrol Filter Kategori yang responsif
         function filterCategory(cat, event) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if (event && event.target) {
@@ -557,19 +561,19 @@
                 return;
             }
 
-            let isiPesan = `Halo *CJR Couture*, saya tertarik untuk memesan koleksi eksklusif berikut:\n\n`;
+            let isiPesan = `Halo *CJR Couture*, saya tertarik untuk berdiskusi & memesan koleksi eksklusif berikut:\n\n`;
             
             cart.forEach((item, index) => {
                 isiPesan += `${index + 1}. *${item.nama}* - ${item.kategori} (${item.harga})\n`;
             });
 
-            isiPesan += `\n Mohon info ketersediaan . Terima kasih.`;
+            isiPesan += `\nMohon informasi ketersediaan jadwal fitting dan detail selanjutnya. Terima kasih.`;
 
             const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
             window.open(linkWhatsApp, '_blank');
         }
 
-        // Inisialisasi Trigger Pengambilan Data Saat Aplikasi Dibuka
+        // Jalankan fetch data saat dokumen web siap
         window.onload = fetchData;
     </script>
 </body>
