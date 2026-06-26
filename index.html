@@ -262,7 +262,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // === KONFIGURASI ===
+        // === KONFIGURASI LINK SPREADSHEET UTAMA ===
         const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
         const whatsappNumber = "6282336975199"; 
         const placeholderImg = "https://placehold.co/600x800/f5f5f5/c59b27?text=CJR+Couture";
@@ -284,16 +284,13 @@
             }
         });
 
-        // FIXED & UPGRADED: Bypass keamanan Google Drive terbaru menggunakan link direktori 'lh3'
+        // FIXED: Sinkronisasi pemanggilan gambar Google Drive bypass security system
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
             
-            // Mencari ID file unik dari link Google Drive biasa maupun link sharing
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
-            
             if (match && match[1]) {
-                // Endpoint LH3 terbukti sangat tangguh melewati pemblokiran hotlinking Google terbaru
                 return `https://lh3.googleusercontent.com/d/${match[1]}`;
             }
             return str;
@@ -313,37 +310,55 @@
             }, 3500);
         }
 
-        // Mengambil Data Database dari Google Sheet
+        // UPGRADED: Mengambil Data Database dengan sistem Anti-Cache / Cache Buster
         function fetchData() {
-            fetch(rawSheetUrl)
-                .then(res => res.text())
+            // Menambahkan kode unik timestamp di belakang link agar browser dipaksa menarik data paling baru dari server
+            const antiCacheUrl = rawSheetUrl + "&t=" + new Date().getTime();
+
+            fetch(antiCacheUrl)
+                .then(res => {
+                    if (!res.ok) throw new Error("Gagal terhubung dengan server Google Sheets.");
+                    return res.text();
+                })
                 .then(csvText => {
                     Papa.parse(csvText, {
                         header: false,
                         skipEmptyLines: true,
                         complete: function(results) {
-                            const rows = results.data;
-                            if (rows.length > 1) {
-                                buildDatabase(rows.slice(1));
-                            } else {
-                                closeLoader();
+                            try {
+                                const rows = results.data;
+                                if (rows.length > 1) {
+                                    buildDatabase(rows.slice(1));
+                                } else {
+                                    console.warn("Spreadsheet kosong.");
+                                    closeLoader();
+                                }
+                            } catch (parseError) {
+                                console.error("Terjadi error pengolahan data:", parseError);
+                                closeLoader(); // Tetap tutup loader agar tidak membeku
                             }
+                        },
+                        error: function(err) {
+                            console.error("PapaParse mendeteksi kegagalan:", err);
+                            closeLoader();
                         }
                     });
                 })
                 .catch(err => {
-                    console.error("Gagal memuat data dari Spreadsheet:", err);
-                    closeLoader();
+                    console.error("Jaringan bermasalah:", err);
+                    closeLoader(); // Menghindari freeze total saat koneksi gagal
                 });
         }
 
-        // Memproses baris spreadsheet menjadi objek JSON
+        // Memproses baris spreadsheet menjadi objek JSON yang aman dari error data kosong
         function buildDatabase(rows) {
             globalProductsData = rows.map((row, index) => {
+                if (!row || row.length === 0) return null;
+                
                 const nama = row[0] ? row[0].trim() : '';
-                if (!nama) return null;
+                if (!nama) return null; // Melewati baris jika kolom Nama kosong
 
-                // Logika Sembunyikan Item otomatis jika stok kosong/sold
+                // Logika Sembunyikan Item otomatis
                 let statusSembunyi = '';
                 if(row.length > 6 && row[6]) {
                     statusSembunyi = row[6].toString().trim().toLowerCase();
@@ -428,7 +443,7 @@
             });
         }
 
-        // Kontrol Filter Kategori yang responsif
+        // Kontrol Filter Kategori
         function filterCategory(cat, event) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             if (event && event.target) {
@@ -499,7 +514,6 @@
                 closeModal();
                 toggleCart();
                 
-                // Animasi mikro memantul pada badge angka wishlist
                 const badge = document.getElementById('cart-count');
                 badge.classList.add('bump');
                 setTimeout(() => badge.classList.remove('bump'), 300);
@@ -573,7 +587,7 @@
             window.open(linkWhatsApp, '_blank');
         }
 
-        // Jalankan fetch data saat dokumen web siap
+        // Jalankan sistem
         window.onload = fetchData;
     </script>
 </body>
