@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CJR Couture | Luxury Haute Couture Catalog</title>
+    <title>CJR Couture | Haute Couture Catalog</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,80 +18,75 @@
             --text-primary: #ffffff;
             --text-muted: #999999;
             --gold: #c5a059;
-            --border-color: rgba(197, 160, 89, 0.15);
             --font-display: 'Cinzel', serif;
             --font-body: 'Montserrat', sans-serif;
             --transition: all 0.4s ease;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; }
+        body { background-color: var(--bg-color); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; }
         
-        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #0b0b0b; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
 
-        #loader-panel {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-color: var(--bg-color); z-index: 9999;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            transition: var(--transition);
-        }
-
-        .spinner {
-            width: 40px; height: 40px; border: 2px solid rgba(197, 160, 89, 0.1);
-            border-top: 2px solid var(--gold); border-radius: 50%;
-            animation: spin 1s linear infinite; margin-bottom: 20px;
-        }
+        /* Loader */
+        #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.5s; }
+        .spinner { width: 50px; height: 50px; border: 2px solid rgba(197, 160, 89, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 15px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loader-text { font-family: var(--font-display); letter-spacing: 4px; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; }
 
-        .announcement-bar { background-color: #000; text-align: center; padding: 8px; font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
-        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(10px); padding: 40px 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
-        .brand-logo { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 10px; color: var(--text-primary); text-decoration: none; display: block; }
+        /* Header */
+        .announcement-bar { background-color: #000; text-align: center; padding: 8px; font-size: 0.7rem; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; border-bottom: 1px solid rgba(197, 160, 89, 0.15); }
+        header { background-color: rgba(11, 11, 11, 0.95); backdrop-filter: blur(10px); padding: 30px 20px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        .brand-logo { font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 12px; color: var(--text-primary); text-decoration: none; display: block; margin-bottom: 5px; }
         .brand-subtitle { font-size: 0.7rem; letter-spacing: 8px; color: var(--gold); text-transform: uppercase; }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 80px; }
         
-        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; margin-bottom: 50px; }
-        .filter-btn { background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted); padding: 8px 20px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); }
+        /* Filter */
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 50px; }
+        .filter-btn { background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-muted); padding: 10px 20px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); }
         .filter-btn:hover, .filter-btn.active { color: var(--text-primary); border-color: var(--gold); background-color: rgba(197, 160, 89, 0.05); }
 
-        .section-header { text-align: center; margin-bottom: 50px; }
-        .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 15px; border-bottom: 1px solid var(--gold); display: inline-block; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 15px; display: inline-block; position: relative; }
+        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 1px; background-color: var(--gold); }
 
+        /* Grid & Cards */
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px 30px; }
         .product-card { background-color: var(--surface-card); border: 1px solid rgba(255, 255, 255, 0.02); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(197, 160, 89, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .product-card:hover { transform: translateY(-8px); border-color: rgba(197, 160, 89, 0.3); box-shadow: 0 15px 30px rgba(0,0,0,0.6); }
         
-        .image-container { position: relative; width: 100%; padding-top: 133%; background-color: #121212; overflow: hidden; }
+        .image-container { position: relative; width: 100%; padding-top: 135%; background-color: #050505; overflow: hidden; }
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
         .product-card:hover .product-image { transform: scale(1.05); }
-        .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #000; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; padding: 4px 10px; letter-spacing: 2px; z-index: 2; }
+        .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #000; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; padding: 4px 12px; letter-spacing: 2px; z-index: 2; }
 
         .card-details { padding: 25px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; }
         .product-category { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
-        .product-title { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 10px; }
+        .product-title { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 12px; color: #fff; }
         .product-desc { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-price { font-size: 0.95rem; margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 15px; }
+        .product-price { font-size: 0.95rem; margin-top: auto; border-top: 1px dashed rgba(255,255,255,0.05); padding-top: 15px; color: #fff; }
 
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); backdrop-filter: blur(5px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
+        /* Modal Pop-up */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.9); backdrop-filter: blur(8px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-wrapper { background-color: var(--surface-color); border: 1px solid var(--gold); max-width: 900px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; }
-        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { height: 400px; } }
+        .modal-wrapper { background-color: var(--surface-color); border: 1px solid rgba(197, 160, 89, 0.3); max-width: 900px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; }
+        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 350px; } }
         
-        .modal-image-side { flex: 1; background-color: #000; min-height: 400px; }
-        .modal-image-side img { width: 100%; height: 100%; object-fit: cover; }
+        .modal-image-side { flex: 1; background-color: #000; position: relative; }
+        .modal-image-side img { position: absolute; width: 100%; height: 100%; object-fit: cover; }
         .modal-info-side { flex: 1; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
         
         .close-modal-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; z-index: 10; }
         .close-modal-btn:hover { color: var(--gold); }
         .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 10px; }
-        .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 20px; }
-        .modal-desc { font-size: 0.85rem; color: #ccc; margin-bottom: 30px; }
-        .modal-price { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; }
+        .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: #fff; }
+        .modal-desc { font-size: 0.85rem; color: #ccc; margin-bottom: 30px; line-height: 1.6; }
+        .modal-price { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; color: #fff; }
         
-        .cta-button { background-color: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 15px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; text-align: center; text-decoration: none; display: inline-block; transition: var(--transition); }
+        .cta-button { background-color: transparent; color: var(--gold); border: 1px solid var(--gold); padding: 15px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); }
         .cta-button:hover { background-color: var(--gold); color: #000; }
 
         .hide { display: none !important; }
@@ -114,13 +109,16 @@
     <main class="container">
         <div class="filter-container" id="filter-wrapper">
             <button class="filter-btn active" onclick="filterCategory('all')">All Collection</button>
-            <button class="filter-btn" onclick="filterCategory('wedding gown')">Wedding Gown</button>
+            <button class="filter-btn" onclick="filterCategory('cocktail dress')">Cocktail Dress</button>
             <button class="filter-btn" onclick="filterCategory('evening dress')">Evening Dress</button>
             <button class="filter-btn" onclick="filterCategory('engagement dress')">Engagement Dress</button>
+            <button class="filter-btn" onclick="filterCategory('brides robe')">Brides Robe</button>
+            <button class="filter-btn" onclick="filterCategory('wedding gown')">Wedding Gown</button>
+            <button class="filter-btn" onclick="filterCategory('moms gown')">Mom's Gown</button>
         </div>
 
         <div class="section-header">
-            <h2>The Masterpiece Collection</h2>
+            <h2>The Collection</h2>
         </div>
 
         <div class="catalog-grid" id="catalog-wrapper">
@@ -131,7 +129,7 @@
         <div class="modal-wrapper" onclick="event.stopPropagation()">
             <button class="close-modal-btn" onclick="closeModal(null)"><i class="fa-solid fa-xmark"></i></button>
             <div class="modal-image-side">
-                <img id="modal-img" src="" alt="Detail Gambar" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80';">
+                <img id="modal-img" src="" alt="Detail Gambar">
             </div>
             <div class="modal-info-side">
                 <span class="modal-cat" id="modal-cat">Kategori</span>
@@ -147,59 +145,73 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
     <script>
-        // === KONFIGURASI UTAMA ===
-        const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
-        const whatsappNumber = "6281234567890"; // Ganti Nomor WA
-        const fallbackImg = "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80";
+        // === KONFIGURASI LINK ===
+        let rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pubhtml";
+        const whatsappNumber = "6281234567890"; // <- Ganti dengan nomor WA asli Anda
         
-        let globalProductsData = [];
+        // Gambar Pengganti Kuat (jika link dari excel rusak, akan muncul logo hitam elegan ini, bukan layar hitam)
+        const placeholderImg = "https://placehold.co/600x800/121212/c5a059?text=CJR+Couture";
 
-        // Fungsi Pembersih Link Gambar
-        function cleanImageLink(url) {
-            if (!url || url.trim() === "") return fallbackImg;
-            let finalUrl = url.trim();
-            // Coba perbaiki Google Drive Link secara otomatis
-            if (finalUrl.includes("drive.google.com/file/d/")) {
-                const match = finalUrl.match(/\/d\/(.*?)\//);
-                if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
-            }
-            return finalUrl;
+        if (rawSheetUrl.includes("pubhtml")) {
+            rawSheetUrl = rawSheetUrl.replace("pubhtml", "pub") + "?gid=0&single=true&output=csv";
         }
 
-        // Ambil Data dari CSV Google Sheets
-        function fetchData() {
-            Papa.parse(rawSheetUrl, {
-                download: true,
-                header: false,
-                skipEmptyLines: true,
-                complete: function(results) {
-                    const rows = results.data;
-                    if (rows.length > 1) {
-                        buildDatabase(rows.slice(1));
-                    } else {
-                        loadDummyData();
-                    }
-                },
-                error: function(error) {
-                    console.error("Error mengambil Excel:", error);
-                    loadDummyData();
+        let globalProductsData = [];
+
+        // FUNGSI SUPER BYPASS GOOGLE DRIVE
+        function parseImageUrl(url) {
+            if (!url || url.trim() === "") return placeholderImg;
+            let str = url.trim();
+            
+            // Jika user menempelkan link Google Drive
+            if (str.includes("drive.google.com")) {
+                let match = str.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    // Paksa terjemahkan ID Drive ke format direct download image
+                    return `https://drive.google.com/uc?export=view&id=${match[1]}`;
                 }
-            });
+            }
+            return str;
+        }
+
+        function fetchData() {
+            fetch(rawSheetUrl)
+                .then(res => res.text())
+                .then(csvText => {
+                    Papa.parse(csvText, {
+                        header: false,
+                        skipEmptyLines: true,
+                        complete: function(results) {
+                            const rows = results.data;
+                            if (rows.length > 1) {
+                                buildDatabase(rows.slice(1));
+                            } else {
+                                // Jika excel kosong
+                                closeLoader();
+                            }
+                        }
+                    });
+                })
+                .catch(err => {
+                    console.error(err);
+                    closeLoader();
+                });
         }
 
         function buildDatabase(rows) {
             globalProductsData = rows.map((row, index) => {
+                // Berdasarkan kolom di foto ke-3 yang Anda kirim
                 const nama = row[0] ? row[0].trim() : '';
-                if (!nama) return null;
+                if (!nama) return null; // lewati jika nama kosong
 
                 return {
                     id: index,
                     nama: nama,
-                    kategori: row[1] ? row[1].trim() : 'Couture',
-                    deskripsi: row[2] ? row[2].trim() : 'Exclusive collection by CJR.',
+                    kategori: row[1] ? row[1].trim() : 'Lainnya',
+                    deskripsi: row[2] ? row[2].trim() : '-',
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
                     harga: row[4] ? row[4].trim() : 'Price by Request',
-                    gambar: cleanImageLink(row[5])
+                    gambar: parseImageUrl(row[5])
                 };
             }).filter(item => item !== null);
 
@@ -212,12 +224,17 @@
             wrapper.innerHTML = '';
 
             items.forEach(product => {
-                const isNew = product.statusNew === 'new' ? `<span class="badge-new">New</span>` : '';
+                // Tampilkan Pita "New Arrival" jika kolom D ada tulisan "new"
+                const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
+                
+                // Sanitasi kategori agar mudah difilter (hilangkan tanda petik dari mom's gown)
+                let filterTag = product.kategori.toLowerCase().replace(/['"’]/g, '');
+
                 const html = `
                     <div class="product-card" onclick="openModal(${product.id})">
                         <div class="image-container">
                             ${isNew}
-                            <img class="product-image" src="${product.gambar}" alt="${product.nama}" onerror="this.onerror=null; this.src='${fallbackImg}';">
+                            <img class="product-image" src="${product.gambar}" alt="${product.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
                         </div>
                         <div class="card-details">
                             <span class="product-category">${product.kategori}</span>
@@ -238,7 +255,13 @@
             if (cat === 'all') {
                 renderCatalog(globalProductsData);
             } else {
-                renderCatalog(globalProductsData.filter(p => p.kategori.toLowerCase() === cat));
+                // Filter cerdas (mengabaikan salah ketik atau tanda petik di "mom's gown")
+                const filtered = globalProductsData.filter(p => {
+                    let pCat = p.kategori.toLowerCase().replace(/['"’]/g, '');
+                    let targetCat = cat.toLowerCase().replace(/['"’]/g, '');
+                    return pCat.includes(targetCat);
+                });
+                renderCatalog(filtered);
             }
         }
 
@@ -246,13 +269,17 @@
             const prod = globalProductsData.find(p => p.id === id);
             if(!prod) return;
 
-            document.getElementById('modal-img').src = prod.gambar;
+            const modalImg = document.getElementById('modal-img');
+            modalImg.src = prod.gambar;
+            // Fallback untuk modal
+            modalImg.onerror = function() { this.onerror=null; this.src=placeholderImg; };
+
             document.getElementById('modal-cat').innerText = prod.kategori;
             document.getElementById('modal-title').innerText = prod.nama;
             document.getElementById('modal-desc').innerText = prod.deskripsi;
             document.getElementById('modal-price').innerText = prod.harga;
 
-            const msg = encodeURIComponent(`Halo CJR Couture, saya tertarik dengan gaun:\n*Nama:* ${prod.nama}\n*Harga:* ${prod.harga}`);
+            const msg = encodeURIComponent(`Halo CJR Couture, saya tertarik untuk melihat koleksi ini:\n\n*Nama Baju:* ${prod.nama}\n*Harga:* ${prod.harga}`);
             document.getElementById('modal-wa-btn').href = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${msg}`;
             
             document.getElementById('product-modal').classList.add('active');
@@ -260,15 +287,6 @@
 
         function closeModal(e) {
             document.getElementById('product-modal').classList.remove('active');
-        }
-
-        function loadDummyData() {
-            globalProductsData = [
-                { id: 1, nama: "Royal Seraphina", kategori: "Wedding Gown", deskripsi: "Gaun pengantin haute couture dengan detail kristal swarovski.", statusNew: "new", harga: "Rp 45.000.000", gambar: "https://images.unsplash.com/photo-1594552072238-16e6f4773a97?auto=format&fit=crop&w=800&q=80" },
-                { id: 2, nama: "Golden Muse", kategori: "Engagement Dress", deskripsi: "Gaun pertunangan silk dengan aksen gold.", statusNew: "", harga: "Rp 18.500.000", gambar: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80" }
-            ];
-            renderCatalog(globalProductsData);
-            closeLoader();
         }
 
         function closeLoader() {
