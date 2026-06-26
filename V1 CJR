@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CJR Couture | Haute Couture Exclusive Catalog</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <style>
+        /* =========================================
+           CSS DESAIN: ULTRA LUXURY & PREMIUM DARK MODE
+           ========================================= */
+        :root {
+            --bg-color: #0b0b0b; /* Hitam Mewah */
+            --card-bg: #141414; /* Abu Gelap Elegan */
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --gold: #d4af37; /* Gold Champagne */
+            --font-title: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- HEADER & LOGO --- */
+        header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(11, 11, 11, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-main {
+            font-family: var(--font-title);
+            font-size: 3.5rem;
+            font-weight: 400;
+            letter-spacing: 15px;
+            color: var(--text-main);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .logo-sub {
+            font-size: 0.75rem;
+            letter-spacing: 12px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 300;
+            margin-right: -12px;
+        }
+
+        /* --- SECTION STYLING --- */
+        .section-container {
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 30px;
+        }
+
+        .section-title {
+            font-family: var(--font-title);
+            font-size: 2.2rem;
+            font-weight: 400;
+            text-align: center;
+            margin-bottom: 40px;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background: var(--gold);
+            margin: 15px auto 0;
+        }
+
+        /* --- SWIPER SLIDER (NEW COLLECTION) --- */
+        .swiper {
+            width: 100%;
+            padding-bottom: 50px !important;
+        }
+
+        .swiper-slide {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: border 0.4s ease;
+        }
+
+        .swiper-slide:hover {
+            border-color: var(--gold);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+            display: block;
+        }
+
+        .swiper-slide:hover img {
+            transform: scale(1.04);
+        }
+
+        .slide-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 40px 20px 25px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 40%, rgba(0,0,0,0));
+            text-align: center;
+        }
+
+        .slide-info h3 {
+            font-family: var(--font-title);
+            font-size: 1.6rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .slide-info p {
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .swiper-pagination-bullet-active {
+            background: var(--gold) !important;
+            width: 25px !important;
+            border-radius: 4px !important;
+            transition: all 0.3s;
+        }
+
+        /* --- CATEGORY FILTER --- */
+        .filter-wrapper {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 50px;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            color: var(--text-muted);
+            padding: 10px 24px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--gold);
+            color: var(--bg-color);
+            background-color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* --- GRID CATALOG --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .dress-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255,255,255,0.02);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .dress-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.6);
+        }
+
+        .card-img-holder {
+            width: 100%;
+            height: 460px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .card-img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .dress-card:hover .card-img-holder img {
+            transform: scale(1.05);
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 11, 11, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .card-img-holder:hover .card-overlay { opacity: 1; }
+
+        .view-btn {
+            border: 1px solid var(--gold);
+            background: rgba(11, 11, 11, 0.8);
+            color: var(--gold);
+            padding: 12px 24px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .card-body {
+            padding: 25px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-category {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .card-name {
+            font-family: var(--font-title);
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .card-price {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-main);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 15px;
+        }
+
+        /* --- LIGHTBOX POPUP --- */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(5, 5, 5, 0.98);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 85vh;
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        /* --- STATUS PANEL (LOADING & ERROR) --- */
+        .status-panel {
+            text-align: center;
+            padding: 120px 30px;
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(214, 175, 55, 0.1);
+            border-top-color: var(--gold);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .error-card {
+            background: #161111;
+            border: 1px solid #3a1a1a;
+            padding: 30px;
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .error-card p {
+            font-size: 0.95rem;
+            color: #f19e9e;
+            margin-bottom: 20px;
+        }
+
+        .btn-action {
+            background: var(--gold);
+            color: #000;
+            border: none;
+            padding: 12px 28px;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-action:hover { opacity: 0.9; }
+        .hide { display: none !important; }
+
+        footer {
+            text-align: center;
+            padding: 50px 20px;
+            background: #050505;
+            border-top: 1px solid rgba(212, 175, 55, 0.05);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-main">CJR</div>
+        <div class="logo-sub">COUTURE</div>
+    </header>
+
+    <div class="status-panel" id="loading-panel">
+        <div class="spinner"></div>
+        <h3 style="font-family: var(--font-title); letter-spacing: 2px;">Menghubungkan ke Database CJR...</h3>
+    </div>
+
+    <div class="status-panel hide" id="error-panel">
+        <h3 style="font-family: var(--font-title); letter-spacing: 2px; color: var(--gold);">Koneksi Diblokir Browser Lokal</h3>
+        <div class="error-card">
+            <p><strong>Info Keamanan:</strong> Karena Anda membuka file ini langsung dari komputer (klik 2x), browser memblokir akses data otomatis demi keamanan. Jangan khawatir! Masalah ini akan hilang total saat website di-upload ke internet (Vercel/Netlify).</p>
+            <button class="btn-action" onclick="muatDataSimulasi()">Lihat Tampilan Simulasi Katalog</button>
+        </div>
+    </div>
+
+    <div id="main-content" class="hide">
+        
+        <div id="slider-section">
+            <h2 class="section-title">New Collection</h2>
+            <div class="section-container" style="margin-top: 20px; margin-bottom: 40px;">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper" id="new-collection-wrapper">
+                        </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-title">The Catalog</h2>
+        <div class="section-container" style="margin-top: 20px;">
+            <div class="filter-wrapper">
+                <button class="filter-btn active" onclick="filterKategori('All')">All Collection</button>
+                <button class="filter-btn" onclick="filterKategori('Cocktail dress')">Cocktail</button>
+                <button class="filter-btn" onclick="filterKategori('Evening dress')">Evening</button>
+                <button class="filter-btn" onclick="filterKategori('Engagement dress')">Engagement</button>
+                <button class="filter-btn" onclick="filterKategori('Wedding gown')">Wedding</button>
+                <button class="filter-btn" onclick="filterKategori('Brides robe')">Brides Robe</button>
+                <button class="filter-btn" onclick="filterKategori('Mom\'s gown')">Mom's Gown</button>
+            </div>
+
+            <div class="grid-container" id="catalog-wrapper">
+                </div>
+        </div>
+
+    </div>
+
+    <div class="lightbox" id="lightbox-popup" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" src="" alt="Couture Detail">
+    </div>
+
+    <footer>
+        &copy; 2026 CJR COUTURE. ALL RIGHTS RESERVED.<br>
+        <span style="color: var(--gold); font-size: 0.65rem; margin-top: 5px; display: inline-block;">LUXURY HAUTE COUTURE</span>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <script>
+        // Tautan CSV langsung dari tautan publikasi spreadsheet Anda
+        const linkSpreadsheetCSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
+
+        // 1. Mengambil data dari internet menggunakan Fetch API Native
+        function ambilDataOnline() {
+            fetch(linkSpreadsheetCSV)
+                .then(response => {
+                    if (!response.ok) throw new Error("Respons jaringan bermasalah.");
+                    return response.text();
+                })
+                .then(csvKonten => {
+                    // Mengurai CSV berdasarkan urutan kolom (Indeks) agar aman dari duplikasi nama kolom header
+                    Papa.parse(csvKonten, {
+                        header: false, 
+                        skipEmptyLines: true,
+                        complete: function(hasil) {
+                            if (hasil.data && hasil.data.length > 1) {
+                                // Potong baris pertama (Judul Kolom / Header)
+                                const dataBarisBaju = hasil.data.slice(1);
+                                prosesDanTampilkan(dataBarisBaju);
+                            } else {
+                                urusErrorKoneksi();
+                            }
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.warn("Koneksi lokal diblokir browser (CORS Policy). Mengaktifkan Panel Penyelamat Otomatis.");
+                    urusErrorKoneksi();
+                });
+        }
+
+        // 2. Memetakan baris excel berdasarkan urutan kolom di screenshot Anda
+        function prosesDanTampilkan(kumpulanBaris) {
+            const sliderWrapper = document.getElementById('new-collection-wrapper');
+            const catalogWrapper = document.getElementById('catalog-wrapper');
+            
+            sliderWrapper.innerHTML = '';
+            catalogWrapper.innerHTML = '';
+            let jumlahKoleksiBaru = 0;
+
+            kumpulanBaris.forEach(baris => {
+                // Berdasarkan urutan screenshot Excel Anda:
+                const namaBaju   = baris[0] ? baris[0].trim() : '';
+                if (!namaBaju) return; // Lewati jika nama kosong
+
+                const kategori   = baris[1] ? baris[1].trim() : 'Exclusive';
+                const deskripsi  = baris[2] ? baris[2].trim() : '-';
+                const kolomStatus= baris[3] ? baris[3].trim() : ''; // Kolom D
+                const harga      = baris[4] ? baris[4].trim() : 'Price by Request';
+                const linkGambar = baris[5] ? baris[5].trim() : 'https://via.placeholder.com/600x800?text=CJR+Couture';
+
+                // Deteksi otomatis: Jika kolom D berisi tulisan "new" atau variasi teks lainnya
+                const isNewCollection = kolomStatus.toLowerCase().includes('new');
+
+                // HTML Card Template
+                const itemCardHTML = `
+                    <div class="card-img-holder" onclick="openLightbox('${linkGambar}')">
+                        <img src="${linkGambar}" alt="${namaBaju}">
+                        <div class="card-overlay"><button class="view-btn">View Detail</button></div>
+                    </div>
+                    <div class="card-body">
+                        <span class="card-category">${kategori}</span>
+                        <h3 class="card-name">${namaBaju}</h3>
+                        <p class="card-desc">${deskripsi}</p>
+                        <div class="card-price">${harga}</div>
+                    </div>
+                `;
+
+                // --- Input ke Slider Atas (Jika New Collection) ---
+                if (isNewCollection) {
+                    jumlahKoleksiBaru++;
+                    const slideElement = document.createElement('div');
+                    slideElement.className = 'swiper-slide';
+                    slideElement.innerHTML = `
+                        <img src="${linkGambar}" alt="${namaBaju}" onclick="openLightbox('${linkGambar}')">
+                        <div class="slide-info">
+                            <h3>${namaBaju}</h3>
+                            <p>${harga}</p>
+                        </div>
+                    `;
+                    sliderWrapper.appendChild(slideElement);
+                }
+
+                // --- Input ke Katalog Grid Utama Bawah ---
+                const cardElement = document.createElement('div');
+                cardElement.className = 'dress-card';
+                cardElement.setAttribute('data-category', kategori.toLowerCase());
+                cardElement.innerHTML = itemCardHTML;
+                catalogWrapper.appendChild(cardElement);
+            });
+
+            // Atur Visibilitas Slider berdasarkan ketersediaan barang "New Collection"
+            if (jumlahKoleksiBaru === 0) {
+                document.getElementById('slider-section').classList.add('hide');
+            } else {
+                document.getElementById('slider-section').classList.remove('hide');
+                jalankanEfekSlider();
+            }
+
+            // Tampilkan konten utama, sembunyikan loading
+            document.getElementById('loading-panel').classList.add('hide');
+            document.getElementById('error-panel').classList.add('hide');
+            document.getElementById('main-content').classList.remove('hide');
+        }
+
+        // 3. Penyelamat: Jika gagal koneksi (saat dibuka offline di laptop), siapkan data tiruan
+        function urusErrorKoneksi() {
+            document.getElementById('loading-panel').classList.add('hide');
+            document.getElementById('error-panel').classList.remove('hide');
+        }
+
+        function muatDataSimulasi() {
+            // Data Tiruan mewah berformat array demi kecocokan struktur indeks data asli
+            const dataTiruanMewah = [
+                ["The Royal Pearl Gown", "Wedding gown", "Gaun pengantin haute couture bertabur mutiara premium dengan ekor megah sepanjang 3 meter.", "New Collection", "Rp 35.000.000", "https://images.unsplash.com/photo-1594552072238-16e6f4773a97?auto=format&fit=crop&w=600&q=80"],
+                ["Golden Hour Muse", "Engagement dress", "Gaun tunangan beraksen payet emas transparan yang memukau dan siluet ramping menawan.", "New Collection", "Rp 16.500.000", "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=600&q=80"],
+                ["Midnight Noir", "Evening dress", "Gaun malam berbahan sutra velvet hitam pekat eksklusif untuk acara gala dinner kenegaraan.", "Regular Collection", "Rp 12.000.000", "https://images.unsplash.com/photo-1566164284693-0e2ff1b0235f?auto=format&fit=crop&w=600&q=80"],
+                ["Blush Silk Robe", "Brides robe", "Jubah persiapan pengantin wanita dari bahan satin sutra dengan pinggiran renda kustom asal Prancis.", "New Collection", "Rp 3.500.000", "https://images.unsplash.com/photo-1515347619252-1abfbffebcf2?auto=format&fit=crop&w=600&q=80"],
+                ["Emerald Empress", "Mom\'s gown", "Gaun berkelas untuk Ibu pengantin dengan warna hijau zamrud satin yang memberikan ilusi postur tegap.", "Regular Collection", "Rp 9.000.000", "https://images.unsplash.com/photo-1566164319808-1627993a40bd?auto=format&fit=crop&w=600&q=80"]
+            ];
+            prosesDanTampilkan(dataTiruanMewah);
+        }
+
+        // 4. Sistem Filtrasi Gaun Kustom
+        function filterKategori(namaKategori) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const semuaKartu = document.querySelectorAll('.dress-card');
+            semuaKartu.forEach(kartu => {
+                const kategoriKartu = kartu.getAttribute('data-category');
+                if (namaKategori === 'All' || kategoriKartu.includes(namaKategori.toLowerCase())) {
+                    kartu.classList.remove('hide');
+                } else {
+                    kartu.classList.add('hide');
+                }
+            });
+        }
+
+        // 5. Konfigurasi Slider Otomatis Swiper.js
+        function jalankanEfekSlider() {
+            new Swiper(".mySwiper", {
+                slidesPerView: 1,
+                spaceBetween: 25,
+                loop: true,
+                speed: 1200,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                breakpoints: {
+                    768: { slidesPerView: 2 },
+                    1100: { slidesPerView: 3 }
+                }
+            });
+        }
+
+        // 6. Sistem Pembesar Gambar (Lightbox)
+        function openLightbox(sumberGambar) {
+            document.getElementById('lightbox-img').src = sumberGambar;
+            document.getElementById('lightbox-popup').style.display = 'flex';
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox-popup').style.display = 'none';
+        }
+
+        // Jalankan perintah pengambilan data online saat website dibuka
+        ambilDataOnline();
+    </script>
+</body>
+</html>
