@@ -32,7 +32,7 @@
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-        /* Loader - Dipercepat transisinya */
+        /* Loader Super Cepat */
         #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.3s ease-out; }
         .spinner { width: 45px; height: 45px; border: 1px solid rgba(212, 175, 55, 0.1); border-top: 1px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -244,7 +244,7 @@
 
         updateCartUI();
 
-        // Bypass Google Drive Thumbnail (Dipercepat resolusinya s800)
+        // Bypass Google Drive Thumbnail (Dengan Resolusi Menengah untuk Anti-Lemot)
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
@@ -255,8 +255,15 @@
             } else if (str.includes("drive.google.com/open?id=")) {
                 id = str.split("id=")[1].split("&")[0];
             }
-            if (id) return `https://lh3.googleusercontent.com/d/${id}=s800`;
+            if (id) return `https://lh3.googleusercontent.com/d/$${id}=s800`;
             return str;
+        }
+
+        // Teks Harga jadi Angka
+        function extractPriceNumber(priceStr) {
+            if (!priceStr) return 0;
+            let cleanStr = priceStr.toLowerCase().replace(/rp|idr/g, '').replace(/[^0-9]/g, '');
+            return parseInt(cleanStr) || 0;
         }
 
         // Fetch Data Excel
@@ -285,10 +292,20 @@
                 const nama = row[0] ? row[0].trim() : '';
                 if (!nama) return null; 
 
-                // === LOGIKA SEMBUNYI YANG BENAR ===
-                // Jika sel kosong, tetap tampil. Jika diisi kata "kosong" (atau sold/sembunyi), baru hilang.
-                const statusSembunyi = row[6] ? row[6].trim().toLowerCase() : '';
+                // === LOGIKA SEMBUNYI "KOSONG" ===
+                // Mengecek ke Kolom G (index 6). Jika di kolom itu ada kata 'kosong', 'sold', atau 'sembunyi', baju dihilangkan.
+                let statusSembunyi = '';
+                if(row.length > 6 && row[6]) {
+                    statusSembunyi = row[6].toString().trim().toLowerCase();
+                }
                 if (statusSembunyi === 'kosong' || statusSembunyi === 'sold' || statusSembunyi === 'sembunyi') return null;
+
+                // === HARGA DIKEMBALIKAN ===
+                let hargaText = row[4] ? row[4].trim() : '';
+                if (hargaText === '' || hargaText.toLowerCase().includes('request')) {
+                    hargaText = 'Bespoke Inquiry';
+                }
+                const hargaAngka = extractPriceNumber(hargaText);
 
                 return {
                     id: index,
@@ -296,6 +313,8 @@
                     kategori: row[1] ? row[1].trim() : 'Exclusive',
                     deskripsi: row[2] ? row[2].trim() : '-',
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
+                    harga: hargaText, // <-- Variabel Harga Asli
+                    hargaAngka: hargaAngka,
                     gambar: parseImageUrl(row[5])
                 };
             }).filter(item => item !== null);
@@ -305,19 +324,20 @@
             closeLoader();
         }
 
-        // Generate Item Card HTML (Dengan Watermark)
+        // Generate Item Card HTML (Ditambah loading="lazy" Anti-Lemot)
         function createCardHTML(product) {
             const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
             return `
                 <div class="product-card" onclick="openModal(${product.id})">
                     <div class="image-container">
                         ${isNew}
-                        <div class="watermark">CJR</div> <img class="product-image" src="${product.gambar}" alt="${product.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                        <div class="watermark">CJR</div>
+                        <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
                     </div>
                     <div class="card-details">
                         <span class="product-category">${product.kategori}</span>
                         <h3 class="product-title">${product.nama}</h3>
-                        <div class="product-price">Bespoke Inquiry</div>
+                        <div class="product-price">${product.harga}</div>
                     </div>
                 </div>
             `;
@@ -395,12 +415,12 @@
             document.getElementById('product-modal').classList.remove('active');
         }
 
-        // LOADING DIPERCEPAT
+        // === LOADER DIPERCEPAT (0.25 Detik) ===
         function closeLoader() {
             const loader = document.getElementById('loader-panel');
             if(loader) {
                 loader.style.opacity = '0';
-                setTimeout(() => loader.classList.add('hide'), 250); // Waktu diubah jadi sangat cepat
+                setTimeout(() => loader.classList.add('hide'), 250);
             }
         }
 
