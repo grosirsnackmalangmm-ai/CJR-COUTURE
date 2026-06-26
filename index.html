@@ -32,9 +32,9 @@
         ::-webkit-scrollbar-track { background: #050505; }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
 
-        /* Loader Ekstra Halus */
+        /* Loader */
         #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: 0.6s ease-out; }
-        .spinner { width: 45px; height: 45px; border: 1px solid rgba(212, 175, 55, 0.1); border-top: 1px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        .spinner { width: 45px; height: 45px; border: 1px solid rgba(212, 175, 55, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loader-text { font-family: var(--font-display); letter-spacing: 5px; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; opacity: 0.8; }
 
@@ -46,14 +46,13 @@
         .brand-subtitle { font-size: 0.65rem; letter-spacing: 10px; color: var(--gold); text-transform: uppercase; font-weight: 400; }
         .header-right { width: 60px; text-align: right; }
         
-        /* Ikon Tas Belanja */
         .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; position: relative; transition: var(--transition); }
         .cart-icon-btn:hover { color: var(--gold); transform: scale(1.05); }
         .cart-badge { position: absolute; top: -6px; right: -12px; background: var(--gold); color: #000; font-size: 0.6rem; font-weight: bold; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
 
         .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px 80px; }
         
-        /* Slider New Arrival */
+        /* New Arrival Section */
         .new-arrival-section { padding: 60px 20px 40px; background: radial-gradient(circle at top, #111111 0%, #080808 100%); border-bottom: 1px solid rgba(212, 175, 55, 0.05); }
         .swiper { width: 100%; padding-bottom: 50px !important; }
         .swiper-slide { height: auto; }
@@ -69,7 +68,7 @@
         .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 8px; text-transform: uppercase; font-weight: 300; padding-bottom: 15px; display: inline-block; position: relative; color: #fff; }
         .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 1px; background-color: var(--gold); box-shadow: 0 0 10px var(--gold); }
 
-        /* Kartu Produk Elegan */
+        /* Grid Katalog */
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 50px 30px; }
         .product-card { background-color: var(--surface-card); border: 1px solid rgba(255, 255, 255, 0.03); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
         .product-card:hover { transform: translateY(-10px); border-color: rgba(212, 175, 55, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.1); }
@@ -78,8 +77,8 @@
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; opacity: 0.9; }
         .product-card:hover .product-image { transform: scale(1.08); opacity: 1; filter: contrast(1.1); }
         
-        /* === WATERMARK SISTEM === */
-        .watermark { position: absolute; bottom: 12px; right: 15px; font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: rgba(255, 255, 255, 0.35); letter-spacing: 6px; z-index: 5; pointer-events: none; text-shadow: 0px 2px 5px rgba(0,0,0,0.8); user-select: none; }
+        /* === WATERMARK SISTEM V2 (DIperbesar & Lebih ke Kanan) === */
+        .watermark { position: absolute; bottom: 15px; right: 20px; font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: rgba(255, 255, 255, 0.4); letter-spacing: 6px; z-index: 5; pointer-events: none; text-shadow: 0px 2px 5px rgba(0,0,0,0.8); user-select: none; }
         
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #000; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; padding: 5px 12px; letter-spacing: 2px; z-index: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
@@ -88,7 +87,7 @@
         .product-title { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 15px; color: #fff; letter-spacing: 1px; }
         .product-price { font-size: 0.9rem; margin-top: auto; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 15px; color: var(--text-muted); font-weight: 300; letter-spacing: 1px; }
 
-        /* Modal Pop-up (Border Emas & Anti-Gepeng) */
+        /* Modal Pop-up (Border Emas & Resolusi Fix Contain) */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
         .modal.active { opacity: 1; pointer-events: auto; }
         .modal-wrapper { background-color: var(--surface-color); border: 1px solid rgba(212, 175, 55, 0.3); max-width: 950px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: 0 0 50px rgba(0,0,0,0.8); }
@@ -136,7 +135,7 @@
 
         .cart-footer { padding: 30px 20px; border-top: 1px solid rgba(255,255,255,0.05); background: #080808; }
         
-        /* Tombol Integrasi WhatsApp Sopan */
+        /* Tombol Integrasi WhatsApp Sopan (Bukan Total Harga) */
         .checkout-wa-btn { background: #1a1a1a; color: var(--gold); border: 1px solid var(--gold); width: 100%; padding: 18px; font-family: var(--font-body); font-weight: 500; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: var(--transition); border-radius: 2px; }
         .checkout-wa-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); }
 
@@ -304,7 +303,7 @@
             closeLoader();
         }
 
-        // Generate Item Card HTML (Dengan Watermark)
+        // Generate Item Card HTML (Dengan Watermark V2)
         function createCardHTML(product) {
             const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
             return `
@@ -316,7 +315,7 @@
                     <div class="card-details">
                         <span class="product-category">${product.kategori}</span>
                         <h3 class="product-title">${product.nama}</h3>
-                        <div class="product-price">Bespoke Inquiry</div>
+                        <div class="product-price">Price Inquiry</div>
                     </div>
                 </div>
             `;
@@ -469,10 +468,10 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // === FORMAT PESAN WA HALUS & ELEGAN ===
+        // === FORMAT PESAN WA HALUS & ELEGAN (TANPA HARGA/FITTING) ===
         function checkoutWA() {
             if(cart.length === 0) {
-                alert("Daftar koleksi Anda masih kosong.");
+                alert("Daftar Wishlist Anda masih kosong.");
                 return;
             }
 
