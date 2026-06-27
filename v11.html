@@ -85,7 +85,7 @@
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover .product-image { transform: scale(1.08); }
         
-        /* Watermark pada Grid */
+        /* Watermark pada Grid (Kecil) */
         .watermark { position: absolute; bottom: 15px; right: 20px; font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: rgba(255, 255, 255, 0.5); letter-spacing: 6px; z-index: 5; pointer-events: none; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); user-select: none; }
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; padding: 6px 14px; letter-spacing: 2px; z-index: 2; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 2px; }
 
@@ -104,14 +104,15 @@
         .modal-image-side { flex: 1; background-color: #fdfdfd; position: relative; display: flex; justify-content: center; align-items: center; padding: 20px; border-right: 1px solid #f0f0f0; overflow: hidden; }
         .modal-image-side img { width: 100%; height: 100%; max-height: 600px; object-fit: contain; background: transparent; position: relative; z-index: 2; pointer-events: auto; }
 
-        /* OVERLAY WATERMARK POLA DI MODAL */
+        /* OVERLAY WATERMARK POLA DI MODAL (Fitur Baru) */
         .modal-watermark-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
+            /* SVG Pattern text CJR COUTURE miring */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08" transform="rotate(-30)"><text y="100" x="20" fill="%23000" font-family="Cinzel" font-size="20" font-weight="bold" letter-spacing="4">CJR COUTURE</text></svg>');
             background-repeat: repeat;
             z-index: 3;
-            pointer-events: none;
+            pointer-events: none; 
             user-select: none;
         }
 
@@ -176,7 +177,9 @@
         .hide { display: none !important; opacity: 0 !important; visibility: hidden !important; }
     </style>
 </head>
-<body oncontextmenu="return false;"> <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
+<body oncontextmenu="return false;">
+
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
@@ -236,7 +239,9 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="modal-watermark-overlay"></div> <img id="modal-img" src="" alt="Koleksi Gambar" ondragstart="return false;" oncontextmenu="return false;">
+                <div class="modal-watermark-overlay"></div>
+                
+                <img id="modal-img" src="" alt="Koleksi Gambar" ondragstart="return false;">
             </div>
             
             <div class="modal-info-side">
@@ -262,9 +267,6 @@
             <button class="checkout-wa-btn" onclick="checkoutWA()">
                 <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Hubungi CJR Couture
             </button>
-            <p style="font-size: 0.7rem; color: #888; text-align: center; margin-top: 20px; letter-spacing: 1px; font-weight: 400; line-height: 1.6;">
-                Eksklusivitas terjamin. Mari jadwalkan sesi fitting pribadi bersama desainer kami.
-            </p>
         </div>
     </div>
 
@@ -279,34 +281,24 @@
 
         let globalProductsData = [];
         let currentModalProductId = null;
+        
+        // Membaca Cart dari LocalStorage (Struktur asli: seluruh object item)
         let cart = JSON.parse(localStorage.getItem('cjr_cart')) || [];
 
-        // Inisialisasi keranjang
-        updateCartUI();
-
-        // Animasi Header saat di-scroll & Tombol Back to Top
+        // Animasi Scroll Header
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
             const header = document.getElementById('main-header');
-            
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-
-            if (window.scrollY > 400) {
-                btn.classList.add('show');
-            } else {
-                btn.classList.remove('show');
-            }
+            if (window.scrollY > 100) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+            if (window.scrollY > 400) btn.classList.add('show');
+            else btn.classList.remove('show');
         });
 
-        // FIXED: URL parser untuk HTTPS dan endpoint resmi Drive 
+        // Parser URL Google Drive (Aman dan Standar)
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
-            
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
             if (match && match[1]) {
                 return `https://drive.google.com/uc?export=view&id=${match[1]}`;
@@ -321,77 +313,46 @@
             toast.className = 'toast';
             toast.innerHTML = `<i class="fa-solid fa-gem"></i> <span>${message}</span>`;
             container.appendChild(toast);
-            
             setTimeout(() => {
                 toast.style.animation = 'slideOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
                 toast.addEventListener('animationend', () => toast.remove());
             }, 3500);
         }
 
-        // Mengambil Data dari Spreadsheet
+        // Fetch Data dari Google Spreadsheet
         function fetchData() {
             const antiCacheUrl = rawSheetUrl + "&t=" + new Date().getTime();
-
             fetch(antiCacheUrl)
-                .then(res => {
-                    if (!res.ok) throw new Error("Gagal terhubung dengan server Google Sheets.");
-                    return res.text();
-                })
+                .then(res => res.text())
                 .then(csvText => {
                     Papa.parse(csvText, {
                         header: false,
                         skipEmptyLines: true,
                         complete: function(results) {
-                            try {
-                                const rows = results.data;
-                                if (rows.length > 1) {
-                                    buildDatabase(rows.slice(1));
-                                } else {
-                                    closeLoader();
-                                }
-                            } catch (parseError) {
-                                console.error("Terjadi error pengolahan data:", parseError);
-                                closeLoader();
-                            }
-                        },
-                        error: function(err) {
-                            console.error("PapaParse mendeteksi kegagalan:", err);
-                            closeLoader();
+                            if (results.data.length > 1) buildDatabase(results.data.slice(1));
+                            else closeLoader();
                         }
                     });
-                })
-                .catch(err => {
-                    console.error("Jaringan bermasalah:", err);
-                    closeLoader();
-                });
+                }).catch(err => closeLoader());
         }
 
-        // Memproses baris spreadsheet
+        // Menyusun Database Produk
         function buildDatabase(rows) {
             globalProductsData = rows.map((row, index) => {
-                if (!row || row.length === 0) return null;
+                if (!row || row.length === 0 || !row[0]) return null;
                 
-                const nama = row[0] ? row[0].trim() : '';
-                if (!nama) return null;
+                let statusSembunyi = (row[6] || '').toString().trim().toLowerCase();
+                if (['kosong', 'sold', 'sembunyi'].includes(statusSembunyi)) return null;
 
-                // Fitur Sembunyikan Item
-                let statusSembunyi = '';
-                if(row.length > 6 && row[6]) {
-                    statusSembunyi = row[6].toString().trim().toLowerCase();
-                }
-                if (statusSembunyi === 'kosong' || statusSembunyi === 'sold' || statusSembunyi === 'sembunyi') return null;
-
-                let hargaText = row[4] ? row[4].trim() : '';
-                if (hargaText === '' || hargaText.toLowerCase().includes('request')) {
-                    hargaText = 'Bespoke Inquiry';
-                }
+                let hargaText = (row[4] || '').trim();
+                if (hargaText === '' || hargaText.toLowerCase().includes('request')) hargaText = 'Bespoke Inquiry';
 
                 return {
                     id: index,
-                    nama: nama,
-                    kategori: row[1] ? row[1].trim() : 'Exclusive',
-                    deskripsi: row[2] ? row[2].trim() : '-',
-                    statusNew: row[3] ? row[3].trim().toLowerCase() : '',
+                    nama: row[0].trim(),
+                    kategori: (row[1] || 'Exclusive').trim(),
+                    deskripsi: (row[2] || '-').trim(),
+                    statusNew: (row[3] || '').trim().toLowerCase(),
                     harga: hargaText,
                     gambar: parseImageUrl(row[5])
                 };
@@ -403,7 +364,7 @@
             closeLoader();
         }
 
-        // HTML Pembuatan Kartu Katalog
+        // HTML untuk Kartu
         function createCardHTML(product) {
             const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
             return `
@@ -422,111 +383,74 @@
             `;
         }
 
-        // Render Slider New Arrivals
+        // Render Slider
         function renderNewArrivals() {
             const newArrivals = globalProductsData.filter(p => p.statusNew.includes('new'));
             const section = document.getElementById('new-arrival-section');
             const wrapper = document.getElementById('new-arrival-wrapper');
             wrapper.innerHTML = '';
-
             if(newArrivals.length > 0) {
                 section.classList.remove('hide');
-                newArrivals.forEach(product => {
-                    wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(product)}</div>`;
-                });
-
+                newArrivals.forEach(p => wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(p)}</div>`);
                 new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 1,
-                    spaceBetween: 30,
-                    autoplay: { delay: 4500, disableOnInteraction: false },
-                    pagination: { el: ".swiper-pagination", clickable: true },
-                    breakpoints: {
-                        500: { slidesPerView: 2, spaceBetween: 20 },
-                        900: { slidesPerView: 3, spaceBetween: 30 },
-                        1200: { slidesPerView: 4, spaceBetween: 40 }
-                    }
+                    slidesPerView: 1, spaceBetween: 30, autoplay: { delay: 4500 }, pagination: { el: ".swiper-pagination", clickable: true },
+                    breakpoints: { 500: { slidesPerView: 2 }, 900: { slidesPerView: 3 }, 1200: { slidesPerView: 4 } }
                 });
-            } else {
-                section.classList.add('hide');
-            }
+            } else { section.classList.add('hide'); }
         }
 
-        // Render Grid Utama
+        // Render Katalog
         function renderCatalog(items) {
             const wrapper = document.getElementById('catalog-wrapper');
             wrapper.innerHTML = '';
-            items.forEach(product => {
-                wrapper.innerHTML += createCardHTML(product);
-            });
+            items.forEach(p => wrapper.innerHTML += createCardHTML(p));
         }
 
-        // Kontrol Filter Kategori
         function filterCategory(cat, event) {
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            if (event && event.target) {
-                event.target.classList.add('active');
-            }
+            if (event) event.target.classList.add('active');
             
-            if (cat === 'all') {
-                renderCatalog(globalProductsData);
-            } else {
-                const filtered = globalProductsData.filter(p => {
-                    let pCat = p.kategori.toLowerCase().replace(/['"’]/g, '');
-                    let targetCat = cat.toLowerCase().replace(/['"’]/g, '');
-                    return pCat.includes(targetCat);
-                });
-                renderCatalog(filtered);
-            }
+            if (cat === 'all') renderCatalog(globalProductsData);
+            else renderCatalog(globalProductsData.filter(p => p.kategori.toLowerCase().includes(cat.toLowerCase())));
         }
 
-        // Buka Detail Modal Produk
+        // Kontrol Modal
         function openModal(id) {
             const prod = globalProductsData.find(p => p.id === id);
             if(!prod) return;
             currentModalProductId = id;
 
-            const modalImg = document.getElementById('modal-img');
-            modalImg.src = prod.gambar;
-            modalImg.onerror = function() { this.onerror=null; this.src=placeholderImg; };
-
+            document.getElementById('modal-img').src = prod.gambar;
             document.getElementById('modal-cat').innerText = prod.kategori;
             document.getElementById('modal-title').innerText = prod.nama;
             document.getElementById('modal-desc').innerText = prod.deskripsi;
             document.getElementById('modal-price').innerText = prod.harga;
-
             document.getElementById('product-modal').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('product-modal').classList.remove('active');
-        }
-
-        // Hilangkan Panel Loader
+        function closeModal() { document.getElementById('product-modal').classList.remove('active'); }
         function closeLoader() {
             const loader = document.getElementById('loader-panel');
-            if(loader) {
-                loader.style.opacity = '0';
-                setTimeout(() => loader.classList.add('hide'), 600);
-            }
+            if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.classList.add('hide'), 600); }
         }
-
-        // Sidebar Wishlist Toggle
         function toggleCart() {
             document.getElementById('cart-sidebar').classList.toggle('open');
             document.getElementById('cart-overlay').classList.toggle('active');
         }
 
-        // Tambah Produk ke Wishlist
+        // === PERBAIKAN LOGIKA CART (Sesuai Struktur Kode Anda) ===
         function addToCartFromModal() {
             if(currentModalProductId === null) return;
+            
             const product = globalProductsData.find(p => p.id === currentModalProductId);
             if(!product) return;
 
-            const itemAda = cart.find(item => item.nama === product.nama);
+            // Cek apakah item (berdasarkan ID) sudah ada di dalam cart
+            const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
-                showToast("Koleksi eksklusif ini sudah berada di Wishlist Anda.");
+                showToast("Koleksi ini sudah berada di Wishlist Anda.");
             } else {
-                cart.push({ nama: product.nama }); 
+                cart.push(product); // Simpan SELURUH object product, sesuai struktur Anda!
                 saveCart();
                 closeModal();
                 toggleCart();
@@ -537,19 +461,18 @@
             }
         }
 
-        // Hapus dari Wishlist
+        // Hapus Item Berdasarkan ID (Sesuai snippet Anda)
         function removeFromCart(id) {
-            cart.splice(id, 1);
+            cart = cart.filter(item => item.id !== id);
             saveCart();
         }
 
-        // Save LocalStorage
         function saveCart() {
             localStorage.setItem('cjr_cart', JSON.stringify(cart));
             updateCartUI();
         }
 
-        // Sinkronisasi Live Harga ke Wishlist
+        // Render UI Cart menggunakan struktur asli Anda yang telah disempurnakan layoutnya
         function updateCartUI() {
             const containerItem = document.getElementById('cart-items');
             const penandaJumlah = document.getElementById('cart-count');
@@ -564,24 +487,18 @@
                     </div>
                 `;
             } else {
-                cart.forEach((item, index) => {
-                    const liveData = globalProductsData.find(p => p.nama === item.nama);
-                    
-                    const hargaSekarang = liveData ? liveData.harga : 'Loading...';
-                    const gambarSekarang = liveData ? liveData.gambar : placeholderImg;
-                    const kategoriSekarang = liveData ? liveData.kategori : 'Exclusive';
-
+                cart.forEach((item) => {
                     containerItem.innerHTML += `
                         <div class="cart-item">
-                            <img src="${gambarSekarang}" class="cart-item-img" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                            <img src="${item.gambar || placeholderImg}" class="cart-item-img" onerror="this.onerror=null; this.src='${placeholderImg}';">
                             <div class="cart-item-info">
                                 <div>
                                     <div class="cart-item-title">${item.nama}</div>
-                                    <div class="cart-item-category">${kategoriSekarang} <br><span style="color:var(--gold-dark); text-transform:none; font-size:0.75rem; font-weight:600; line-height:2.5;">${hargaSekarang}</span></div>
+                                    <div class="cart-item-category">${item.kategori}</div>
                                 </div>
                                 <div class="cart-item-actions">
                                     <span class="exclusive-badge">1 Pcs Only</span>
-                                    <button class="remove-btn" onclick="removeFromCart(${index})"><i class="fa-solid fa-xmark"></i> Hapus</button>
+                                    <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-xmark"></i> Hapus</button>
                                 </div>
                             </div>
                         </div>
@@ -591,36 +508,34 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // Upgrade Format Pemesanan WA
+        // === UPGRADE FORMAT WHATSAPP ===
         function checkoutWA() {
             if(cart.length === 0) {
                 showToast("Daftar Wishlist Anda masih kosong");
                 return;
             }
 
+            // Sapaan dinamis berdasarkan jam lokal pelanggan
             const hour = new Date().getHours();
             let greeting = "Selamat pagi";
             if (hour >= 11 && hour < 15) greeting = "Selamat siang";
             else if (hour >= 15 && hour < 18) greeting = "Selamat sore";
             else if (hour >= 18) greeting = "Selamat malam";
 
-            let isiPesan = `${greeting} tim *CJR Couture*.\n\nSaya ingin menanyakan ketersediaan dan menjadwalkan sesi fitting untuk koleksi Haute Couture berikut:\n\n`;
+            let isiPesan = `${greeting} tim *CJR Couture*.\n\nSaya tertarik untuk berdiskusi & memesan koleksi eksklusif berikut:\n\n`;
             
+            // Loop untuk setiap item yang ada di cart (Struktur format Anda)
             cart.forEach((item, index) => {
-                const liveData = globalProductsData.find(p => p.nama === item.nama);
-                const hargaSekarang = liveData ? liveData.harga : 'Bespoke Inquiry';
-                const kategoriSekarang = liveData ? liveData.kategori : 'Exclusive';
-                
-                isiPesan += `✨ *${index + 1}. ${item.nama}*\n   ▪️ Kategori: ${kategoriSekarang}\n   ▪️ Est. Investment: ${hargaSekarang}\n\n`;
+                isiPesan += `${index + 1}. *${item.nama}*\n    ▪ Kategori: ${item.kategori}\n    ▪ Est. Harga: ${item.harga}\n\n`;
             });
 
-            isiPesan += `Mohon bantuan dari tim CJR Couture untuk informasi proses selanjutnya. Terima kasih.`;
+            isiPesan += `Mohon informasi ketersediaan, jadwal fitting, dan detail selanjutnya. Terima kasih.`;
 
             const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
             window.open(linkWhatsApp, '_blank');
         }
 
-        // Mulai aplikasi
+        // Jalankan sistem saat load
         window.onload = fetchData;
     </script>
 </body>
