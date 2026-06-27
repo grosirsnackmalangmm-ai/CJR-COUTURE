@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        /* === LUXURY COUTURE PALETTE === */
+        /* === LUXURY COUTURE PALETTE & TRANSITIONS === */
         :root {
             --bg-color: #ffffff;
             --surface-color: #fafafa;
@@ -25,10 +25,12 @@
             --gold-dark: #99741d;
             --font-display: 'Cinzel', serif;
             --font-body: 'Montserrat', sans-serif;
-            --shadow-sm: 0 4px 15px rgba(0,0,0,0.02);
-            --shadow-md: 0 15px 35px rgba(0,0,0,0.06);
-            --shadow-lg: 0 25px 50px rgba(0,0,0,0.1);
-            --transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.03);
+            --shadow-md: 0 20px 40px rgba(0,0,0,0.08);
+            --shadow-lg: 0 30px 60px rgba(0,0,0,0.15);
+            /* Transisi super halus ala editorial fashion */
+            --transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            --transition-fast: all 0.4s ease;
         }
 
         /* === SECURITY STYLE (ANTI-SELECT) === */
@@ -36,9 +38,9 @@
             margin: 0; 
             padding: 0; 
             box-sizing: border-box;
-            -webkit-user-select: none; /* Safari */
-            -ms-user-select: none; /* IE 10+ */
-            user-select: none; /* Standar */
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         
         input, textarea { -webkit-user-select: text; user-select: text; }
@@ -57,153 +59,169 @@
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
         /* Loader Panel */
-        #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s ease, visibility 0.5s; }
-        .spinner { width: 45px; height: 45px; border: 2px solid rgba(197, 155, 39, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 20px; }
+        #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.8s ease, visibility 0.8s; }
+        .spinner { width: 50px; height: 50px; border: 2px solid rgba(197, 155, 39, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite; margin-bottom: 25px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loader-text { font-family: var(--font-display); letter-spacing: 5px; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; font-weight: 500; }
+        .loader-text { font-family: var(--font-display); letter-spacing: 6px; color: var(--gold); font-size: 0.8rem; text-transform: uppercase; font-weight: 500; }
 
         /* Header Premium Glassmorphism */
-        header { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 25px 40px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0, 0, 0, 0.03); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); transition: var(--transition); }
-        header.scrolled { padding: 15px 40px; background-color: rgba(255, 255, 255, 0.95); }
+        header { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 25px 40px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0, 0, 0, 0.02); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); transition: var(--transition); }
+        header.scrolled { padding: 15px 40px; background-color: rgba(255, 255, 255, 0.98); box-shadow: var(--shadow-sm); }
         .header-left, .header-right { width: 80px; } 
         .header-center { text-align: center; }
-        .brand-logo { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: 18px; color: var(--text-primary); text-decoration: none; display: block; font-weight: 500; text-indent: 18px; line-height: 1; }
-        .brand-subtitle { font-size: 0.65rem; letter-spacing: 12px; color: var(--gold); text-transform: uppercase; font-weight: 500; text-indent: 12px; margin-top: 8px; }
+        .brand-logo { font-family: var(--font-display); font-size: 2.6rem; letter-spacing: 18px; color: var(--text-primary); text-decoration: none; display: block; font-weight: 500; text-indent: 18px; line-height: 1; transition: var(--transition); }
+        .brand-subtitle { font-size: 0.65rem; letter-spacing: 12px; color: var(--gold); text-transform: uppercase; font-weight: 500; text-indent: 12px; margin-top: 8px; transition: var(--transition); }
         .header-right { text-align: right; }
         
-        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.35rem; cursor: pointer; position: relative; transition: var(--transition); padding: 5px; }
+        .cart-icon-btn { background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; position: relative; transition: var(--transition-fast); padding: 5px; }
         .cart-icon-btn:hover { color: var(--gold); transform: scale(1.05); }
-        .cart-badge { position: absolute; top: -2px; right: -6px; background: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 8px rgba(197, 155, 39, 0.3); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .cart-badge.bump { transform: scale(1.3); }
+        .cart-badge { position: absolute; top: -2px; right: -6px; background: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 8px rgba(197, 155, 39, 0.4); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .cart-badge.bump { transform: scale(1.4); }
 
-        .container { max-width: 1440px; margin: 0 auto; padding: 40px 40px 80px; }
-        @media (max-width: 768px) { .container { padding: 25px 15px 60px; } header { padding: 15px 15px; } .brand-logo { font-size: 1.8rem; letter-spacing: 12px; } }
+        .container { max-width: 1440px; margin: 0 auto; padding: 50px 40px 80px; }
+        @media (max-width: 768px) { .container { padding: 30px 15px 60px; } header { padding: 15px 15px; } .brand-logo { font-size: 1.8rem; letter-spacing: 12px; text-indent: 12px; } }
         
         /* New Arrival Section */
-        .new-arrival-section { padding: 50px 40px 20px; background: #fafafa; border-bottom: 1px solid rgba(0, 0, 0, 0.01); }
-        .swiper { width: 100%; padding-bottom: 50px !important; }
-        .swiper-pagination-bullet { background: #ccc !important; opacity: 0.5; transition: var(--transition); width: 6px; height: 6px; }
-        .swiper-pagination-bullet-active { background: var(--gold) !important; opacity: 1; width: 25px; border-radius: 4px; }
+        .new-arrival-section { padding: 60px 40px 30px; background: #fafafa; border-bottom: 1px solid rgba(0, 0, 0, 0.02); }
+        .swiper { width: 100%; padding-bottom: 60px !important; }
+        .swiper-pagination-bullet { background: #ccc !important; opacity: 0.5; transition: var(--transition-fast); width: 6px; height: 6px; }
+        .swiper-pagination-bullet-active { background: var(--gold) !important; opacity: 1; width: 30px; border-radius: 4px; }
 
         /* Filter Kategori Luxury */
-        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 50px; }
-        .filter-btn { background: transparent; border: 1px solid #eaeaea; color: var(--text-muted); padding: 10px 24px; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition); border-radius: 2px; font-weight: 500; font-family: var(--font-body); }
+        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 60px; }
+        .filter-btn { background: transparent; border: 1px solid #eaeaea; color: var(--text-muted); padding: 12px 28px; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); border-radius: 2px; font-weight: 500; font-family: var(--font-body); }
         .filter-btn:hover, .filter-btn.active { color: var(--gold); border-color: var(--gold); background-color: var(--gold-light); }
 
-        .section-header { text-align: center; margin-bottom: 45px; }
-        .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 12px; display: inline-block; position: relative; color: var(--text-primary); }
-        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 1px; background-color: var(--gold); }
+        .section-header { text-align: center; margin-bottom: 50px; }
+        .section-header h2 { font-family: var(--font-display); font-size: 2rem; letter-spacing: 8px; text-transform: uppercase; font-weight: 400; padding-bottom: 15px; display: inline-block; position: relative; color: var(--text-primary); }
+        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 50px; height: 1px; background-color: var(--gold); }
 
         /* Grid Katalog */
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px 25px; transition: opacity 0.4s ease; /* Transisi saat saring */ }
-        .product-card { background-color: var(--surface-card); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; border-radius: 4px; box-shadow: var(--shadow-sm); }
-        /* Transisi luxury hover baru, lebih lambat dan halus */
-        .product-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: var(--shadow-md); transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1); }
+        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 50px 30px; transition: opacity 0.6s ease; }
+        .product-card { background-color: var(--surface-card); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid transparent; }
+        .product-card:hover { transform: translateY(-12px); box-shadow: var(--shadow-md); border-color: rgba(197, 155, 39, 0.15); }
         
         /* PROTECTION LAYERS ON IMAGE */
         .image-container { position: relative; width: 100%; padding-top: 145%; background-color: #f7f7f7; overflow: hidden; }
-        .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; /* Mencegah sentuhan langsung file foto */ -webkit-user-drag: none; user-drag: none; }
-        .product-card:hover .product-image { transform: scale(1.06); }
+        .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; -webkit-user-drag: none; user-drag: none; }
+        .product-card:hover .product-image { transform: scale(1.08); }
         
-        /* Invisible Shield Overlay (Fitur Baru untuk menahan drag mouse/sentuhan di HP) */
+        /* Invisible Shield Overlay */
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; background: transparent; }
         
-        /* Watermark Teks Pojok Bawah Ditingkatkan Visibility-nya */
-        .watermark { position: absolute; bottom: 15px; right: 20px; font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: rgba(255, 255, 255, 0.45); letter-spacing: 5px; z-index: 4; pointer-events: none; text-shadow: 1px 2px 4px rgba(0,0,0,0.15); /* Bayangan miring agar kontras dengan gambar terang */ }
-        .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; padding: 5px 12px; letter-spacing: 2px; z-index: 4; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-radius: 2px; }
-
-        .card-details { padding: 22px 18px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid #f7f7f7; border-top: none; }
-        .product-category { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; font-weight: 600; }
-        .product-title { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.4; }
-        .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #fbfbfb; padding-top: 15px; color: var(--text-muted); font-weight: 500; }
-
-        /* Modal Pop-up Modern */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
-        .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-wrapper { background-color: #fff; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; overflow: hidden; }
-        .modal.active .modal-wrapper { transform: translateY(0); }
-        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 400px; } }
-        
-        .modal-image-side { flex: 1; background-color: #fafafa; position: relative; display: flex; justify-content: center; align-items: center; padding: 15px; border-right: 1px solid #f5f5f5; overflow: hidden; }
-        .modal-image-side img { width: 100%; height: 100%; max-height: 550px; object-fit: contain; position: relative; z-index: 2; pointer-events: none; -webkit-user-drag: none; user-drag: none; }
-
-        /* Overlay Watermark Pola Silang Miring di Modal Ditingkatkan Visibility-nya */
-        .modal-watermark-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            /* SVG Pattern text CJR COUTURE miring tebal */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" opacity="0.06" transform="rotate(-25)"><text y="120" x="20" fill="%23000" font-family="Cinzel" font-size="16" font-weight="bold" letter-spacing="4">CJR COUTURE</text></svg>');
-            background-repeat: repeat;
-            z-index: 4;
+        /* WATERMARK KHUSUS (Di bawah gaun sesuai request) */
+        .watermark-bottom { 
+            position: absolute; 
+            bottom: 25px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-family: var(--font-display); 
+            font-size: 1.4rem; 
+            font-weight: 600; 
+            color: rgba(255, 255, 255, 0.85); /* Terang dan elegan */
+            letter-spacing: 8px; 
+            z-index: 4; 
             pointer-events: none; 
-            user-select: none;
+            text-shadow: 0px 4px 15px rgba(0,0,0,0.5); /* Bayangan hitam agar terbaca jelas di gaun terang */
+            width: 100%;
+            text-align: center;
         }
 
-        .modal-info-side { flex: 1.1; padding: 50px 45px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
-        @media (max-width: 500px) { .modal-info-side { padding: 35px 20px; } }
-        .close-modal-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #111; font-size: 1.4rem; cursor: pointer; z-index: 10; opacity: 0.5; transition: var(--transition); width: 35px; height: 35px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); }
-        .close-modal-btn:hover { color: var(--gold); opacity: 1; transform: rotate(90deg); }
-        
-        .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 600; }
-        .modal-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 18px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.2; }
-        .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; }
-        .modal-price { font-size: 1.35rem; font-weight: 500; margin-bottom: 30px; color: var(--gold-dark); letter-spacing: 0.5px; border-bottom: 1px solid #f5f5f5; padding-bottom: 20px; }
-        
-        .btn-gold { background-color: var(--text-primary); color: #fff; border: 1px solid var(--text-primary); padding: 16px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 500; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition); width: 100%; border-radius: 2px; }
-        .btn-gold:hover { background-color: var(--gold); border-color: var(--gold); box-shadow: 0 8px 20px rgba(197, 155, 39, 0.2); transform: translateY(-2px); }
+        .badge-new { position: absolute; top: 20px; left: 20px; background-color: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; padding: 6px 14px; letter-spacing: 2px; z-index: 4; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 2px; }
 
-        /* Sidebar Wishlist */
-        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
+        .card-details { padding: 25px 20px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid #f7f7f7; border-top: none; }
+        .product-category { font-size: 0.65rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 600; }
+        .product-title { font-family: var(--font-display); font-size: 1.15rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 1px; font-weight: 500; line-height: 1.4; }
+        .product-price { font-size: 0.9rem; margin-top: auto; border-top: 1px solid #fbfbfb; padding-top: 18px; color: var(--text-muted); font-weight: 500; letter-spacing: 1px; }
+
+        /* Modal Pop-up Modern - Transisi Diperhalus */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
+        .modal.active { opacity: 1; pointer-events: auto; }
+        .modal-wrapper { background-color: #fff; max-width: 1000px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(30px) scale(0.98); transition: var(--transition); border-radius: 2px; overflow: hidden; opacity: 0; }
+        .modal.active .modal-wrapper { transform: translateY(0) scale(1); opacity: 1; }
+        @media (max-width: 768px) { .modal-wrapper { flex-direction: column; } .modal-image-side { min-height: 450px; } }
+        
+        .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; display: flex; justify-content: center; align-items: center; padding: 15px; border-right: 1px solid #f5f5f5; overflow: hidden; }
+        .modal-image-side img { width: 100%; height: 100%; max-height: 650px; object-fit: contain; position: relative; z-index: 2; pointer-events: none; -webkit-user-drag: none; user-drag: none; }
+
+        /* WATERMARK BESAR DI MODAL TEPAT DI BAWAH GAUN */
+        .modal-watermark-bottom {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.85); /* Sangat jelas */
+            letter-spacing: 12px;
+            z-index: 5;
+            pointer-events: none;
+            text-shadow: 0px 5px 20px rgba(0,0,0,0.6); /* Shadow tebal */
+            width: 100%;
+            text-align: center;
+        }
+
+        .modal-info-side { flex: 1; padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
+        @media (max-width: 500px) { .modal-info-side { padding: 40px 25px; } .modal-watermark-bottom { font-size: 1.5rem; letter-spacing: 8px; } }
+        
+        .close-modal-btn { position: absolute; top: 15px; right: 20px; background: none; border: none; color: #111; font-size: 1.6rem; cursor: pointer; z-index: 10; opacity: 0.4; transition: var(--transition-fast); width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; border-radius: 50%; background: rgba(255,255,255,0.9); backdrop-filter: blur(5px); box-shadow: var(--shadow-sm); }
+        .close-modal-btn:hover { color: var(--gold); opacity: 1; transform: rotate(90deg); background: #fff; }
+        
+        .modal-cat { color: var(--gold); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 15px; font-weight: 600; }
+        .modal-title { font-family: var(--font-display); font-size: 2.2rem; margin-bottom: 20px; color: var(--text-primary); letter-spacing: 1px; font-weight: 500; line-height: 1.2; }
+        .modal-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 35px; line-height: 1.8; }
+        .modal-price { font-size: 1.4rem; font-weight: 500; margin-bottom: 40px; color: var(--gold-dark); letter-spacing: 1px; border-bottom: 1px solid #f0f0f0; padding-bottom: 25px; }
+        
+        .btn-gold { background-color: var(--text-primary); color: #fff; border: 1px solid var(--text-primary); padding: 18px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 3px; font-weight: 500; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; transition: var(--transition-fast); width: 100%; border-radius: 2px; }
+        .btn-gold:hover { background-color: var(--gold); border-color: var(--gold); box-shadow: 0 10px 30px rgba(197, 155, 39, 0.25); transform: translateY(-3px); }
+
+        /* Sidebar Wishlist - Animasi Diperhalus */
+        .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
         .cart-overlay.active { opacity: 1; pointer-events: auto; }
         
-        .cart-sidebar { position: fixed; top: 0; right: -460px; width: 100%; max-width: 430px; height: 100vh; background: #ffffff; z-index: 1002; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
+        .cart-sidebar { position: fixed; top: 0; right: -480px; width: 100%; max-width: 450px; height: 100vh; background: #ffffff; z-index: 1002; transition: var(--transition); display: flex; flex-direction: column; box-shadow: var(--shadow-lg); }
         .cart-sidebar.open { right: 0; }
         
-        .cart-header { padding: 30px 25px; border-bottom: 1px solid #f5f5f5; display: flex; justify-content: space-between; align-items: center; background: #fafafa; }
-        .cart-header h3 { font-family: var(--font-display); font-size: 1.15rem; letter-spacing: 2px; color: var(--text-primary); font-weight: 500; text-transform: uppercase; }
-        .close-cart-btn { background: none; border: none; color: #222; font-size: 1.2rem; cursor: pointer; opacity: 0.5; transition: var(--transition); }
+        .cart-header { padding: 35px 30px; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; background: #fafafa; }
+        .cart-header h3 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 3px; color: var(--text-primary); font-weight: 500; text-transform: uppercase; }
+        .close-cart-btn { background: none; border: none; color: #222; font-size: 1.4rem; cursor: pointer; opacity: 0.4; transition: var(--transition-fast); }
         .close-cart-btn:hover { color: var(--gold); opacity: 1; transform: rotate(90deg); }
 
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 25px; }
-        .cart-item { display: flex; gap: 15px; margin-bottom: 25px; padding-bottom: 25px; border-bottom: 1px solid #f7f7f7; animation: fadeIn 0.4s ease forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .cart-items { flex-grow: 1; overflow-y: auto; padding: 30px; }
+        .cart-item { display: flex; gap: 20px; margin-bottom: 30px; padding-bottom: 30px; border-bottom: 1px solid #f5f5f5; animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Tambahan Proteksi Gambar di Wishlist */
-        .cart-item-img-wrapper { width: 75px; height: 105px; position: relative; background: #fafafa; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+        .cart-item-img-wrapper { width: 85px; height: 120px; position: relative; background: #fafafa; border-radius: 2px; overflow: hidden; flex-shrink: 0; border: 1px solid #eee; }
         .cart-item-img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
         
         .cart-item-info { flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .cart-item-title { font-family: var(--font-display); font-size: 0.95rem; color: var(--text-primary); font-weight: 600; }
-        .cart-item-category { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; }
+        .cart-item-title { font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.4; margin-bottom: 5px; }
+        .cart-item-category { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
         
-        .cart-item-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
-        .exclusive-badge { font-size: 0.55rem; color: var(--gold); border: 1px solid rgba(197, 155, 39, 0.2); padding: 3px 8px; text-transform: uppercase; letter-spacing: 1px; background: var(--gold-light); font-weight: 500; }
-        .remove-btn { color: #aaa; background: none; border: none; cursor: pointer; font-size: 0.7rem; transition: var(--transition); display: flex; align-items: center; gap: 4px; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 1px; }
+        .cart-item-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 15px; }
+        .exclusive-badge { font-size: 0.6rem; color: var(--gold); border: 1px solid rgba(197, 155, 39, 0.25); padding: 4px 10px; text-transform: uppercase; letter-spacing: 1px; background: var(--gold-light); font-weight: 500; }
+        .remove-btn { color: #aaa; background: none; border: none; cursor: pointer; font-size: 0.75rem; transition: var(--transition-fast); display: flex; align-items: center; gap: 5px; font-family: var(--font-body); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
         .remove-btn:hover { color: #d9534f; }
 
-        .cart-footer { padding: 30px 25px; border-top: 1px solid #f5f5f5; background: #fafafa; }
-        
-        .checkout-wa-btn { background: #25D366; color: #fff; border: none; width: 100%; padding: 18px; font-family: var(--font-body); font-weight: 600; font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: var(--transition); box-shadow: 0 4px 12px rgba(37, 211, 102, 0.15); border-radius: 4px; }
-        .checkout-wa-btn:hover { background: #1ebe57; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25); }
+        .cart-footer { padding: 35px 30px; border-top: 1px solid #f0f0f0; background: #fafafa; }
+        .checkout-wa-btn { background: #25D366; color: #fff; border: none; width: 100%; padding: 22px; font-family: var(--font-body); font-weight: 600; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 12px; transition: var(--transition-fast); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2); border-radius: 4px; }
+        .checkout-wa-btn:hover { background: #1ebe57; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3); }
 
-        .empty-cart { text-align: center; color: #bbb; font-size: 0.8rem; padding-top: 80px; }
-        .empty-cart i { font-size: 2.5rem; color: #e5e5e5; margin-bottom: 20px; display: block; }
+        .empty-cart { text-align: center; color: #aaa; font-size: 0.85rem; padding-top: 100px; letter-spacing: 1px; font-weight: 400; line-height: 1.8; }
+        .empty-cart i { font-size: 3rem; color: #e0e0e0; margin-bottom: 25px; display: block; }
 
-        /* Premium Floating Toast Notification */
-        #toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .toast { background: #111; color: #fff; padding: 15px 25px; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-lg); animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: auto; border-radius: 3px; border-left: 3px solid var(--gold); }
-        .toast i { color: var(--gold); font-size: 1rem; }
+        /* Toast Notification */
+        #toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 12px; pointer-events: none; }
+        .toast { background: #111; color: #fff; padding: 18px 30px; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 15px; box-shadow: var(--shadow-lg); animation: slideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: auto; border-radius: 4px; border-left: 3px solid var(--gold); }
+        .toast i { color: var(--gold); font-size: 1.1rem; }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOut { to { transform: translateX(100%); opacity: 0; } }
 
         /* Back To Top Button */
-        #backToTop { position: fixed; bottom: 25px; left: 25px; background-color: #fff; color: var(--text-primary); border: 1px solid #eee; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; z-index: 999; opacity: 0; pointer-events: none; transition: var(--transition); box-shadow: var(--shadow-sm); }
+        #backToTop { position: fixed; bottom: 30px; left: 30px; background-color: #fff; color: var(--text-primary); border: 1px solid #eee; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1.1rem; cursor: pointer; z-index: 999; opacity: 0; pointer-events: none; transition: var(--transition-fast); box-shadow: var(--shadow-sm); }
         #backToTop.show { opacity: 1; pointer-events: auto; }
-        #backToTop:hover { border-color: var(--gold); color: #fff; background-color: var(--gold); transform: translateY(-3px); }
-
-        /* Transisi Halaman/Reveal Awal */
-        body { animation: revealBody 0.8s ease forwards; }
-        @keyframes revealBody { from { opacity: 0.2; } to { opacity: 1; } }
+        #backToTop:hover { border-color: var(--gold); color: #fff; background-color: var(--gold); transform: translateY(-5px); box-shadow: var(--shadow-md); }
 
         .hide { display: none !important; opacity: 0 !important; visibility: hidden !important; }
     </style>
@@ -236,7 +254,7 @@
     <div id="toast-container"></div>
 
     <section class="new-arrival-section hide" id="new-arrival-section">
-        <div class="section-header" style="margin-bottom: 35px;">
+        <div class="section-header" style="margin-bottom: 40px;">
             <h2>New Arrival</h2>
         </div>
         <div style="max-width: 1440px; margin: 0 auto;">
@@ -270,8 +288,9 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="modal-watermark-overlay"></div>
                 <div class="invisible-shield"></div>
+                
+                <div class="modal-watermark-bottom">CJR COUTURE</div>
                 
                 <img id="modal-img" src="" alt="Koleksi Gambar" ondragstart="return false;">
             </div>
@@ -297,7 +316,7 @@
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-footer">
             <button class="checkout-wa-btn" onclick="checkoutWA()">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Hubungi CJR via WA
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Pesan via WhatsApp
             </button>
         </div>
     </div>
@@ -306,14 +325,13 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // GLOBAL SECURITY: Dead Click & Inspection Mencegah menyalin
+        // GLOBAL SECURITY: Mencegah Inspect Element & Save Page
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
-            // Blokir F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U (Inspect elements)
             if (e.keyCode == 123) return false;
-            if (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) return false;
-            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) return false;
-            if (e.ctrlKey && e.keyCode == 'S'.charCodeAt(0)) return false; // Blokir save page
+            if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) return false;
+            if (e.ctrlKey && e.keyCode == 85) return false;
+            if (e.ctrlKey && e.keyCode == 83) return false;
         };
 
         const rawSheetUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSLAgyV7AjoFwARtvgnshPSZf2r9DWzpIzjRRoyUmodA6kg5ALfTLSqNOVDHwFwSqa12xkzUIefBaXO/pub?gid=0&single=true&output=csv";
@@ -322,10 +340,11 @@
 
         let globalProductsData = [];
         let currentModalProductId = null;
-        // Memakai Memori Cache v2 yang clean
-        let cart = JSON.parse(localStorage.getItem('cjr_cart_v2')) || [];
+        
+        // Memakai Memori Cache v4 untuk membersihkan sisa data lama secara total
+        let cart = JSON.parse(localStorage.getItem('cjr_cart_v4')) || [];
 
-        // Animasi Scroll Header & Tombol Kembali ke Atas
+        // Animasi Scroll Header Premium
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
             const header = document.getElementById('main-header');
@@ -335,18 +354,14 @@
             else btn.classList.remove('show');
         });
 
-        // === UPGRADE SISTEM PARSER GAMBAR BYPASS GOOGLE DRIVE (FIX BARU) ===
+        // PARSER GOOGLE DRIVE LH3 (ANTI-BLOKIR)
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
-            
-            // Mencocokkan ID Google Drive dari URL
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
             if (match && match[1]) {
-                // Menggunakan endpoint lh3 yang jarang diblokir oleh Google Security
                 return `https://lh3.googleusercontent.com/d/${match[1]}`;
             }
-            // Jika bukan link Drive (misal link image hosting), kirim mentah
             return str;
         }
 
@@ -357,13 +372,12 @@
             toast.innerHTML = `<i class="fa-solid fa-gem"></i> <span>${message}</span>`;
             container.appendChild(toast);
             setTimeout(() => {
-                toast.style.animation = 'slideOut 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards';
+                toast.style.animation = 'slideOut 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards';
                 toast.addEventListener('animationend', () => toast.remove());
-            }, 3000);
+            }, 3500);
         }
 
         function fetchData() {
-            // Anti Cache pada URL Spreadsheet
             const antiCacheUrl = rawSheetUrl + "&t=" + new Date().getTime();
 
             fetch(antiCacheUrl)
@@ -384,7 +398,6 @@
             globalProductsData = rows.map((row, index) => {
                 if (!row || row.length === 0 || !row[0]) return null;
                 
-                // Mencegah error jika kolom sembunyi tidak ada
                 let statusSembunyi = '';
                 if(row.length > 6 && row[6]) statusSembunyi = row[6].toString().trim().toLowerCase();
                 if (['kosong', 'sold', 'sembunyi'].includes(statusSembunyi)) return null;
@@ -399,7 +412,6 @@
                     deskripsi: row[2] ? row[2].trim() : '-',
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
                     harga: hargaText,
-                    // Menggunakan sistem parser bypass gambar
                     gambar: parseImageUrl(row[5])
                 };
             }).filter(item => item !== null);
@@ -410,13 +422,14 @@
             closeLoader();
         }
 
+        // PEMBUATAN KARTU GRID
         function createCardHTML(product) {
             const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New Arrival</span>` : '';
             return `
                 <div class="product-card" onclick="openModal(${product.id})">
                     <div class="image-container">
                         ${isNew}
-                        <div class="watermark">CJR</div>
+                        <div class="watermark-bottom">CJR COUTURE</div>
                         <div class="invisible-shield"></div>
                         <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
                     </div>
@@ -439,7 +452,7 @@
                 section.classList.remove('hide');
                 newArrivals.forEach(p => wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(p)}</div>`);
                 new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 1, spaceBetween: 25, autoplay: { delay: 4000, disableOnInteraction: false }, pagination: { el: ".swiper-pagination", clickable: true },
+                    slidesPerView: 1, spaceBetween: 30, autoplay: { delay: 4500, disableOnInteraction: false }, pagination: { el: ".swiper-pagination", clickable: true },
                     breakpoints: { 480: { slidesPerView: 2 }, 850: { slidesPerView: 3 }, 1200: { slidesPerView: 4 } }
                 });
             } else { section.classList.add('hide'); }
@@ -447,18 +460,18 @@
 
         function renderCatalog(items) {
             const wrapper = document.getElementById('catalog-wrapper');
-            // Menambahkan transisi luxury fade alus saat menyaring
-            wrapper.style.opacity = '0.3';
+            // Transisi Luxury Fade saat memfilter kategori
+            wrapper.style.opacity = '0';
             setTimeout(() => {
                 wrapper.innerHTML = '';
                 if(items.length === 0) {
-                    wrapper.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px; font-size: 0.9rem;">Koleksi tidak ditemukan.</div>`;
+                    wrapper.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px; font-size: 0.95rem; font-weight:300;">Koleksi tidak ditemukan.</div>`;
                     wrapper.style.opacity = '1';
                     return;
                 }
                 items.forEach(p => wrapper.innerHTML += createCardHTML(p));
                 wrapper.style.opacity = '1';
-            }, 300);
+            }, 400);
         }
 
         function filterCategory(cat, event) {
@@ -474,11 +487,9 @@
             if(!prod) return;
             currentModalProductId = id;
 
-            // Resetting modal image state before loading
-            const modalImg = document.getElementById('modal-img');
-            modalImg.onerror = function() { this.onerror=null; this.src=placeholderImg; };
-            modalImg.src = prod.gambar;
-
+            document.getElementById('modal-img').src = prod.gambar;
+            document.getElementById('modal-img').onerror = function() { this.onerror=null; this.src=placeholderImg; };
+            
             document.getElementById('modal-cat').innerText = prod.kategori;
             document.getElementById('modal-title').innerText = prod.nama;
             document.getElementById('modal-desc').innerText = prod.deskripsi;
@@ -489,7 +500,7 @@
         function closeModal() { document.getElementById('product-modal').classList.remove('active'); }
         function closeLoader() {
             const loader = document.getElementById('loader-panel');
-            if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.classList.add('hide'), 500); }
+            if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.classList.add('hide'), 800); }
         }
         function toggleCart() {
             document.getElementById('cart-sidebar').classList.toggle('open');
@@ -512,7 +523,7 @@
                 
                 const badge = document.getElementById('cart-count');
                 badge.classList.add('bump');
-                setTimeout(() => badge.classList.remove('bump'), 300);
+                setTimeout(() => badge.classList.remove('bump'), 400);
             }
         }
 
@@ -522,7 +533,7 @@
         }
 
         function saveCart() {
-            localStorage.setItem('cjr_cart_v2', JSON.stringify(cart));
+            localStorage.setItem('cjr_cart_v4', JSON.stringify(cart));
             updateCartUI();
         }
 
@@ -564,29 +575,31 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // === UPGRADE FORMAT WHATSAPP SESUAI PERMINTAAN ===
+        // === FORMAT WA FINAL SESUAI PERMINTAAN (TIDAK ADA HARGA, SAPAAN OTOMATIS, KALIMAT PENUTUP TETAP) ===
         function checkoutWA() {
             if(cart.length === 0) {
                 showToast("Daftar Wishlist Anda masih kosong.");
                 return;
             }
 
-            // Pesan pembuka baru
-            let isiPesan = `Selamat siang tim *CJR Couture*.\n\nSaya tertarik untuk menanyakan ketersediaan dan menjadwalkan sesi fitting untuk koleksi Haute Couture berikut:\n\n`;
+            const jam = new Date().getHours();
+            let sapaan = "Selamat pagi";
+            if (jam >= 11 && jam < 15) sapaan = "Selamat siang";
+            else if (jam >= 15 && jam < 18) sapaan = "Selamat sore";
+            else if (jam >= 18) sapaan = "Selamat malam";
+
+            let isiPesan = `${sapaan} tim *CJR Couture*.\n\nSaya ingin memesan koleksi berikut:\n\n`;
             
             cart.forEach((item, index) => {
-                // List item tanpa harga, hanya nama & kategori
-                isiPesan += `✨ *${index + 1}. ${item.nama}*\n    ▪ Kategori: ${item.kategori}\n\n`;
+                isiPesan += `${index + 1}. *${item.nama}*\n    ▪ Kategori: ${item.kategori}\n\n`;
             });
 
-            // Kalimat penutup baru sesuai permintaan
-            isiPesan += `Mohon informasi ketersediaan stok, terimakasih.`;
+            isiPesan += `Mohon ketersediaan stok, terimakasih.`;
 
             const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
             window.open(linkWhatsApp, '_blank');
         }
 
-        // Jalankan sistem saat load
         window.onload = fetchData;
     </script>
 </body>
