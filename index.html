@@ -575,13 +575,13 @@
                 return;
             }
 
-            let isiPesan = `Halo *CJR Couture*, saya tertarik untuk berdiskusi & memesan koleksi eksklusif berikut:\n\n`;
+            let isiPesan = `Halo *CJR Couture*, saya tertarik untuk memesan koleksi eksklusif berikut:\n\n`;
             
             cart.forEach((item, index) => {
                 isiPesan += `${index + 1}. *${item.nama}* - ${item.kategori} (${item.harga})\n`;
             });
 
-            isiPesan += `\nMohon informasi ketersediaan jadwal fitting dan detail selanjutnya. Terima kasih.`;
+            isiPesan += `\nMohon informasi ketersediaan stok. Terima kasih.`;
 
             const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
             window.open(linkWhatsApp, '_blank');
