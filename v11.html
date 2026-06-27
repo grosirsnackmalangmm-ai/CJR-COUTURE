@@ -108,7 +108,6 @@
         .modal-watermark-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            /* SVG Pattern text CJR COUTURE miring */
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08" transform="rotate(-30)"><text y="100" x="20" fill="%23000" font-family="Cinzel" font-size="20" font-weight="bold" letter-spacing="4">CJR COUTURE</text></svg>');
             background-repeat: repeat;
             z-index: 3;
@@ -282,8 +281,8 @@
         let globalProductsData = [];
         let currentModalProductId = null;
         
-        // Membaca Cart dari LocalStorage (Struktur asli: seluruh object item)
-        let cart = JSON.parse(localStorage.getItem('cjr_cart')) || [];
+        // MENGGUNAKAN VERSI CACHE BARU: cjr_cart_v2 (Agar bebas dari error)
+        let cart = JSON.parse(localStorage.getItem('cjr_cart_v2')) || [];
 
         // Animasi Scroll Header
         window.addEventListener('scroll', () => {
@@ -438,19 +437,18 @@
             document.getElementById('cart-overlay').classList.toggle('active');
         }
 
-        // === PERBAIKAN LOGIKA CART (Sesuai Struktur Kode Anda) ===
+        // Logic Cart Baru
         function addToCartFromModal() {
             if(currentModalProductId === null) return;
             
             const product = globalProductsData.find(p => p.id === currentModalProductId);
             if(!product) return;
 
-            // Cek apakah item (berdasarkan ID) sudah ada di dalam cart
             const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
                 showToast("Koleksi ini sudah berada di Wishlist Anda.");
             } else {
-                cart.push(product); // Simpan SELURUH object product, sesuai struktur Anda!
+                cart.push(product);
                 saveCart();
                 closeModal();
                 toggleCart();
@@ -461,18 +459,17 @@
             }
         }
 
-        // Hapus Item Berdasarkan ID (Sesuai snippet Anda)
         function removeFromCart(id) {
             cart = cart.filter(item => item.id !== id);
             saveCart();
         }
 
         function saveCart() {
-            localStorage.setItem('cjr_cart', JSON.stringify(cart));
+            // MENYIMPAN KE VERSI CACHE BARU
+            localStorage.setItem('cjr_cart_v2', JSON.stringify(cart));
             updateCartUI();
         }
 
-        // Render UI Cart menggunakan struktur asli Anda yang telah disempurnakan layoutnya
         function updateCartUI() {
             const containerItem = document.getElementById('cart-items');
             const penandaJumlah = document.getElementById('cart-count');
@@ -508,14 +505,13 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // === UPGRADE FORMAT WHATSAPP ===
+        // Format Pesan WA
         function checkoutWA() {
             if(cart.length === 0) {
                 showToast("Daftar Wishlist Anda masih kosong");
                 return;
             }
 
-            // Sapaan dinamis berdasarkan jam lokal pelanggan
             const hour = new Date().getHours();
             let greeting = "Selamat pagi";
             if (hour >= 11 && hour < 15) greeting = "Selamat siang";
@@ -524,7 +520,6 @@
 
             let isiPesan = `${greeting} tim *CJR Couture*.\n\nSaya tertarik untuk berdiskusi & memesan koleksi eksklusif berikut:\n\n`;
             
-            // Loop untuk setiap item yang ada di cart (Struktur format Anda)
             cart.forEach((item, index) => {
                 isiPesan += `${index + 1}. *${item.nama}*\n    ▪ Kategori: ${item.kategori}\n    ▪ Est. Harga: ${item.harga}\n\n`;
             });
@@ -535,7 +530,7 @@
             window.open(linkWhatsApp, '_blank');
         }
 
-        // Jalankan sistem saat load
+        // Jalankan sistem
         window.onload = fetchData;
     </script>
 </body>
