@@ -20,7 +20,7 @@
             --surface-card: #ffffff;
             --text-primary: #111111;
             --text-muted: #666666;
-            --gold: #c59b27; /* Emas Luxury Champagne */
+            --gold: #c59b27;
             --gold-light: #fdfaf3;
             --gold-dark: #99741d;
             --font-display: 'Cinzel', serif;
@@ -85,7 +85,7 @@
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover .product-image { transform: scale(1.08); }
         
-        /* Watermark pada Grid (Kecil) */
+        /* Watermark pada Grid */
         .watermark { position: absolute; bottom: 15px; right: 20px; font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: rgba(255, 255, 255, 0.5); letter-spacing: 6px; z-index: 5; pointer-events: none; text-shadow: 1px 2px 4px rgba(0,0,0,0.2); user-select: none; }
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.6rem; font-weight: 600; text-transform: uppercase; padding: 6px 14px; letter-spacing: 2px; z-index: 2; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border-radius: 2px; }
 
@@ -104,14 +104,14 @@
         .modal-image-side { flex: 1; background-color: #fdfdfd; position: relative; display: flex; justify-content: center; align-items: center; padding: 20px; border-right: 1px solid #f0f0f0; overflow: hidden; }
         .modal-image-side img { width: 100%; height: 100%; max-height: 600px; object-fit: contain; background: transparent; position: relative; z-index: 2; pointer-events: auto; }
 
-        /* === FITUR BARU: OVERLAY WATERMARK POLA DI MODAL === */
+        /* OVERLAY WATERMARK POLA DI MODAL */
         .modal-watermark-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" opacity="0.08" transform="rotate(-30)"><text y="100" x="20" fill="%23000" font-family="Cinzel" font-size="20" font-weight="bold" letter-spacing="4">CJR COUTURE</text></svg>');
             background-repeat: repeat;
             z-index: 3;
-            pointer-events: none; /* Klik tetap tembus ke gambar */
+            pointer-events: none;
             user-select: none;
         }
 
@@ -302,14 +302,14 @@
             }
         });
 
-        // Parser URL Gambar Bypass Google Drive
+        // FIXED: URL parser untuk HTTPS dan endpoint resmi Drive 
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
             
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
             if (match && match[1]) {
-                return `https://lh3.googleusercontent.com/d/${match[1]}`;
+                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             }
             return str;
         }
@@ -328,7 +328,7 @@
             }, 3500);
         }
 
-        // Mengambil Data dari Spreadsheet (Dengan Cache Buster)
+        // Mengambil Data dari Spreadsheet
         function fetchData() {
             const antiCacheUrl = rawSheetUrl + "&t=" + new Date().getTime();
 
@@ -399,7 +399,7 @@
 
             renderNewArrivals();
             renderCatalog(globalProductsData);
-            updateCartUI(); // Sinkronisasi harga terkini di wishlist
+            updateCartUI(); 
             closeLoader();
         }
 
@@ -591,14 +591,13 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // Upgrade Format Pemesanan WA Eksekutif/Profesional
+        // Upgrade Format Pemesanan WA
         function checkoutWA() {
             if(cart.length === 0) {
                 showToast("Daftar Wishlist Anda masih kosong");
                 return;
             }
 
-            // Penentuan sapaan berdasarkan waktu sistem client
             const hour = new Date().getHours();
             let greeting = "Selamat pagi";
             if (hour >= 11 && hour < 15) greeting = "Selamat siang";
