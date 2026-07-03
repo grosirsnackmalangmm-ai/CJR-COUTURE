@@ -171,7 +171,7 @@
         
         /* Modal Swiper Customization */
         .modalSwiper { width: 100%; height: 100%; padding-bottom: 0 !important; }
-        .modalSwiper .swiper-slide { display: flex; justify-content: center; align-items: center; background: #fcfcfc; }
+        .modalSwiper .swiper-slide { display: flex; justify-content: center; align-items: center; background: #fcfcfc; position: relative; }
         .modalSwiper img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 4; }
         .modalSwiper .swiper-button-next, .modalSwiper .swiper-button-prev { color: var(--gold); z-index: 10; transform: scale(0.7); }
         .modalSwiper .swiper-pagination { bottom: 10px !important; z-index: 10; }
@@ -345,13 +345,10 @@
             
             <div class="modal-image-side">
                 <div class="modal-watermark-bottom">CJR</div>
-                <div class="invisible-shield"></div>
                 
-                <!-- Swiper for Modal Gallery -->
                 <div class="swiper modalSwiper">
                     <div class="swiper-wrapper" id="modal-swiper-wrapper">
-                        <!-- Slides injected via JS -->
-                    </div>
+                        </div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-pagination"></div>
@@ -576,10 +573,18 @@
 
             // Generate Swiper Slides for Modal
             const swiperWrapper = document.getElementById('modal-swiper-wrapper');
-            let slidesHTML = `<div class="swiper-slide"><img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';"></div>`;
+            let slidesHTML = `
+                <div class="swiper-slide">
+                    <div class="invisible-shield"></div>
+                    <img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                </div>`;
             
             if (prod.gambar2) {
-                slidesHTML += `<div class="swiper-slide"><img src="${prod.gambar2}" alt="${prod.nama} Detail" onerror="this.onerror=null; this.src='${placeholderImg}';"></div>`;
+                slidesHTML += `
+                    <div class="swiper-slide">
+                        <div class="invisible-shield"></div>
+                        <img src="${prod.gambar2}" alt="${prod.nama} Detail" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                    </div>`;
             }
             swiperWrapper.innerHTML = slidesHTML;
 
@@ -720,14 +725,3 @@
             cart.forEach((item, index) => {
                 messageText += `${index + 1}. *${item.nama}*\n    ▪ Category: ${item.kategori}\n    ▪ Notes: ${item.harga}\n\n`;
             });
-
-            messageText += `Kindly provide more details regarding availability and custom sizing info. Thank you.`;
-
-            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(messageText)}`;
-            window.open(linkWhatsApp, '_blank');
-        }
-
-        window.onload = fetchData;
-    </script>
-</body>
-</html>
