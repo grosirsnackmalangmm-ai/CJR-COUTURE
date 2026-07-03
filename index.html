@@ -28,7 +28,7 @@
             --shadow-sm: 0 5px 20px rgba(0,0,0,0.03);
             --shadow-md: 0 20px 40px rgba(0,0,0,0.08);
             --shadow-lg: 0 30px 60px rgba(0,0,0,0.15);
-            --transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            --transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
             --transition-fast: all 0.3s ease;
         }
 
@@ -101,71 +101,115 @@
         .product-card { background-color: var(--surface-card); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
         .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
         
-        /* Thumbnail Utama di Grid */
-        .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #ececec; overflow: hidden; }
-        .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* Golden Ratio Dress Container & Sliders */
+        .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #fcfcfc; overflow: hidden; }
+        
+        .product-slider { width: 100%; height: 100%; position: relative; overflow: hidden; }
+        .slider-wrapper { display: flex; width: 100%; height: 100%; transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        .slide-item { width: 100%; height: 100%; flex-shrink: 0; position: relative; }
+        
+        .product-image { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); display: block; }
         .product-card:hover .product-image { transform: scale(1.06); }
         
-        /* Transparent Shield Layer */
+        /* Transparent Shield Layer to Protect Copyright Images */
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
         
-        /* Wishlist Button */
-        .quick-wishlist-btn { position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-primary); font-size: 1.15rem; cursor: pointer; z-index: 99; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: var(--transition-fast); }
+        /* Android Ultra-Responsive Wishlist Button */
+        .quick-wishlist-btn { 
+            position: absolute; 
+            top: 15px; 
+            right: 15px; 
+            background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(4px); 
+            -webkit-backdrop-filter: blur(4px);
+            border: none; 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            color: var(--text-primary); 
+            font-size: 1.15rem; 
+            cursor: pointer; 
+            z-index: 99; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
+            transition: var(--transition-fast); 
+        }
         .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #fff; }
 
-        /* FRONT WATERMARK */
-        .watermark-bottom { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 2.0rem; font-weight: 400; color: rgba(255, 255, 255, 0.35); letter-spacing: 12px; z-index: 6; pointer-events: none; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15); width: 100%; text-align: center; text-indent: 12px; }
+        /* FRONT WATERMARK (SLIGHTLY ENLARGED & TRANSLUCENT) */
+        .watermark-bottom { 
+            position: absolute; 
+            bottom: 22px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-family: var(--font-display); 
+            font-size: 2.0rem; 
+            font-weight: 400; 
+            color: rgba(255, 255, 255, 0.45); 
+            letter-spacing: 12px; 
+            z-index: 6; 
+            pointer-events: none; 
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15); 
+            width: 100%; 
+            text-align: center; 
+            text-indent: 12px; 
+        }
+
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; padding: 5px 12px; letter-spacing: 1.5px; z-index: 6; border-radius: 2px; }
 
+        /* Card Details Styling */
         .card-details { padding: 20px 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid #f7f7f7; border-top: none; }
         .product-category { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; font-weight: 600; }
         .product-title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.4; }
+        
+        /* Adjusted Professional Price Display */
         .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #fcfcfc; padding-top: 14px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; }
         .product-price.bespoke-style { color: var(--gold); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* === PERBAIKAN TOTAL: POP UP MODAL GAUN TIDAK AKAN KEPOTONG === */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.4s ease; padding: 20px; }
+        /* Premium Backdrop & Detail Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px; }
         .modal.active { opacity: 1; pointer-events: auto; }
-        
-        /* Mengunci tinggi boks di desktop agar simetris dengan info detail */
-        .modal-wrapper { background-color: #fff; max-width: 980px; width: 100%; display: flex; position: relative; height: 80vh; max-height: 680px; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 4px; overflow: hidden; align-items: stretch; }
+        .modal-wrapper { background-color: #fff; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; overflow: hidden; }
         .modal.active .modal-wrapper { transform: translateY(0); }
         
-        /* SISI KIRI: Container Swiper Slider */
-        .modal-image-side { flex: 1.1; background-color: #fafafa; position: relative; height: 100%; min-width: 0; }
-        .modal-swiper { width: 100%; height: 100%; }
-        
-        /* Memberi padding/ruang napas elegan di sekitar gaun agar tidak terpotong tepi bingkai */
-        .modal-swiper .swiper-slide { display: flex; justify-content: center; align-items: center; background: #fafafa; width: 100%; height: 100%; padding: 30px; position: relative; box-sizing: border-box; }
-        
-        /* KUNCI KRUSIAL: Memaksa gambar mengikuti resolusi asli (Contain) tanpa merusak rasio flexbox */
-        .modal-swiper img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain !important; display: block; position: relative; z-index: 4; }
-        
-        /* Navigasi Panah Slider */
-        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { background: rgba(255, 255, 255, 0.95); color: var(--text-primary); width: 40px; height: 40px; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.08); z-index: 10; transition: var(--transition-fast); }
-        .modal-swiper .swiper-button-next:hover, .modal-swiper .swiper-button-prev:hover { background: var(--text-primary); color: #fff; }
-        .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 12px; font-weight: 800; }
-        .modal-swiper .swiper-pagination-bullet-active { background: var(--gold) !important; }
+        .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; min-height: 350px; }
+        .modal-image-side img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 4; }
 
-        /* Watermark Transparan Belakang Gambar Pop up */
-        .modal-watermark-bottom { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 3.0rem; font-weight: 400; color: rgba(0, 0, 0, 0.04); letter-spacing: 14px; z-index: 2; pointer-events: none; width: 100%; text-align: center; text-indent: 14px; }
+        /* MODAL WATERMARK */
+        .modal-watermark-bottom { 
+            position: absolute; 
+            bottom: 35px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-family: var(--font-display); 
+            font-size: 3.5rem; 
+            font-weight: 400; 
+            color: rgba(255, 255, 255, 0.35); 
+            letter-spacing: 18px; 
+            z-index: 6; 
+            pointer-events: none; 
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            width: 100%; 
+            text-align: center; 
+            text-indent: 18px; 
+        }
 
-        /* SISI KANAN: Informasi Detail */
-        .modal-info-side { flex: 1; padding: 45px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; height: 100%; overflow-y: auto; }
+        .modal-info-side { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
         
-        .close-modal-btn { position: absolute; top: 15px; right: 15px; background: #fff; border: none; color: #111; font-size: 1.2rem; cursor: pointer; z-index: 99; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: var(--shadow-sm); transition: var(--transition-fast); }
-        .close-modal-btn:hover { background: #f5f5f5; color: var(--gold); transform: rotate(90deg); }
+        .close-modal-btn { position: absolute; top: 12px; right: 12px; background: #fff; border: none; color: #111; font-size: 1.3rem; cursor: pointer; z-index: 99; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: var(--shadow-sm); }
         
         .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 600; }
-        .modal-title { font-family: var(--font-display); font-size: 1.7rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.3; }
+        .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.3; }
         .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; font-weight: 400; }
-        .modal-price { font-size: 1.2rem; font-weight: 500; margin-bottom: 30px; color: var(--gold-dark); border-bottom: 1px solid #f5f5f5; padding-bottom: 20px; }
-        .modal-price.bespoke-style { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1px; }
+        .modal-price { font-size: 1.25rem; font-weight: 500; margin-bottom: 30px; color: var(--gold-dark); border-bottom: 1px solid #f5f5f5; padding-bottom: 20px; }
+        .modal-price.bespoke-style { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 1px; }
         
         .btn-gold { background-color: var(--text-primary); color: #fff; border: 1px solid var(--text-primary); padding: 15px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 500; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition-fast); width: 100%; border-radius: 2px; }
         .btn-gold:hover { background-color: var(--gold); border-color: var(--gold); }
 
-        /* Wishlist Sidebar Drawer */
+        /* Luxury Wishlist Sidebar Container */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
         .cart-overlay.active { opacity: 1; pointer-events: auto; }
         
@@ -198,20 +242,20 @@
         .empty-cart { text-align: center; color: #aaa; font-size: 0.8rem; padding-top: 80px; }
         .empty-cart i { font-size: 2.5rem; color: #e5e5e5; margin-bottom: 20px; display: block; }
 
-        /* Toast Notifications */
+        /* Elegant Micro Toast Notifications */
         #toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast { background: #111; color: #fff; padding: 15px 25px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-lg); animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: auto; border-radius: 4px; border-left: 3px solid var(--gold); }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOut { to { transform: translateX(100%); opacity: 0; } }
 
-        /* Back To Top */
+        /* Back To Top Action Button */
         #backToTop { position: fixed; bottom: 25px; left: 25px; background-color: #fff; color: var(--text-primary); border: 1px solid #eee; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; z-index: 99; opacity: 0; pointer-events: none; transition: var(--transition-fast); box-shadow: var(--shadow-sm); }
         #backToTop.show { opacity: 1; pointer-events: auto; }
         #backToTop:hover { border-color: var(--gold); color: #fff; background-color: var(--gold); }
 
         .hide { display: none !important; opacity: 0 !important; visibility: hidden !important; }
 
-        /* === RESPONSIVE SMARTPHONE LAYOUT === */
+        /* === ULTRA-RESPONSIVE SMARTPHONE LAYOUT === */
         @media (max-width: 768px) {
             .container { padding: 25px 15px 60px; } 
             header { padding: 12px 15px; } 
@@ -222,6 +266,7 @@
             .filter-container { margin-bottom: 30px; gap: 6px; }
             .filter-btn { padding: 8px 16px; font-size: 0.65rem; letter-spacing: 1px; }
             
+            /* High-End Double Column Editorial Grid for Android */
             .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
             .card-details { padding: 15px 10px; }
             .product-title { font-size: 0.9rem; margin-bottom: 8px; }
@@ -229,21 +274,15 @@
             .product-price.bespoke-style { font-size: 0.72rem; }
             .quick-wishlist-btn { width: 36px; height: 36px; top: 10px; right: 10px; font-size: 0.95rem; }
             
+            /* Responsive Watermark Tuning */
             .watermark-bottom { font-size: 1.5rem; bottom: 15px; letter-spacing: 8px; text-indent: 8px; }
-            .modal-watermark-bottom { font-size: 1.8rem; bottom: 15px; letter-spacing: 6px; text-indent: 6px; }
+            .modal-watermark-bottom { font-size: 2.4rem; bottom: 25px; letter-spacing: 12px; text-indent: 12px; }
             
-            /* Mengubah susunan baris menjadi kolom scrollable vertikal khusus di smartphone */
-            .modal-wrapper { flex-direction: column; height: auto; max-height: 88vh; width: 94%; margin: auto; overflow-y: auto; display: block; } 
-            
-            /* Mengunci porsi boks gambar di layar smartphone agar seimbang */
-            .modal-image-side { width: 100%; height: 48vh; position: relative; display: block; flex: none; }
-            .modal-swiper .swiper-slide { padding: 15px; }
-            
-            .modal-info-side { padding: 25px 20px; width: 100%; height: auto; flex: none; overflow-y: visible; }
-            .modal-title { font-size: 1.35rem; }
-            
-            .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { width: 34px; height: 34px; }
-            .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 10px; }
+            /* Mobile Modal Adjustments */
+            .modal-wrapper { flex-direction: column; max-height: 90vh; } 
+            .modal-image-side { min-height: 380px; }
+            .modal-info-side { padding: 30px 20px; }
+            .modal-title { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -309,13 +348,9 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="swiper modalSwiper">
-                    <div class="swiper-wrapper" id="modal-slider-wrapper">
-                        </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"></div>
-                    <div class="swiper-button-prev"></div>
-                </div>
+                <div class="modal-watermark-bottom">CJR</div>
+                <div class="invisible-shield"></div>
+                <img id="modal-img" src="" alt="Collection Masterpiece Detail" ondragstart="return false;">
             </div>
             
             <div class="modal-info-side">
@@ -348,6 +383,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
+        // STRICT PREMIUM COUTURE SECURITY: Block Inspect Elements & Theft
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if (e.keyCode == 123) return false;
@@ -362,9 +398,9 @@
 
         let globalProductsData = [];
         let currentModalProductId = null;
-        let modalSwiperInstance = null;
         
-        let cart = JSON.parse(localStorage.getItem('cjr_cart_v9')) || [];
+        // V8 Micro Cache Flushing Mechanism to force global English Translation
+        let cart = JSON.parse(localStorage.getItem('cjr_cart_v8')) || [];
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
@@ -375,6 +411,7 @@
             else btn.classList.remove('show');
         });
 
+        // FAST HIGH-SPEED SECURE DRIVE STREAMER ENGINE
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return null;
             let str = url.trim();
@@ -417,20 +454,14 @@
             globalProductsData = rows.map((row, index) => {
                 if (!row || row.length === 0 || !row[0]) return null;
                 
-                let statusSembunyi = '';
-                if(row.length > 7 && row[7]) statusSembunyi = row[7].toString().trim().toLowerCase();
-                if (['kosong', 'sold', 'sembunyi'].includes(statusSembunyi)) return null;
-
                 let hargaText = row[4] ? row[4].trim() : '';
                 let isBespoke = false;
                 
+                // Professional International Luxury Standard Formatting
                 if (hargaText === '' || hargaText.toLowerCase().includes('request') || hargaText.toLowerCase().includes('bespoke')) {
                     hargaText = 'Price Upon Request';
                     isBespoke = true;
                 }
-
-                let img1 = parseImageUrl(row[5]) || placeholderImg;
-                let img2 = parseImageUrl(row[6]); 
 
                 return {
                     id: index,
@@ -440,8 +471,9 @@
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
                     harga: hargaText,
                     isBespoke: isBespoke,
-                    gambar: img1,
-                    gambar2: img2
+                    gambar: parseImageUrl(row[5]) || placeholderImg,
+                    gambar2: (row.length > 6 && row[6].trim()) ? parseImageUrl(row[6]) : null
+                    // row[7] (Kolom H) is an empty label as per request, ignored here
                 };
             }).filter(item => item !== null);
 
@@ -451,6 +483,7 @@
             closeLoader();
         }
 
+        // TOUCH-SAFE DIRECT WISHLIST ADDITION FOR CELLPHONES
         window.addDirectWishlist = function(event, id) {
             event.stopPropagation(); 
             const product = globalProductsData.find(p => p.id === id);
@@ -474,6 +507,28 @@
             const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New</span>` : '';
             const priceClass = product.isBespoke ? 'product-price bespoke-style' : 'product-price';
             
+            let mediaHTML = "";
+            if (product.gambar2) {
+                mediaHTML = `
+                    <div class="product-slider">
+                        <div class="slider-wrapper">
+                            <div class="slide-item">
+                                <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                            </div>
+                            <div class="slide-item">
+                                <img class="product-image" src="${product.gambar2}" alt="${product.nama} Alternate" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                mediaHTML = `
+                    <div class="slide-item">
+                        <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                    </div>
+                `;
+            }
+            
             return `
                 <div class="product-card" onclick="openModal(${product.id})">
                     <div class="image-container">
@@ -483,7 +538,7 @@
                         </button>
                         <div class="watermark-bottom">CJR</div>
                         <div class="invisible-shield"></div>
-                        <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                        ${mediaHTML}
                     </div>
                     <div class="card-details">
                         <span class="product-category">${product.kategori}</span>
@@ -492,6 +547,23 @@
                     </div>
                 </div>
             `;
+        }
+
+        // Auto Slider initialization for product cards with 2 images
+        function initProductSliders() {
+            const sliders = document.querySelectorAll('.product-slider');
+            sliders.forEach(slider => {
+                if(slider.dataset.initSet) return;
+                const wrapper = slider.querySelector('.slider-wrapper');
+                let currentIdx = 0;
+                
+                setInterval(() => {
+                    currentIdx = (currentIdx + 1) % 2;
+                    wrapper.style.transform = `translateX(-${currentIdx * 100}%)`;
+                }, 3500); 
+                
+                slider.dataset.initSet = "true";
+            });
         }
 
         function renderNewArrivals() {
@@ -504,13 +576,16 @@
                 section.classList.remove('hide');
                 newArrivals.forEach(p => wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(p)}</div>`);
                 
+                // Swiper initialization with 2s (2000ms) delay for New Collection
                 new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 2, spaceBetween: 12, 
-                    loop: true,
-                    autoplay: { delay: 3000, disableOnInteraction: false }, 
+                    slidesPerView: 2, 
+                    spaceBetween: 12, 
+                    autoplay: { delay: 2000, disableOnInteraction: false }, 
                     pagination: { el: ".swiper-pagination", clickable: true },
                     breakpoints: { 600: { slidesPerView: 2, spaceBetween: 20 }, 900: { slidesPerView: 3, spaceBetween: 25 }, 1200: { slidesPerView: 4, spaceBetween: 25 } }
                 });
+                
+                initProductSliders();
             } else { section.classList.add('hide'); }
         }
 
@@ -526,6 +601,8 @@
                 }
                 items.forEach(p => wrapper.innerHTML += createCardHTML(p));
                 wrapper.style.opacity = '1';
+                
+                initProductSliders();
             }, 300);
         }
 
@@ -542,26 +619,8 @@
             if(!prod) return;
             currentModalProductId = id;
 
-            const sliderWrapper = document.getElementById('modal-slider-wrapper');
-            sliderWrapper.innerHTML = '';
-
-            sliderWrapper.innerHTML += `
-                <div class="swiper-slide">
-                    <div class="modal-watermark-bottom">CJR</div>
-                    <div class="invisible-shield"></div>
-                    <img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                </div>
-            `;
-
-            if(prod.gambar2) {
-                sliderWrapper.innerHTML += `
-                    <div class="swiper-slide">
-                        <div class="modal-watermark-bottom">CJR</div>
-                        <div class="invisible-shield"></div>
-                        <img src="${prod.gambar2}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                    </div>
-                `;
-            }
+            document.getElementById('modal-img').src = prod.gambar;
+            document.getElementById('modal-img').onerror = function() { this.onerror=null; this.src=placeholderImg; };
             
             document.getElementById('modal-cat').innerText = prod.kategori;
             document.getElementById('modal-title').innerText = prod.nama;
@@ -573,22 +632,6 @@
             else priceEl.className = 'modal-price';
 
             document.getElementById('product-modal').classList.add('active');
-
-            // PERBAIKAN JS SWIPER MODAL: Ditambahkan Fitur Observer Antilemot/Macet
-            if(modalSwiperInstance) modalSwiperInstance.destroy();
-            modalSwiperInstance = new Swiper(".modalSwiper", {
-                slidesPerView: 1,
-                spaceBetween: 0,
-                loop: prod.gambar2 ? true : false,
-                observer: true, 
-                observeParents: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                pagination: { el: ".modal-image-side .swiper-pagination", clickable: true },
-                navigation: { nextEl: ".modal-image-side .swiper-button-next", prevEl: ".modal-image-side .swiper-button-prev" }
-            });
         }
 
         function closeModal() { document.getElementById('product-modal').classList.remove('active'); }
@@ -627,7 +670,7 @@
         }
 
         function saveCart() {
-            localStorage.setItem('cjr_cart_v9', JSON.stringify(cart));
+            localStorage.setItem('cjr_cart_v8', JSON.stringify(cart));
             updateCartUI();
         }
 
