@@ -345,6 +345,7 @@
             
             <div class="modal-image-side">
                 <div class="modal-watermark-bottom">CJR</div>
+                <div class="invisible-shield"></div>
                 
                 <div class="swiper modalSwiper">
                     <div class="swiper-wrapper" id="modal-swiper-wrapper">
@@ -400,7 +401,7 @@
         let globalProductsData = [];
         let currentModalProductId = null;
         let cart = JSON.parse(localStorage.getItem('cjr_cart_v8')) || [];
-        let modalSwiperInstance = null; // Store modal swiper instance
+        let modalSwiperInstance = null; 
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
@@ -423,6 +424,7 @@
 
         function showToast(message) {
             const container = document.getElementById('toast-container');
+            if(!container) return;
             const toast = document.createElement('div');
             toast.className = 'toast';
             toast.innerHTML = `<i class="fa-solid fa-gem" style="color: var(--gold);"></i> <span>${message}</span>`;
@@ -436,48 +438,72 @@
         function fetchData() {
             const antiCacheUrl = rawSheetUrl + "&t=" + new Date().getTime();
             fetch(antiCacheUrl)
-                .then(res => res.text())
+                .then(res => {
+                    if(!res.ok) throw new Error("Network response error");
+                    return res.text();
+                })
                 .then(csvText => {
+                    if(typeof Papa === 'undefined') throw new Error("PapaParse library missing");
                     Papa.parse(csvText, {
                         header: false,
                         skipEmptyLines: true,
                         complete: function(results) {
-                            if (results.data.length > 1) buildDatabase(results.data.slice(1));
-                            else closeLoader();
+                            try {
+                                if (results.data && results.data.length > 1) {
+                                    buildDatabase(results.data.slice(1));
+                                } else {
+                                    closeLoader();
+                                }
+                            } catch (e) {
+                                console.error("Error building database:", e);
+                                closeLoader();
+                            }
+                        },
+                        error: function(err) {
+                            console.error("PapaParse error:", err);
+                            closeLoader();
                         }
                     });
-                }).catch(err => closeLoader());
+                }).catch(err => {
+                    console.error("Fetch error:", err);
+                    closeLoader();
+                });
         }
 
         function buildDatabase(rows) {
-            globalProductsData = rows.map((row, index) => {
-                if (!row || row.length === 0 || !row[0]) return null;
-                
-                let hargaText = row[4] ? row[4].trim() : '';
-                let isBespoke = false;
-                
-                if (hargaText === '' || hargaText.toLowerCase().includes('request') || hargaText.toLowerCase().includes('bespoke')) {
-                    hargaText = 'Price Upon Request';
-                    isBespoke = true;
-                }
+            try {
+                globalProductsData = rows.map((row, index) => {
+                    if (!row || row.length === 0 || !row[0]) return null;
+                    
+                    let hargaText = row[4] ? row[4].trim() : '';
+                    let isBespoke = false;
+                    
+                    if (hargaText === '' || hargaText.toLowerCase().includes('request') || hargaText.toLowerCase().includes('bespoke')) {
+                        hargaText = 'Price Upon Request';
+                        isBespoke = true;
+                    }
 
-                return {
-                    id: index,
-                    nama: row[0].trim(),
-                    kategori: row[1] ? row[1].trim() : 'Exclusive',
-                    deskripsi: row[2] ? row[2].trim() : '-',
-                    statusNew: row[3] ? row[3].trim().toLowerCase() : '',
-                    harga: hargaText,
-                    isBespoke: isBespoke,
-                    gambar: parseImageUrl(row[5]) || placeholderImg,
-                    gambar2: (row.length > 6 && row[6].trim()) ? parseImageUrl(row[6]) : null
-                };
-            }).filter(item => item !== null);
+                    return {
+                        id: index,
+                        nama: row[0].trim(),
+                        kategori: row[1] ? row[1].trim() : 'Exclusive',
+                        deskripsi: row[2] ? row[2].trim() : '-',
+                        statusNew: row[3] ? row[3].trim().toLowerCase() : '',
+                        harga: hargaText,
+                        isBespoke: isBespoke,
+                        gambar: parseImageUrl(row[5]) || placeholderImg,
+                        gambar2: (row.length > 6 && row[6] && row[6].trim()) ? parseImageUrl(row[6]) : null
+                    };
+                }).filter(item => item !== null);
 
-            renderNewArrivals();
-            renderCatalog(globalProductsData);
-            updateCartUI(); 
-            closeLoader();
+                renderNewArrivals();
+                renderCatalog(globalProductsData);
+                updateCartUI(); 
+            } catch (error) {
+                console.error("Rendering error:", error);
+            } finally {
+                closeLoader();
+            }
         }
 
         window.addDirectWishlist = function(event, id) {
@@ -494,13 +520,15 @@
                 showToast("Added to Wishlist!");
                 
                 const badge = document.getElementById('cart-count');
-                badge.classList.add('bump');
-                setTimeout(() => badge.classList.remove('bump'), 300);
+                if(badge) {
+                    badge.classList.add('bump');
+                    setTimeout(() => badge.classList.remove('bump'), 300);
+                }
             }
         };
 
         function createCardHTML(product) {
-            const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New</span>` : '';
+            const isNew = product.statusNew && product.statusNew.includes('new') ? `<span class="badge-new">New</span>` : '';
             const priceClass = product.isBespoke ? 'product-price bespoke-style' : 'product-price';
             
             return `
@@ -524,27 +552,31 @@
         }
 
         function renderNewArrivals() {
-            const newArrivals = globalProductsData.filter(p => p.statusNew.includes('new'));
+            const newArrivals = globalProductsData.filter(p => p.statusNew && p.statusNew.includes('new'));
             const section = document.getElementById('new-arrival-section');
             const wrapper = document.getElementById('new-arrival-wrapper');
+            if(!wrapper || !section) return;
             wrapper.innerHTML = '';
 
             if(newArrivals.length > 0) {
                 section.classList.remove('hide');
                 newArrivals.forEach(p => wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(p)}</div>`);
                 
-                new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 2, 
-                    spaceBetween: 12, 
-                    autoplay: { delay: 2000, disableOnInteraction: false }, 
-                    pagination: { el: ".swiper-pagination", clickable: true },
-                    breakpoints: { 600: { slidesPerView: 2, spaceBetween: 20 }, 900: { slidesPerView: 3, spaceBetween: 25 }, 1200: { slidesPerView: 4, spaceBetween: 25 } }
-                });
+                if (typeof Swiper !== 'undefined') {
+                    new Swiper(".newArrivalSwiper", {
+                        slidesPerView: 2, 
+                        spaceBetween: 12, 
+                        autoplay: { delay: 2000, disableOnInteraction: false }, 
+                        pagination: { el: ".swiper-pagination", clickable: true },
+                        breakpoints: { 600: { slidesPerView: 2, spaceBetween: 20 }, 900: { slidesPerView: 3, spaceBetween: 25 }, 1200: { slidesPerView: 4, spaceBetween: 25 } }
+                    });
+                }
             } else { section.classList.add('hide'); }
         }
 
         function renderCatalog(items) {
             const wrapper = document.getElementById('catalog-wrapper');
+            if(!wrapper) return;
             wrapper.style.opacity = '0';
             setTimeout(() => {
                 wrapper.innerHTML = '';
@@ -563,7 +595,7 @@
             if (event) event.target.classList.add('active');
             
             if (cat === 'all') renderCatalog(globalProductsData);
-            else renderCatalog(globalProductsData.filter(p => p.kategori.toLowerCase().includes(cat.toLowerCase())));
+            else renderCatalog(globalProductsData.filter(p => p.kategori && p.kategori.toLowerCase().includes(cat.toLowerCase())));
         }
 
         function openModal(id) {
@@ -571,49 +603,36 @@
             if(!prod) return;
             currentModalProductId = id;
 
-            // Generate Swiper Slides for Modal
             const swiperWrapper = document.getElementById('modal-swiper-wrapper');
-            let slidesHTML = `
-                <div class="swiper-slide">
-                    <div class="invisible-shield"></div>
-                    <img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                </div>`;
+            if(!swiperWrapper) return;
+
+            let slidesHTML = `<div class="swiper-slide"><img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';"></div>`;
             
             if (prod.gambar2) {
-                slidesHTML += `
-                    <div class="swiper-slide">
-                        <div class="invisible-shield"></div>
-                        <img src="${prod.gambar2}" alt="${prod.nama} Detail" onerror="this.onerror=null; this.src='${placeholderImg}';">
-                    </div>`;
+                slidesHTML += `<div class="swiper-slide"><img src="${prod.gambar2}" alt="${prod.nama} Detail" onerror="this.onerror=null; this.src='${placeholderImg}';"></div>`;
             }
             swiperWrapper.innerHTML = slidesHTML;
 
-            // Initialize or update Swiper
-            if (modalSwiperInstance) {
-                modalSwiperInstance.destroy(true, true);
+            if (typeof Swiper !== 'undefined') {
+                if (modalSwiperInstance) modalSwiperInstance.destroy(true, true);
+                
+                modalSwiperInstance = new Swiper(".modalSwiper", {
+                    navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+                    pagination: { el: ".swiper-pagination", clickable: true },
+                    grabCursor: true
+                });
             }
             
-            modalSwiperInstance = new Swiper(".modalSwiper", {
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
-                },
-                pagination: {
-                    el: ".swiper-pagination",
-                    clickable: true,
-                },
-                grabCursor: true
-            });
-            
-            // Hide navigation buttons if there is only 1 image
             const nextBtn = document.querySelector('.modalSwiper .swiper-button-next');
             const prevBtn = document.querySelector('.modalSwiper .swiper-button-prev');
-            if(prod.gambar2) {
-                nextBtn.style.display = 'flex';
-                prevBtn.style.display = 'flex';
-            } else {
-                nextBtn.style.display = 'none';
-                prevBtn.style.display = 'none';
+            if(nextBtn && prevBtn) {
+                if(prod.gambar2) {
+                    nextBtn.style.display = 'flex';
+                    prevBtn.style.display = 'flex';
+                } else {
+                    nextBtn.style.display = 'none';
+                    prevBtn.style.display = 'none';
+                }
             }
             
             document.getElementById('modal-cat').innerText = prod.kategori;
@@ -621,9 +640,11 @@
             document.getElementById('modal-desc').innerText = prod.deskripsi;
             
             const priceEl = document.getElementById('modal-price');
-            priceEl.innerText = prod.harga;
-            if(prod.isBespoke) priceEl.className = 'modal-price bespoke-style';
-            else priceEl.className = 'modal-price';
+            if(priceEl) {
+                priceEl.innerText = prod.harga;
+                if(prod.isBespoke) priceEl.className = 'modal-price bespoke-style';
+                else priceEl.className = 'modal-price';
+            }
 
             document.getElementById('product-modal').classList.add('active');
         }
@@ -632,7 +653,10 @@
         
         function closeLoader() {
             const loader = document.getElementById('loader-panel');
-            if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.classList.add('hide'), 600); }
+            if(loader) { 
+                loader.style.opacity = '0'; 
+                setTimeout(() => loader.classList.add('hide'), 600); 
+            }
         }
         
         function toggleCart() {
@@ -655,8 +679,10 @@
                 toggleCart();
                 
                 const badge = document.getElementById('cart-count');
-                badge.classList.add('bump');
-                setTimeout(() => badge.classList.remove('bump'), 300);
+                if(badge) {
+                    badge.classList.add('bump');
+                    setTimeout(() => badge.classList.remove('bump'), 300);
+                }
             }
         }
 
@@ -673,10 +699,11 @@
         function updateCartUI() {
             const containerItem = document.getElementById('cart-items');
             const penandaJumlah = document.getElementById('cart-count');
+            if(!containerItem) return;
             
             containerItem.innerHTML = '';
 
-            if(cart.length === 0) {
+            if(!cart || cart.length === 0) {
                 containerItem.innerHTML = `
                     <div class="empty-cart">
                         <i class="fa-regular fa-heart"></i>
@@ -685,6 +712,7 @@
                 `;
             } else {
                 cart.forEach((item) => {
+                    if(!item) return;
                     containerItem.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-img-wrapper">
@@ -705,7 +733,7 @@
                     `;
                 });
             }
-            penandaJumlah.innerText = cart.length; 
+            if(penandaJumlah) penandaJumlah.innerText = cart.length; 
         }
 
         function checkoutWA() {
@@ -723,5 +751,22 @@
             let messageText = `${greeting} *CJR Couture* team.\n\nI am highly interested in inquiring about the following masterpiece collection(s) from your catalog:\n\n`;
             
             cart.forEach((item, index) => {
+                if(!item) return;
                 messageText += `${index + 1}. *${item.nama}*\n    ▪ Category: ${item.kategori}\n    ▪ Notes: ${item.harga}\n\n`;
             });
+
+            messageText += `Kindly provide more details regarding availability and custom sizing info. Thank you.`;
+
+            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(messageText)}`;
+            window.open(linkWhatsApp, '_blank');
+        }
+
+        // Pemicu super responsif pengganti window.onload lambat
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', fetchData);
+        } else {
+            fetchData();
+        }
+    </script>
+</body>
+</html>
