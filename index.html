@@ -101,8 +101,8 @@
         .product-card { background-color: var(--surface-card); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
         .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
         
-        /* Golden Ratio Dress Container */
-        .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #fcfcfc; overflow: hidden; }
+        /* Thumbnail Utama (Tetap Cover agar rapi di grid) */
+        .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #ececec; overflow: hidden; }
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover .product-image { transform: scale(1.06); }
         
@@ -110,96 +110,57 @@
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
         
         /* Android Ultra-Responsive Wishlist Button */
-        .quick-wishlist-btn { 
-            position: absolute; 
-            top: 15px; 
-            right: 15px; 
-            background: rgba(255, 255, 255, 0.95); 
-            backdrop-filter: blur(4px); 
-            -webkit-backdrop-filter: blur(4px);
-            border: none; 
-            width: 42px; 
-            height: 42px; 
-            border-radius: 50%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            color: var(--text-primary); 
-            font-size: 1.15rem; 
-            cursor: pointer; 
-            z-index: 99; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            transition: var(--transition-fast); 
-        }
+        .quick-wishlist-btn { position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: none; width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-primary); font-size: 1.15rem; cursor: pointer; z-index: 99; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: var(--transition-fast); }
         .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #fff; }
 
-        /* FRONT WATERMARK (SLIGHTLY ENLARGED & TRANSLUCENT) */
-        .watermark-bottom { 
-            position: absolute; 
-            bottom: 22px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            font-family: var(--font-display); 
-            font-size: 2.0rem; 
-            font-weight: 400; 
-            color: rgba(255, 255, 255, 0.35); 
-            letter-spacing: 12px; 
-            z-index: 6; 
-            pointer-events: none; 
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15); 
-            width: 100%; 
-            text-align: center; 
-            text-indent: 12px; 
-        }
-
+        /* FRONT WATERMARK */
+        .watermark-bottom { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 2.0rem; font-weight: 400; color: rgba(255, 255, 255, 0.35); letter-spacing: 12px; z-index: 6; pointer-events: none; text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15); width: 100%; text-align: center; text-indent: 12px; }
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; padding: 5px 12px; letter-spacing: 1.5px; z-index: 6; border-radius: 2px; }
 
-        /* Card Details Styling */
         .card-details { padding: 20px 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid #f7f7f7; border-top: none; }
         .product-category { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; font-weight: 600; }
         .product-title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.4; }
-        
-        /* Adjusted Professional Price Display */
         .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #fcfcfc; padding-top: 14px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; }
         .product-price.bespoke-style { color: var(--gold); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; text-transform: uppercase; }
 
         /* Premium Backdrop & Detail Modal */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px; }
         .modal.active { opacity: 1; pointer-events: auto; }
-        .modal-wrapper { background-color: #fff; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; overflow: hidden; }
+        .modal-wrapper { background-color: #fff; max-width: 1000px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow: hidden; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; }
         .modal.active .modal-wrapper { transform: translateY(0); }
         
-        /* MODAL SLIDER INTEGRATION */
-        .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; min-height: 350px; max-width: 500px; width: 100%; overflow: hidden; }
-        .modal-swiper { width: 100%; height: 100%; }
-        .modal-swiper .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; background: #fcfcfc; aspect-ratio: 2/3; }
-        .modal-swiper img { width: 100%; height: 100%; object-fit: cover; object-position: top center; position: relative; z-index: 4; }
+        /* MODAL SLIDER INTEGRATION - PERBAIKAN PROPORSI (CONTAIN) */
+        .modal-image-side { flex: 1.2; background-color: #eaeaea; position: relative; width: 100%; overflow: hidden; display: flex; flex-direction: column; }
+        .modal-swiper { width: 100%; height: 100%; flex-grow: 1; }
+        .modal-swiper .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; background: #ececec; height: 100%; width: 100%; }
         
-        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { color: var(--gold); transform: scale(0.6); z-index: 10; }
+        /* PERBAIKAN UTAMA: object-fit: contain agar gambar tidak terpotong */
+        .modal-swiper img { width: 100%; height: 100%; object-fit: contain; position: relative; z-index: 4; }
+        
+        /* PANAH ELEGAN UNTUK SLIDER */
+        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { 
+            background: rgba(255, 255, 255, 0.9); 
+            color: var(--text-primary); 
+            width: 40px; 
+            height: 40px; 
+            border-radius: 50%; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15); 
+            z-index: 10;
+            transition: var(--transition-fast);
+        }
+        .modal-swiper .swiper-button-next:hover, .modal-swiper .swiper-button-prev:hover {
+            background: var(--text-primary);
+            color: #fff;
+        }
+        .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 14px; font-weight: 700; }
         .modal-swiper .swiper-pagination-bullet-active { background: var(--gold) !important; }
 
-        /* MODAL WATERMARK (ON-TOP OVERLAY STYLE LIKE FRONT CARDS, ENLARGED) */
-        .modal-watermark-bottom { 
-            position: absolute; 
-            bottom: 35px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            font-family: var(--font-display); 
-            font-size: 3.5rem; 
-            font-weight: 400; 
-            color: rgba(255, 255, 255, 0.35); 
-            letter-spacing: 18px; 
-            z-index: 6; 
-            pointer-events: none; 
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
-            width: 100%; 
-            text-align: center; 
-            text-indent: 18px; 
-        }
+        /* MODAL WATERMARK */
+        .modal-watermark-bottom { position: absolute; bottom: 35px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 3.5rem; font-weight: 400; color: rgba(255, 255, 255, 0.35); letter-spacing: 18px; z-index: 6; pointer-events: none; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); width: 100%; text-align: center; text-indent: 18px; }
 
-        .modal-info-side { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
-        
-        .close-modal-btn { position: absolute; top: 12px; right: 12px; background: #fff; border: none; color: #111; font-size: 1.3rem; cursor: pointer; z-index: 99; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: var(--shadow-sm); }
+        .modal-info-side { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; overflow-y: auto; }
+        .close-modal-btn { position: absolute; top: 15px; right: 15px; background: #fff; border: none; color: #111; font-size: 1.2rem; cursor: pointer; z-index: 99; width: 38px; height: 38px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: var(--shadow-sm); transition: var(--transition-fast); }
+        .close-modal-btn:hover { background: #f5f5f5; color: var(--gold); }
         
         .modal-cat { color: var(--gold); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 12px; font-weight: 600; }
         .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.3; }
@@ -267,7 +228,6 @@
             .filter-container { margin-bottom: 30px; gap: 6px; }
             .filter-btn { padding: 8px 16px; font-size: 0.65rem; letter-spacing: 1px; }
             
-            /* High-End Double Column Editorial Grid for Android */
             .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
             .card-details { padding: 15px 10px; }
             .product-title { font-size: 0.9rem; margin-bottom: 8px; }
@@ -275,15 +235,18 @@
             .product-price.bespoke-style { font-size: 0.72rem; }
             .quick-wishlist-btn { width: 36px; height: 36px; top: 10px; right: 10px; font-size: 0.95rem; }
             
-            /* Responsive Watermark Tuning */
             .watermark-bottom { font-size: 1.5rem; bottom: 15px; letter-spacing: 8px; text-indent: 8px; }
-            .modal-watermark-bottom { font-size: 2.4rem; bottom: 25px; letter-spacing: 12px; text-indent: 12px; }
+            .modal-watermark-bottom { font-size: 2.2rem; bottom: 20px; letter-spacing: 10px; text-indent: 10px; }
             
-            /* Mobile Modal Adjustments */
-            .modal-wrapper { flex-direction: column; max-height: 90vh; } 
-            .modal-image-side { min-height: 380px; max-width: 100%; }
-            .modal-info-side { padding: 30px 20px; }
+            /* Penyesuaian Modal di HP agar gambar tidak gepeng */
+            .modal-wrapper { flex-direction: column; max-height: 90vh; overflow-y: auto; } 
+            .modal-image-side { min-height: 480px; height: 50vh; width: 100%; flex: none; }
+            .modal-info-side { padding: 30px 20px; flex: none; }
             .modal-title { font-size: 1.5rem; }
+            
+            /* Panah lebih kecil di HP */
+            .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { width: 35px; height: 35px; }
+            .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 12px; }
         }
     </style>
 </head>
@@ -349,7 +312,7 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="swiper modalSwiper" style="height: 100%; width: 100%;">
+                <div class="swiper modalSwiper">
                     <div class="swiper-wrapper" id="modal-slider-wrapper">
                         </div>
                     <div class="swiper-pagination"></div>
@@ -388,7 +351,6 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // STRICT PREMIUM COUTURE SECURITY: Block Inspect Elements & Theft
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if (e.keyCode == 123) return false;
@@ -416,7 +378,6 @@
             else btn.classList.remove('show');
         });
 
-        // FAST HIGH-SPEED SECURE DRIVE STREAMER ENGINE
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return null;
             let str = url.trim();
@@ -459,7 +420,6 @@
             globalProductsData = rows.map((row, index) => {
                 if (!row || row.length === 0 || !row[0]) return null;
                 
-                // Ambil label status kosong dari Kolom H (indeks ke-7)
                 let statusSembunyi = '';
                 if(row.length > 7 && row[7]) statusSembunyi = row[7].toString().trim().toLowerCase();
                 if (['kosong', 'sold', 'sembunyi'].includes(statusSembunyi)) return null;
@@ -472,9 +432,8 @@
                     isBespoke = true;
                 }
 
-                // Kolom F (indeks 5) dan Kolom G (indeks 6)
                 let img1 = parseImageUrl(row[5]) || placeholderImg;
-                let img2 = parseImageUrl(row[6]); // Bisa bernilai null jika kosong
+                let img2 = parseImageUrl(row[6]); 
 
                 return {
                     id: index,
@@ -547,8 +506,13 @@
             if(newArrivals.length > 0) {
                 section.classList.remove('hide');
                 newArrivals.forEach(p => wrapper.innerHTML += `<div class="swiper-slide">${createCardHTML(p)}</div>`);
+                
+                // AUTO SLIDING NEW ARRIVAL 3 DETIK
                 new Swiper(".newArrivalSwiper", {
-                    slidesPerView: 2, spaceBetween: 12, autoplay: { delay: 4000, disableOnInteraction: false }, pagination: { el: ".swiper-pagination", clickable: true },
+                    slidesPerView: 2, spaceBetween: 12, 
+                    loop: true,
+                    autoplay: { delay: 3000, disableOnInteraction: false }, 
+                    pagination: { el: ".swiper-pagination", clickable: true },
                     breakpoints: { 600: { slidesPerView: 2, spaceBetween: 20 }, 900: { slidesPerView: 3, spaceBetween: 25 }, 1200: { slidesPerView: 4, spaceBetween: 25 } }
                 });
             } else { section.classList.add('hide'); }
@@ -582,11 +546,9 @@
             if(!prod) return;
             currentModalProductId = id;
 
-            // Bangun Slider di dalam modal
             const sliderWrapper = document.getElementById('modal-slider-wrapper');
             sliderWrapper.innerHTML = '';
 
-            // Masukkan slide foto pertama (Kolom F)
             sliderWrapper.innerHTML += `
                 <div class="swiper-slide">
                     <div class="modal-watermark-bottom">CJR</div>
@@ -595,7 +557,6 @@
                 </div>
             `;
 
-            // Masukkan slide foto kedua (Kolom G) jika ada
             if(prod.gambar2) {
                 sliderWrapper.innerHTML += `
                     <div class="swiper-slide">
@@ -617,11 +578,16 @@
 
             document.getElementById('product-modal').classList.add('active');
 
-            // Inisialisasi Ulang Swiper Modal agar posisinya fresh di slide ke-1
+            // AUTO SLIDING MODAL 3 DETIK DENGAN LOOP
             if(modalSwiperInstance) modalSwiperInstance.destroy();
             modalSwiperInstance = new Swiper(".modalSwiper", {
                 slidesPerView: 1,
                 spaceBetween: 0,
+                loop: prod.gambar2 ? true : false,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
                 pagination: { el: ".modal-image-side .swiper-pagination", clickable: true },
                 navigation: { nextEl: ".modal-image-side .swiper-button-next", prevEl: ".modal-image-side .swiper-button-prev" }
             });
