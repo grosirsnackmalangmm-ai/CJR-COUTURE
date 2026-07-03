@@ -106,7 +106,7 @@
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover .product-image { transform: scale(1.06); }
         
-        /* Transparent Shield Layer to Protect Copyright Images */
+        /* Transparent Shield Layer */
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
         
         /* Wishlist Button */
@@ -123,44 +123,36 @@
         .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #fcfcfc; padding-top: 14px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; }
         .product-price.bespoke-style { color: var(--gold); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* === PREMIUM POP UP MODAL (PERBAIKAN TOTAL AGAR TIDAK TERPOTONG) === */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
+        /* === PREMIUM POP UP MODAL (FIX KEPOTONG/CROPPED) === */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 25px; }
         .modal.active { opacity: 1; pointer-events: auto; }
         
-        .modal-wrapper { background-color: #fff; max-width: 1050px; width: 100%; display: flex; position: relative; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(25px); transition: var(--transition); border-radius: 8px; }
+        .modal-wrapper { background-color: #fff; max-width: 1100px; width: 100%; display: flex; position: relative; max-height: 85vh; min-height: 60vh; box-shadow: var(--shadow-lg); transform: translateY(25px); transition: var(--transition); border-radius: 4px; overflow: hidden; align-items: stretch; }
         .modal.active .modal-wrapper { transform: translateY(0); }
         
-        /* SISI KIRI: Wadah Image dengan Rasio Emas Gaun (2:3) */
-        .modal-image-side { flex: 1.2; background-color: #f7f7f7; position: relative; width: 100%; aspect-ratio: 2 / 3; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .modal-swiper { width: 100%; height: 100%; }
-        .modal-swiper .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; background: #f7f7f7; width: 100%; height: 100%; }
+        /* SISI KIRI: Wadah Image */
+        .modal-image-side { flex: 1.2; background-color: #f4f4f4; position: relative; overflow: hidden; }
         
-        /* Gambar Proporsional Sempurna (Contain & Tidak Terpotong) */
-        .modal-swiper img { width: 100%; height: 100%; object-fit: contain; object-position: center; position: relative; z-index: 4; }
+        /* Swiper diatur absolute agar mengisi penuh wadah tanpa mendistorsi flexbox */
+        .modal-swiper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         
-        /* NAVIGASI PANAH SLIDER ELEGAN BERSIH */
-        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { 
-            background: rgba(255, 255, 255, 0.95); 
-            color: var(--text-primary); 
-            width: 44px; 
-            height: 44px; 
-            border-radius: 50%; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.12); 
-            z-index: 10;
-            transition: var(--transition-fast);
-        }
-        .modal-swiper .swiper-button-next:hover, .modal-swiper .swiper-button-prev:hover {
-            background: var(--text-primary);
-            color: #fff;
-        }
+        /* Memberikan padding agar gambar tidak menempel di ujung layar seperti referensi Anda */
+        .modal-swiper .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; background: #f4f4f4; width: 100%; height: 100%; padding: 30px; box-sizing: border-box; }
+        
+        /* KUNCI UTAMA: Object-fit contain agar gambar utuh 100% tanpa terpotong */
+        .modal-swiper img { width: 100%; height: 100%; object-fit: contain !important; object-position: center; position: relative; z-index: 4; }
+        
+        /* Navigasi Panah */
+        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { background: rgba(255, 255, 255, 0.95); color: var(--text-primary); width: 44px; height: 44px; border-radius: 50%; box-shadow: 0 4px 15px rgba(0,0,0,0.12); z-index: 10; transition: var(--transition-fast); }
+        .modal-swiper .swiper-button-next:hover, .modal-swiper .swiper-button-prev:hover { background: var(--text-primary); color: #fff; }
         .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 13px; font-weight: 800; }
         .modal-swiper .swiper-pagination-bullet-active { background: var(--gold) !important; }
 
-        /* MODAL WATERMARK */
-        .modal-watermark-bottom { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 3.2rem; font-weight: 400; color: rgba(0, 0, 0, 0.06); letter-spacing: 16px; z-index: 6; pointer-events: none; width: 100%; text-align: center; text-indent: 16px; }
+        /* Watermark di dalam pop up */
+        .modal-watermark-bottom { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 3.2rem; font-weight: 400; color: rgba(0, 0, 0, 0.05); letter-spacing: 16px; z-index: 3; pointer-events: none; width: 100%; text-align: center; text-indent: 16px; }
 
         /* SISI KANAN: Informasi Detail */
-        .modal-info-side { flex: 1; padding: 50px 45px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
+        .modal-info-side { flex: 1; padding: 50px 45px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; overflow-y: auto; }
         
         .close-modal-btn { position: absolute; top: 15px; right: 15px; background: #fff; border: none; color: #111; font-size: 1.2rem; cursor: pointer; z-index: 99; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; border-radius: 50%; box-shadow: var(--shadow-sm); transition: var(--transition-fast); }
         .close-modal-btn:hover { background: #f5f5f5; color: var(--gold); transform: rotate(90deg); }
@@ -213,14 +205,14 @@
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOut { to { transform: translateX(100%); opacity: 0; } }
 
-        /* Back To Top Action Button */
+        /* Back To Top */
         #backToTop { position: fixed; bottom: 25px; left: 25px; background-color: #fff; color: var(--text-primary); border: 1px solid #eee; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; z-index: 99; opacity: 0; pointer-events: none; transition: var(--transition-fast); box-shadow: var(--shadow-sm); }
         #backToTop.show { opacity: 1; pointer-events: auto; }
         #backToTop:hover { border-color: var(--gold); color: #fff; background-color: var(--gold); }
 
         .hide { display: none !important; opacity: 0 !important; visibility: hidden !important; }
 
-        /* === RESPONSIVE SMARTPHONE LAYOUT (FIXED IMAGE CUTTING) === */
+        /* === RESPONSIVE SMARTPHONE LAYOUT === */
         @media (max-width: 768px) {
             .container { padding: 25px 15px 60px; } 
             header { padding: 12px 15px; } 
@@ -241,15 +233,16 @@
             .watermark-bottom { font-size: 1.5rem; bottom: 15px; letter-spacing: 8px; text-indent: 8px; }
             .modal-watermark-bottom { font-size: 2.0rem; bottom: 15px; letter-spacing: 8px; text-indent: 8px; }
             
-            /* SOLUSI KUNCI SMARTPHONE: Wrapper diatur Vertikal Scroll */
-            .modal-wrapper { flex-direction: column; max-height: 85vh; overflow-y: auto; } 
+            /* SOLUSI MOBILE: Diubah jadi vertikal block (bukan flex baris) */
+            .modal-wrapper { flex-direction: column; overflow-y: auto; display: block; max-height: 90vh; } 
             
-            /* Image Side di HP mengikuti aspek rasio gaun utuh agar TIDAK PERNAH terpotong */
-            .modal-image-side { flex: none; width: 100%; aspect-ratio: 2 / 3; background-color: #f7f7f7; }
-            .modal-info-side { padding: 25px 20px; flex: none; }
+            /* Tinggi boks gambar diset spesifik untuk mobile agar proporsional */
+            .modal-image-side { width: 100%; height: 60vh; min-height: auto; position: relative; display: block; flex: none; }
+            .modal-swiper .swiper-slide { padding: 15px; }
+            
+            .modal-info-side { padding: 25px 20px; flex: none; overflow-y: visible; }
             .modal-title { font-size: 1.4rem; }
             
-            /* Navigasi Mini di Layar Sentuh */
             .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { width: 36px; height: 36px; }
             .modal-swiper .swiper-button-next::after, .modal-swiper .swiper-button-prev::after { font-size: 11px; }
         }
@@ -582,7 +575,6 @@
 
             document.getElementById('product-modal').classList.add('active');
 
-            // INGERASI AUTO SLIDING MULUS 3 DETIK
             if(modalSwiperInstance) modalSwiperInstance.destroy();
             modalSwiperInstance = new Swiper(".modalSwiper", {
                 slidesPerView: 1,
