@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CJR Couture | Katalog Haute Couture</title>
+    <title>CJR Couture | Haute Couture Catalog</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        /* === PALET WARNA LUXURY & TRANSISI === */
+        /* === LUXURY COLOR PALETTE & TRANSITIONS === */
         :root {
             --bg-color: #ffffff;
             --surface-color: #fafafa;
@@ -32,7 +32,7 @@
             --transition-fast: all 0.3s ease;
         }
 
-        /* === KEAMANAN & RESET === */
+        /* === COUTURE SECURITY & RESET === */
         * { 
             margin: 0; 
             padding: 0; 
@@ -58,13 +58,13 @@
         ::-webkit-scrollbar-track { background: var(--surface-color); }
         ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 10px; }
 
-        /* Layar Memuat Konten (Loader) */
+        /* Elegant Page Loader Panel */
         #loader-panel { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-color: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.6s ease, visibility 0.6s; }
         .spinner { width: 45px; height: 45px; border: 2px solid rgba(197, 155, 39, 0.1); border-top: 2px solid var(--gold); border-radius: 50%; animation: spin 1s cubic-bezier(0.55, 0.055, 0.675, 0.19) infinite; margin-bottom: 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .loader-text { font-family: var(--font-display); letter-spacing: 4px; color: var(--gold); font-size: 0.75rem; text-transform: uppercase; font-weight: 500; }
 
-        /* Navigasi Atas Premium */
+        /* Luxury Header & Navigation */
         header { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px 40px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid rgba(0, 0, 0, 0.02); display: flex; justify-content: space-between; align-items: center; box-shadow: var(--shadow-sm); transition: var(--transition); }
         header.scrolled { padding: 12px 40px; background-color: rgba(255, 255, 255, 0.98); }
         .header-left, .header-right { width: 80px; } 
@@ -80,12 +80,12 @@
 
         .container { max-width: 1440px; margin: 0 auto; padding: 40px 40px 80px; }
         
-        /* Koleksi Terbaru Slider */
+        /* New Arrival Slider Section */
         .new-arrival-section { padding: 50px 40px 20px; background: #fafafa; border-bottom: 1px solid rgba(0, 0, 0, 0.02); }
         .swiper { width: 100%; padding-bottom: 50px !important; }
         .swiper-pagination-bullet-active { background: var(--gold) !important; width: 25px; border-radius: 4px; }
 
-        /* Tombol Filter Kategori */
+        /* Premium Category Filter Buttons */
         .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 50px; }
         .filter-btn { background: transparent; border: 1px solid #eaeaea; color: var(--text-muted); padding: 10px 24px; font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); border-radius: 2px; font-weight: 500; font-family: var(--font-body); }
         .filter-btn:hover, .filter-btn.active { color: var(--gold); border-color: var(--gold); background-color: var(--gold-light); }
@@ -94,22 +94,22 @@
         .section-header h2 { font-family: var(--font-display); font-size: 1.8rem; letter-spacing: 6px; text-transform: uppercase; font-weight: 400; padding-bottom: 12px; display: inline-block; position: relative; color: var(--text-primary); }
         .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 1px; background-color: var(--gold); }
 
-        /* Grid Katalog (Responsif Android 2 Kolom) */
+        /* Catalog Grid Layout (Highly Responsive) */
         .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px 25px; transition: opacity 0.4s ease; }
         
-        /* Kartu Produk */
+        /* Premium Card Design */
         .product-card { background-color: var(--surface-card); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; box-shadow: var(--shadow-sm); }
         .product-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-md); }
         
-        /* Wadah Gambar Sempurna (Rasio Vertikal Gaun Ideal) */
+        /* Golden Ratio Dress Container */
         .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #fcfcfc; overflow: hidden; }
         .product-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         .product-card:hover .product-image { transform: scale(1.06); }
         
-        /* Tameng Transparan Pencegah Klik Kanan */
+        /* Transparent Shield Layer to Protect Copyright Images */
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
         
-        /* TOMBOL WISHLIST REKAYASA BARU (ANTI-HILANG DI ANDROID) */
+        /* Android Ultra-Responsive Wishlist Button */
         .quick-wishlist-btn { 
             position: absolute; 
             top: 15px; 
@@ -127,43 +127,43 @@
             color: var(--text-primary); 
             font-size: 1.15rem; 
             cursor: pointer; 
-            z-index: 99; /* Lapisan paling atas melompati tameng gambar */
+            z-index: 99; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
             transition: var(--transition-fast); 
         }
         .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #fff; }
 
-        /* WATERMARK ULTRA SAMAR TRANSPARAN TULISAN CJR (TIDAK MENUTUPI DETAIL GAUN) */
+        /* FRONT WATERMARK (SLIGHTLY ENLARGED & TRANSLUCENT) */
         .watermark-bottom { 
             position: absolute; 
-            bottom: 20px; 
+            bottom: 22px; 
             left: 50%; 
             transform: translateX(-50%); 
             font-family: var(--font-display); 
-            font-size: 1.5rem; 
+            font-size: 2.0rem; /* Enlarged for premium presence */
             font-weight: 400; 
-            color: rgba(255, 255, 255, 0.28); 
-            letter-spacing: 10px; 
+            color: rgba(255, 255, 255, 0.35); /* Translucent premium white */
+            letter-spacing: 12px; 
             z-index: 6; 
             pointer-events: none; 
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.12); 
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15); 
             width: 100%; 
             text-align: center; 
-            text-indent: 10px; 
+            text-indent: 12px; 
         }
 
         .badge-new { position: absolute; top: 15px; left: 15px; background-color: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 600; text-transform: uppercase; padding: 5px 12px; letter-spacing: 1.5px; z-index: 6; border-radius: 2px; }
 
-        /* Detail Teks di Kartu */
+        /* Card Details Styling */
         .card-details { padding: 20px 15px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #fff; border: 1px solid #f7f7f7; border-top: none; }
         .product-category { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; font-weight: 600; }
         .product-title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.4; }
         
-        /* Teks Harga yang Disesuaikan */
+        /* Adjusted Professional Price Display */
         .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #fcfcfc; padding-top: 14px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; }
-        .product-price.bespoke-style { color: var(--gold); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; }
+        .product-price.bespoke-style { color: var(--gold); font-weight: 600; letter-spacing: 1px; font-size: 0.8rem; text-transform: uppercase; }
 
-        /* Pop-up Modal Detail */
+        /* Premium Backdrop & Detail Modal */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 15px; }
         .modal.active { opacity: 1; pointer-events: auto; }
         .modal-wrapper { background-color: #fff; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; overflow: hidden; }
@@ -172,7 +172,24 @@
         .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; min-height: 350px; }
         .modal-image-side img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 4; }
 
-        .modal-watermark-bottom { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 2.4rem; font-weight: 400; color: rgba(0, 0, 0, 0.05); letter-spacing: 15px; z-index: 2; pointer-events: none; width: 100%; text-align: center; text-indent: 15px; }
+        /* MODAL WATERMARK (ON-TOP OVERLAY STYLE LIKE FRONT CARDS, ENLARGED) */
+        .modal-watermark-bottom { 
+            position: absolute; 
+            bottom: 35px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            font-family: var(--font-display); 
+            font-size: 3.5rem; /* Bold & beautifully enlarged for modal view */
+            font-weight: 400; 
+            color: rgba(255, 255, 255, 0.35); /* Translucent white layered over the photo */
+            letter-spacing: 18px; 
+            z-index: 6; /* Placed cleanly on top of the image layer */
+            pointer-events: none; 
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+            width: 100%; 
+            text-align: center; 
+            text-indent: 18px; 
+        }
 
         .modal-info-side { flex: 1; padding: 50px 40px; display: flex; flex-direction: column; justify-content: center; background: #ffffff; }
         
@@ -182,12 +199,12 @@
         .modal-title { font-family: var(--font-display); font-size: 1.8rem; margin-bottom: 15px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.3; }
         .modal-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.7; font-weight: 400; }
         .modal-price { font-size: 1.25rem; font-weight: 500; margin-bottom: 30px; color: var(--gold-dark); border-bottom: 1px solid #f5f5f5; padding-bottom: 20px; }
-        .modal-price.bespoke-style { color: var(--gold); font-weight: 600; }
+        .modal-price.bespoke-style { color: var(--gold); font-weight: 600; text-transform: uppercase; font-size: 1.1rem; letter-spacing: 1px; }
         
         .btn-gold { background-color: var(--text-primary); color: #fff; border: 1px solid var(--text-primary); padding: 15px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; font-weight: 500; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: var(--transition-fast); width: 100%; border-radius: 2px; }
         .btn-gold:hover { background-color: var(--gold); border-color: var(--gold); }
 
-        /* Menu Samping Daftar Impian (Wishlist) */
+        /* Luxury Wishlist Sidebar Container */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
         .cart-overlay.active { opacity: 1; pointer-events: auto; }
         
@@ -220,20 +237,20 @@
         .empty-cart { text-align: center; color: #aaa; font-size: 0.8rem; padding-top: 80px; }
         .empty-cart i { font-size: 2.5rem; color: #e5e5e5; margin-bottom: 20px; display: block; }
 
-        /* Notifikasi Kecil (Toast) */
+        /* Elegant Micro Toast Notifications */
         #toast-container { position: fixed; bottom: 25px; right: 25px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         .toast { background: #111; color: #fff; padding: 15px 25px; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; font-weight: 500; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-lg); animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; pointer-events: auto; border-radius: 4px; border-left: 3px solid var(--gold); }
         @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes slideOut { to { transform: translateX(100%); opacity: 0; } }
 
-        /* Tombol Kembali ke Atas */
+        /* Back To Top Action Button */
         #backToTop { position: fixed; bottom: 25px; left: 25px; background-color: #fff; color: var(--text-primary); border: 1px solid #eee; width: 45px; height: 45px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; z-index: 99; opacity: 0; pointer-events: none; transition: var(--transition-fast); box-shadow: var(--shadow-sm); }
         #backToTop.show { opacity: 1; pointer-events: auto; }
         #backToTop:hover { border-color: var(--gold); color: #fff; background-color: var(--gold); }
 
         .hide { display: none !important; opacity: 0 !important; visibility: hidden !important; }
 
-        /* === RESPONSIVE KHUSUS ANDROID / MOBILE LAYAR KECIL === */
+        /* === ULTRA-RESPONSIVE SMARTPHONE LAYOUT === */
         @media (max-width: 768px) {
             .container { padding: 25px 15px 60px; } 
             header { padding: 12px 15px; } 
@@ -244,16 +261,19 @@
             .filter-container { margin-bottom: 30px; gap: 6px; }
             .filter-btn { padding: 8px 16px; font-size: 0.65rem; letter-spacing: 1px; }
             
-            /* SANGAT PENTING: Mengubah Jadi 2 Kolom di Layar HP Agar Mewah & Rapi */
+            /* High-End Double Column Editorial Grid for Android */
             .catalog-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 12px; }
             .card-details { padding: 15px 10px; }
             .product-title { font-size: 0.9rem; margin-bottom: 8px; }
             .product-price { font-size: 0.75rem; padding-top: 10px; }
             .product-price.bespoke-style { font-size: 0.72rem; }
-            .quick-wishlist-btn { width: 34px; height: 34px; top: 10px; right: 10px; font-size: 0.95rem; }
-            .watermark-bottom { font-size: 1.2rem; bottom: 15px; letter-spacing: 6px; text-indent: 6px; }
+            .quick-wishlist-btn { width: 36px; height: 36px; top: 10px; right: 10px; font-size: 0.95rem; }
             
-            /* Modal di HP */
+            /* Responsive Watermark Tuning */
+            .watermark-bottom { font-size: 1.5rem; bottom: 15px; letter-spacing: 8px; text-indent: 8px; }
+            .modal-watermark-bottom { font-size: 2.4rem; bottom: 25px; letter-spacing: 12px; text-indent: 12px; }
+            
+            /* Mobile Modal Adjustments */
             .modal-wrapper { flex-direction: column; max-height: 90vh; } 
             .modal-image-side { min-height: 380px; }
             .modal-info-side { padding: 30px 20px; }
@@ -263,7 +283,7 @@
 </head>
 <body oncontextmenu="return false;">
 
-    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Kembali ke atas">
+    <button id="backToTop" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Scroll to top">
         <i class="fa-solid fa-arrow-up"></i>
     </button>
 
@@ -274,7 +294,7 @@
             <div class="brand-subtitle">Couture</div>
         </div>
         <div class="header-right">
-            <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Buka Daftar Impian">
+            <button class="cart-icon-btn" onclick="toggleCart()" aria-label="Open Wishlist">
                 <i class="fa-solid fa-bag-shopping"></i>
                 <span class="cart-badge" id="cart-count">0</span>
             </button>
@@ -283,14 +303,14 @@
 
     <div id="loader-panel">
         <div class="spinner"></div>
-        <div class="loader-text">Memuat Koleksi Indah...</div>
+        <div class="loader-text">Loading the Collection...</div>
     </div>
 
     <div id="toast-container"></div>
 
     <section class="new-arrival-section hide" id="new-arrival-section">
         <div class="section-header" style="margin-bottom: 30px;">
-            <h2>Koleksi Terbaru</h2>
+            <h2>New Arrivals</h2>
         </div>
         <div style="max-width: 1440px; margin: 0 auto;">
             <div class="swiper newArrivalSwiper">
@@ -302,17 +322,17 @@
 
     <main class="container">
         <div class="filter-container" id="filter-wrapper">
-            <button class="filter-btn active" onclick="filterCategory('all', event)">Semua Koleksi</button>
-            <button class="filter-btn" onclick="filterCategory('cocktail dress', event)">Gaun Cocktail</button>
-            <button class="filter-btn" onclick="filterCategory('evening dress', event)">Gaun Malam</button>
-            <button class="filter-btn" onclick="filterCategory('engagement dress', event)">Gaun Tunangan</button>
-            <button class="filter-btn" onclick="filterCategory('brides robe', event)">Jubah Pengantin</button>
-            <button class="filter-btn" onclick="filterCategory('wedding gown', event)">Gaun Pernikahan</button>
-            <button class="filter-btn" onclick="filterCategory('moms gown', event)">Gaun Ibu</button>
+            <button class="filter-btn active" onclick="filterCategory('all', event)">All Collections</button>
+            <button class="filter-btn" onclick="filterCategory('cocktail dress', event)">Cocktail Dresses</button>
+            <button class="filter-btn" onclick="filterCategory('evening dress', event)">Evening Gowns</button>
+            <button class="filter-btn" onclick="filterCategory('engagement dress', event)">Engagement Dresses</button>
+            <button class="filter-btn" onclick="filterCategory('brides robe', event)">Bridal Robes</button>
+            <button class="filter-btn" onclick="filterCategory('wedding gown', event)">Wedding Gowns</button>
+            <button class="filter-btn" onclick="filterCategory('moms gown', event)">Mom's Gowns</button>
         </div>
 
         <div class="section-header">
-            <h2>Karya Mahakarya</h2>
+            <h2>The Masterpieces</h2>
         </div>
 
         <div class="catalog-grid" id="catalog-wrapper"></div>
@@ -320,21 +340,21 @@
 
     <div class="modal" id="product-modal" onclick="closeModal()">
         <div class="modal-wrapper" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeModal()" aria-label="Tutup"><i class="fa-solid fa-xmark"></i></button>
+            <button class="close-modal-btn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="invisible-shield"></div>
                 <div class="modal-watermark-bottom">CJR</div>
-                <img id="modal-img" src="" alt="Detail Koleksi" ondragstart="return false;">
+                <div class="invisible-shield"></div>
+                <img id="modal-img" src="" alt="Collection Masterpiece Detail" ondragstart="return false;">
             </div>
             
             <div class="modal-info-side">
-                <span class="modal-cat" id="modal-cat">Kategori</span>
-                <h3 class="modal-title" id="modal-title">Nama Gaun</h3>
-                <p class="modal-desc" id="modal-desc">Deskripsi gaun</p>
-                <div class="modal-price" id="modal-price">Harga</div> 
+                <span class="modal-cat" id="modal-cat">Category</span>
+                <h3 class="modal-title" id="modal-title">Gown Masterpiece</h3>
+                <p class="modal-desc" id="modal-desc">Gown description details.</p>
+                <div class="modal-price" id="modal-price">Price</div> 
                 <button id="modal-add-btn" class="btn-gold" onclick="addToCartFromModal()">
-                    <i class="fa-regular fa-heart"></i> Simpan ke Favorit
+                    <i class="fa-regular fa-heart"></i> Add to Wishlist
                 </button>
             </div>
         </div>
@@ -343,13 +363,13 @@
     <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
     <div class="cart-sidebar" id="cart-sidebar">
         <div class="cart-header">
-            <h3><i class="fa-regular fa-heart" style="color: var(--gold); margin-right: 5px;"></i> Favorit Saya</h3>
+            <h3><i class="fa-regular fa-heart" style="color: var(--gold); margin-right: 8px;"></i> My Wishlist</h3>
             <button class="close-cart-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="cart-items" id="cart-items"></div>
         <div class="cart-footer">
             <button class="checkout-wa-btn" onclick="checkoutWA()">
-                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Tanyakan Via WhatsApp
+                <i class="fa-brands fa-whatsapp" style="font-size: 1.2rem;"></i> Inquire via WhatsApp
             </button>
         </div>
     </div>
@@ -358,7 +378,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     
     <script>
-        // SISTEM KEAMANAN: Anti Klik Kanan & Inspeksi
+        // STRICT PREMIUM COUTURE SECURITY: Block Inspect Elements & Theft
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
             if (e.keyCode == 123) return false;
@@ -374,8 +394,8 @@
         let globalProductsData = [];
         let currentModalProductId = null;
         
-        // Memakai Cache v7 (Membersihkan penuh sisa data bermasalah dari versi lama)
-        let cart = JSON.parse(localStorage.getItem('cjr_cart_v7')) || [];
+        // V8 Micro Cache Flushing Mechanism to force global English Translation
+        let cart = JSON.parse(localStorage.getItem('cjr_cart_v8')) || [];
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
@@ -386,7 +406,7 @@
             else btn.classList.remove('show');
         });
 
-        // PEMBACA GOOGLE DRIVE FORMAT LH3 AMAN & CEPAT
+        // FAST HIGH-SPEED SECURE DRIVE STREAMER ENGINE
         function parseImageUrl(url) {
             if (!url || url.trim() === "") return placeholderImg;
             let str = url.trim();
@@ -436,16 +456,16 @@
                 let hargaText = row[4] ? row[4].trim() : '';
                 let isBespoke = false;
                 
-                // Konversi Teks "Bespoke" Menjadi Bahasa Indonesia yang Jelas dan Elegan
+                // Professional International Luxury Standard Formatting
                 if (hargaText === '' || hargaText.toLowerCase().includes('request') || hargaText.toLowerCase().includes('bespoke')) {
-                    hargaText = 'Hubungi Kami (Desain Khusus)';
+                    hargaText = 'Price Upon Request';
                     isBespoke = true;
                 }
 
                 return {
                     id: index,
                     nama: row[0].trim(),
-                    kategori: row[1] ? row[1].trim() : 'Eksklusif',
+                    kategori: row[1] ? row[1].trim() : 'Exclusive',
                     deskripsi: row[2] ? row[2].trim() : '-',
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
                     harga: hargaText,
@@ -460,19 +480,19 @@
             closeLoader();
         }
 
-        // FUNGSI KLIK DIRECT WISHLIST (DIJAMIN BEBAS BUG DI ANDROID)
+        // TOUCH-SAFE DIRECT WISHLIST ADDITION FOR CELLPHONES
         window.addDirectWishlist = function(event, id) {
-            event.stopPropagation(); // Menahan agar pop-up detail tidak ikut melompat buka
+            event.stopPropagation(); 
             const product = globalProductsData.find(p => p.id === id);
             if(!product) return;
 
             const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
-                showToast("Sudah ada di daftar favorit Anda.");
+                showToast("Already in your wishlist.");
             } else {
                 cart.push(product);
                 saveCart();
-                showToast("Disimpan ke Favorit!");
+                showToast("Added to Wishlist!");
                 
                 const badge = document.getElementById('cart-count');
                 badge.classList.add('bump');
@@ -481,14 +501,14 @@
         };
 
         function createCardHTML(product) {
-            const isNew = product.statusNew.includes('new') ? `<span class="badge-new">Terbaru</span>` : '';
+            const isNew = product.statusNew.includes('new') ? `<span class="badge-new">New</span>` : '';
             const priceClass = product.isBespoke ? 'product-price bespoke-style' : 'product-price';
             
             return `
                 <div class="product-card" onclick="openModal(${product.id})">
                     <div class="image-container">
                         ${isNew}
-                        <button class="quick-wishlist-btn" onclick="addDirectWishlist(event, ${product.id})" title="Simpan ke Favorit">
+                        <button class="quick-wishlist-btn" onclick="addDirectWishlist(event, ${product.id})" title="Add to Wishlist">
                             <i class="fa-regular fa-heart"></i>
                         </button>
                         <div class="watermark-bottom">CJR</div>
@@ -526,7 +546,7 @@
             setTimeout(() => {
                 wrapper.innerHTML = '';
                 if(items.length === 0) {
-                    wrapper.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px; font-size: 0.85rem; font-weight:300;">Koleksi kategori ini belum tersedia.</div>`;
+                    wrapper.innerHTML = `<div style="grid-column: 1/-1; text-align: center; color: #999; padding: 40px; font-size: 0.85rem; font-weight:300;">No collection available for this category.</div>`;
                     wrapper.style.opacity = '1';
                     return;
                 }
@@ -580,7 +600,7 @@
 
             const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
-                showToast("Sudah ada di daftar favorit Anda.");
+                showToast("Already in your wishlist.");
             } else {
                 cart.push(product);
                 saveCart();
@@ -599,7 +619,7 @@
         }
 
         function saveCart() {
-            localStorage.setItem('cjr_cart_v7', JSON.stringify(cart));
+            localStorage.setItem('cjr_cart_v8', JSON.stringify(cart));
             updateCartUI();
         }
 
@@ -613,7 +633,7 @@
                 containerItem.innerHTML = `
                     <div class="empty-cart">
                         <i class="fa-regular fa-heart"></i>
-                        <p>Daftar favorit impian Anda masih kosong.</p>
+                        <p>Your luxury wishlist is currently empty.</p>
                     </div>
                 `;
             } else {
@@ -630,8 +650,8 @@
                                     <div class="cart-item-category">${item.kategori}</div>
                                 </div>
                                 <div class="cart-item-actions">
-                                    <span class="exclusive-badge">Produk Terbatas</span>
-                                    <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-xmark"></i> Hapus</button>
+                                    <span class="exclusive-badge">Limited Edition</span>
+                                    <button class="remove-btn" onclick="removeFromCart(${item.id})"><i class="fa-solid fa-xmark"></i> Remove</button>
                                 </div>
                             </div>
                         </div>
@@ -641,27 +661,28 @@
             penandaJumlah.innerText = cart.length; 
         }
 
+        // COUTURE COURIER: Automated International WhatsApp Message Generation
         function checkoutWA() {
             if(cart.length === 0) {
-                showToast("Daftar favorit Anda masih kosong.");
+                showToast("Your wishlist is empty.");
                 return;
             }
 
-            const jam = new Date().getHours();
-            let sapaan = "Selamat pagi";
-            if (jam >= 11 && jam < 15) sapaan = "Selamat siang";
-            else if (jam >= 15 && jam < 18) sapaan = "Selamat sore";
-            else if (jam >= 18) sapaan = "Selamat malam";
+            const hours = new Date().getHours();
+            let greeting = "Good morning";
+            if (hours >= 11 && hours < 15) greeting = "Good afternoon";
+            else if (hours >= 15 && hours < 18) greeting = "Good afternoon";
+            else if (hours >= 18) greeting = "Good evening";
 
-            let isiPesan = `${sapaan} tim *CJR Couture*.\n\nSaya tertarik dan ingin menanyakan koleksi mahakarya berikut:\n\n`;
+            let messageText = `${greeting} *CJR Couture* team.\n\nI am highly interested in inquiring about the following masterpiece collection(s) from your catalog:\n\n`;
             
             cart.forEach((item, index) => {
-                isiPesan += `${index + 1}. *${item.nama}*\n    ▪ Kategori: ${item.kategori}\n    ▪ Keterangan: ${item.harga}\n\n`;
+                messageText += `${index + 1}. *${item.nama}*\n    ▪ Category: ${item.kategori}\n    ▪ Notes: ${item.harga}\n\n`;
             });
 
-            isiPesan += `Mohon informasi detail dan ketersediaannya, terima kasih.`;
+            messageText += `Kindly provide more details regarding availability and custom sizing info. Thank you.`;
 
-            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(isiPesan)}`;
+            const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(messageText)}`;
             window.open(linkWhatsApp, '_blank');
         }
 
