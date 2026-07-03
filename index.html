@@ -140,9 +140,9 @@
             left: 50%; 
             transform: translateX(-50%); 
             font-family: var(--font-display); 
-            font-size: 2.0rem; /* Enlarged for premium presence */
+            font-size: 2.0rem; 
             font-weight: 400; 
-            color: rgba(255, 255, 255, 0.35); /* Translucent premium white */
+            color: rgba(255, 255, 255, 0.35); 
             letter-spacing: 12px; 
             z-index: 6; 
             pointer-events: none; 
@@ -169,8 +169,14 @@
         .modal-wrapper { background-color: #fff; max-width: 950px; width: 100%; display: flex; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); transform: translateY(20px); transition: var(--transition); border-radius: 4px; overflow: hidden; }
         .modal.active .modal-wrapper { transform: translateY(0); }
         
-        .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; min-height: 350px; }
-        .modal-image-side img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 4; }
+        /* MODAL SLIDER INTEGRATION */
+        .modal-image-side { flex: 1.1; background-color: #fcfcfc; position: relative; min-height: 350px; max-width: 500px; width: 100%; overflow: hidden; }
+        .modal-swiper { width: 100%; height: 100%; }
+        .modal-swiper .swiper-slide { position: relative; display: flex; justify-content: center; align-items: center; background: #fcfcfc; aspect-ratio: 2/3; }
+        .modal-swiper img { width: 100%; height: 100%; object-fit: cover; object-position: top center; position: relative; z-index: 4; }
+        
+        .modal-swiper .swiper-button-next, .modal-swiper .swiper-button-prev { color: var(--gold); transform: scale(0.6); z-index: 10; }
+        .modal-swiper .swiper-pagination-bullet-active { background: var(--gold) !important; }
 
         /* MODAL WATERMARK (ON-TOP OVERLAY STYLE LIKE FRONT CARDS, ENLARGED) */
         .modal-watermark-bottom { 
@@ -179,11 +185,11 @@
             left: 50%; 
             transform: translateX(-50%); 
             font-family: var(--font-display); 
-            font-size: 3.5rem; /* Bold & beautifully enlarged for modal view */
+            font-size: 3.5rem; 
             font-weight: 400; 
-            color: rgba(255, 255, 255, 0.35); /* Translucent white layered over the photo */
+            color: rgba(255, 255, 255, 0.35); 
             letter-spacing: 18px; 
-            z-index: 6; /* Placed cleanly on top of the image layer */
+            z-index: 6; 
             pointer-events: none; 
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
             width: 100%; 
@@ -275,7 +281,7 @@
             
             /* Mobile Modal Adjustments */
             .modal-wrapper { flex-direction: column; max-height: 90vh; } 
-            .modal-image-side { min-height: 380px; }
+            .modal-image-side { min-height: 380px; max-width: 100%; }
             .modal-info-side { padding: 30px 20px; }
             .modal-title { font-size: 1.5rem; }
         }
@@ -343,9 +349,13 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="modal-watermark-bottom">CJR</div>
-                <div class="invisible-shield"></div>
-                <img id="modal-img" src="" alt="Collection Masterpiece Detail" ondragstart="return false;">
+                <div class="swiper modalSwiper" style="height: 100%; width: 100%;">
+                    <div class="swiper-wrapper" id="modal-slider-wrapper">
+                        </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
             </div>
             
             <div class="modal-info-side">
@@ -393,9 +403,9 @@
 
         let globalProductsData = [];
         let currentModalProductId = null;
+        let modalSwiperInstance = null;
         
-        // V8 Micro Cache Flushing Mechanism to force global English Translation
-        let cart = JSON.parse(localStorage.getItem('cjr_cart_v8')) || [];
+        let cart = JSON.parse(localStorage.getItem('cjr_cart_v9')) || [];
 
         window.addEventListener('scroll', () => {
             const btn = document.getElementById('backToTop');
@@ -408,7 +418,7 @@
 
         // FAST HIGH-SPEED SECURE DRIVE STREAMER ENGINE
         function parseImageUrl(url) {
-            if (!url || url.trim() === "") return placeholderImg;
+            if (!url || url.trim() === "") return null;
             let str = url.trim();
             let match = str.match(/(?:\/d\/|id=)([\w-]+)/);
             if (match && match[1]) {
@@ -449,18 +459,22 @@
             globalProductsData = rows.map((row, index) => {
                 if (!row || row.length === 0 || !row[0]) return null;
                 
+                // Ambil label status kosong dari Kolom H (indeks ke-7)
                 let statusSembunyi = '';
-                if(row.length > 6 && row[6]) statusSembunyi = row[6].toString().trim().toLowerCase();
+                if(row.length > 7 && row[7]) statusSembunyi = row[7].toString().trim().toLowerCase();
                 if (['kosong', 'sold', 'sembunyi'].includes(statusSembunyi)) return null;
 
                 let hargaText = row[4] ? row[4].trim() : '';
                 let isBespoke = false;
                 
-                // Professional International Luxury Standard Formatting
                 if (hargaText === '' || hargaText.toLowerCase().includes('request') || hargaText.toLowerCase().includes('bespoke')) {
                     hargaText = 'Price Upon Request';
                     isBespoke = true;
                 }
+
+                // Kolom F (indeks 5) dan Kolom G (indeks 6)
+                let img1 = parseImageUrl(row[5]) || placeholderImg;
+                let img2 = parseImageUrl(row[6]); // Bisa bernilai null jika kosong
 
                 return {
                     id: index,
@@ -470,7 +484,8 @@
                     statusNew: row[3] ? row[3].trim().toLowerCase() : '',
                     harga: hargaText,
                     isBespoke: isBespoke,
-                    gambar: parseImageUrl(row[5])
+                    gambar: img1,
+                    gambar2: img2
                 };
             }).filter(item => item !== null);
 
@@ -480,7 +495,6 @@
             closeLoader();
         }
 
-        // TOUCH-SAFE DIRECT WISHLIST ADDITION FOR CELLPHONES
         window.addDirectWishlist = function(event, id) {
             event.stopPropagation(); 
             const product = globalProductsData.find(p => p.id === id);
@@ -568,8 +582,29 @@
             if(!prod) return;
             currentModalProductId = id;
 
-            document.getElementById('modal-img').src = prod.gambar;
-            document.getElementById('modal-img').onerror = function() { this.onerror=null; this.src=placeholderImg; };
+            // Bangun Slider di dalam modal
+            const sliderWrapper = document.getElementById('modal-slider-wrapper');
+            sliderWrapper.innerHTML = '';
+
+            // Masukkan slide foto pertama (Kolom F)
+            sliderWrapper.innerHTML += `
+                <div class="swiper-slide">
+                    <div class="modal-watermark-bottom">CJR</div>
+                    <div class="invisible-shield"></div>
+                    <img src="${prod.gambar}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                </div>
+            `;
+
+            // Masukkan slide foto kedua (Kolom G) jika ada
+            if(prod.gambar2) {
+                sliderWrapper.innerHTML += `
+                    <div class="swiper-slide">
+                        <div class="modal-watermark-bottom">CJR</div>
+                        <div class="invisible-shield"></div>
+                        <img src="${prod.gambar2}" alt="${prod.nama}" onerror="this.onerror=null; this.src='${placeholderImg}';">
+                    </div>
+                `;
+            }
             
             document.getElementById('modal-cat').innerText = prod.kategori;
             document.getElementById('modal-title').innerText = prod.nama;
@@ -581,6 +616,15 @@
             else priceEl.className = 'modal-price';
 
             document.getElementById('product-modal').classList.add('active');
+
+            // Inisialisasi Ulang Swiper Modal agar posisinya fresh di slide ke-1
+            if(modalSwiperInstance) modalSwiperInstance.destroy();
+            modalSwiperInstance = new Swiper(".modalSwiper", {
+                slidesPerView: 1,
+                spaceBetween: 0,
+                pagination: { el: ".modal-image-side .swiper-pagination", clickable: true },
+                navigation: { nextEl: ".modal-image-side .swiper-button-next", prevEl: ".modal-image-side .swiper-button-prev" }
+            });
         }
 
         function closeModal() { document.getElementById('product-modal').classList.remove('active'); }
@@ -619,7 +663,7 @@
         }
 
         function saveCart() {
-            localStorage.setItem('cjr_cart_v8', JSON.stringify(cart));
+            localStorage.setItem('cjr_cart_v9', JSON.stringify(cart));
             updateCartUI();
         }
 
@@ -661,7 +705,6 @@
             penandaJumlah.innerText = cart.length; 
         }
 
-        // COUTURE COURIER: Automated International WhatsApp Message Generation
         function checkoutWA() {
             if(cart.length === 0) {
                 showToast("Your wishlist is empty.");
