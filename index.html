@@ -133,7 +133,7 @@
         }
         .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #fff; }
 
-        /* PERBAIKAN: Watermark Emas Luxury agar selalu terlihat jelas di latar mana pun */
+        /* Watermark Emas Luxury */
         .watermark-bottom { 
             position: absolute; 
             bottom: 22px; 
@@ -178,7 +178,7 @@
         .modalSwiper .swiper-button-next, .modalSwiper .swiper-button-prev { color: var(--gold); z-index: 50; transform: scale(0.7); background: rgba(255,255,255,0.6); width: 45px; height: 45px; border-radius: 50%; backdrop-filter: blur(4px); }
         .modalSwiper .swiper-pagination { bottom: 10px !important; z-index: 50; }
 
-        /* PERBAIKAN: Watermark Modal Emas Luxury */
+        /* Watermark Modal Emas Luxury */
         .modal-watermark-bottom { 
             position: absolute; 
             bottom: 35px; 
@@ -276,7 +276,7 @@
             .product-price.bespoke-style { font-size: 0.72rem; }
             .quick-wishlist-btn { width: 36px; height: 36px; top: 10px; right: 10px; font-size: 0.95rem; }
             
-            /* PERBAIKAN: Watermark Katalog di HP (Kombinasi warna emas kontras tinggi) */
+            /* Watermark Katalog di HP */
             .watermark-bottom { 
                 font-size: 1.4rem; 
                 bottom: 15px; 
@@ -286,7 +286,7 @@
                 text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9) !important;
             }
             
-            /* PERBAIKAN: Watermark Modal Pop-up di HP */
+            /* Watermark Modal Pop-up di HP */
             .modal-watermark-bottom { 
                 font-size: 2.2rem; 
                 bottom: 25px; 
@@ -296,15 +296,42 @@
                 text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.9) !important;
             }
             
-            /* PERBAIKAN TOTAL: Zoom Gambar Pop-up Modal di HP dikunci ketat */
-            .modal-wrapper { flex-direction: column; max-height: 85vh; } 
-            .modal-image-side { height: 380px; min-height: 380px; flex-shrink: 0; background-color: #fafafa; }
+            /* PERBAIKAN POP-UP: Mengunci gambar dan melarang teks menyusut/hilang */
+            .modal-wrapper { 
+                flex-direction: column; 
+                max-height: 90vh; /* Ditambah ruang agar lebih luas */
+                overflow-y: auto !important; /* Mengizinkan seluruh isi pop-up di-scroll kebawah */
+                display: flex;
+            } 
+            
+            .modal-image-side { 
+                height: 340px; /* Tinggi gambar disesuaikan agar proporsional di HP */
+                min-height: 340px; 
+                flex-shrink: 0; 
+                background-color: #fafafa; 
+            }
+            
             .modalSwiper { height: 100% !important; }
             .modalSwiper .swiper-slide { background: #fafafa; }
             .modalSwiper img { width: 100% !important; height: 100% !important; object-fit: contain !important; max-height: 100% !important; }
             
-            .modal-info-side { padding: 25px 20px; }
-            .modal-title { font-size: 1.4rem; }
+            /* PERBAIKAN TULISAN KEPOTONG: Ditambahkan flex-shrink: 0 agar tidak gepeng */
+            .modal-info-side { 
+                padding: 30px 20px; 
+                flex-shrink: 0 !important; /* Melarang teks terpotong atau mengecil */
+                height: auto !important; 
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .modal-title { 
+                font-size: 1.3rem; 
+                margin-bottom: 12px;
+                line-height: 1.4;
+            }
+            .modal-desc { margin-bottom: 20px; }
+            .modal-price { margin-bottom: 20px; padding-bottom: 15px; }
+            
             .modalSwiper .swiper-button-next, .modalSwiper .swiper-button-prev { transform: scale(0.55); width: 32px; height: 32px; }
         }
     </style>
@@ -372,8 +399,7 @@
             
             <div class="modal-image-side">
                 <div class="swiper modalSwiper">
-                    <div class="swiper-wrapper" id="modal-swiper-wrapper">
-                        </div>
+                    <div class="swiper-wrapper" id="modal-swiper-wrapper"></div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-pagination"></div>
