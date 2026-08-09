@@ -812,14 +812,14 @@
             else if (hours >= 15 && hours < 18) greeting = "Good afternoon";
             else if (hours >= 18) greeting = "Good evening";
 
-            let messageText = `${greeting} *CJR Couture* team.\n\nI am highly interested in inquiring about the following masterpiece collection(s) from your catalog:\n\n`;
+            let messageText = `${greeting} *CJR Couture* team.\n\nI am interested in inquiring about the collection from your catalog:\n\n`;
             
             cart.forEach((item, index) => {
                 if(!item) return;
                 messageText += `${index + 1}. *${item.nama}*\n    ▪ Category: ${item.kategori}\n    ▪ Notes: ${item.harga}\n\n`;
             });
 
-            messageText += `Kindly provide more details regarding availability and custom sizing info. Thank you.`;
+            messageText += `Kindly provide more details regarding availability. Thank you.`;
 
             const linkWhatsApp = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${encodeURIComponent(messageText)}`;
             window.open(linkWhatsApp, '_blank');
