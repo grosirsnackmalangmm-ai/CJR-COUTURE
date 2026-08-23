@@ -89,12 +89,12 @@
             font-weight: 600; 
         }
 
-        /* Luxury Header */
+        /* Luxury Header & Logo Container */
         header { 
             background-color: rgba(255, 255, 255, 0.92); 
             backdrop-filter: blur(20px); 
             -webkit-backdrop-filter: blur(20px); 
-            padding: 22px 40px; 
+            padding: 18px 40px; 
             position: sticky; 
             top: 0; 
             z-index: 100; 
@@ -105,9 +105,19 @@
             box-shadow: var(--shadow-sm); 
             transition: var(--transition); 
         }
-        header.scrolled { padding: 14px 40px; background-color: rgba(255, 255, 255, 0.98); }
+        header.scrolled { padding: 12px 40px; background-color: rgba(255, 255, 255, 0.98); }
         .header-left, .header-right { width: 80px; } 
-        .header-center { text-align: center; }
+        .header-center { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        
+        .brand-logo-img {
+            max-height: 48px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            transition: var(--transition-fast);
+        }
+
         .brand-logo { 
             font-family: var(--font-display); 
             font-size: 1.75rem; 
@@ -249,8 +259,14 @@
         
         /* Image Display */
         .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #F8F6F2; overflow: hidden; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); display: block; z-index: 1; }
+        .product-image { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease; display: block; z-index: 1; }
         .product-card:hover .product-image { transform: scale(1.06); }
+        
+        /* EFEK SOLD OUT (HITAM PUTIH) */
+        .product-card.is-sold-out .product-image { 
+            filter: grayscale(100%) contrast(90%) brightness(95%); 
+            opacity: 0.82;
+        }
         
         /* Shield Protection */
         .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
@@ -278,6 +294,13 @@
             transition: var(--transition-fast); 
         }
         .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #FFFFFF; }
+        .quick-wishlist-btn.disabled-btn {
+            background: rgba(230, 230, 230, 0.85);
+            color: #A0A0A0;
+            cursor: not-allowed;
+            border-color: #DDD;
+        }
+        .quick-wishlist-btn.disabled-btn:hover { color: #A0A0A0; transform: none; background: rgba(230, 230, 230, 0.85); }
 
         /* BOLD ELEGAN WATERMARK (ROSÈU) */
         .watermark-bottom { 
@@ -315,12 +338,29 @@
             box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
         }
 
+        .badge-sold-out {
+            position: absolute; 
+            top: 15px; 
+            left: 15px; 
+            background-color: #1A1A1A; 
+            color: #FFFFFF; 
+            font-size: 0.58rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            padding: 6px 14px; 
+            letter-spacing: 2px; 
+            z-index: 6; 
+            border-radius: 2px; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+        }
+
         /* Card Content */
         .card-details { padding: 22px 18px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #FFFFFF; border-top: none; z-index: 10; }
         .product-category { font-size: 0.62rem; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 8px; font-weight: 600; }
         .product-title { font-family: var(--font-display); font-size: 1.08rem; margin-bottom: 12px; color: var(--text-primary); letter-spacing: 0.5px; font-weight: 500; line-height: 1.4; }
         .product-price { font-size: 0.85rem; margin-top: auto; border-top: 1px solid #F6F3EE; padding-top: 14px; color: var(--text-muted); font-weight: 500; letter-spacing: 0.5px; }
         .product-price.bespoke-style { color: var(--gold-dark); font-weight: 600; letter-spacing: 1.5px; font-size: 0.78rem; text-transform: uppercase; }
+        .product-price.sold-out-price { color: #888888; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem; }
 
         /* Modal Pop-up UI */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 15, 15, 0.65); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
@@ -332,7 +372,8 @@
         
         .modalSwiper { width: 100%; height: 100%; padding-bottom: 0 !important; position: relative; }
         .modalSwiper .swiper-slide { display: flex; justify-content: center; align-items: center; background: #F8F6F2; position: relative; width: 100%; height: 100%; }
-        .modalSwiper img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 1; }
+        .modalSwiper img { width: 100%; height: 100%; object-fit: contain; max-height: 600px; position: relative; z-index: 1; transition: filter 0.4s ease; }
+        .modalSwiper.is-sold-out img { filter: grayscale(100%) contrast(90%) brightness(95%); }
         
         .modalSwiper .swiper-button-next, .modalSwiper .swiper-button-prev { color: var(--gold); z-index: 50; transform: scale(0.7); background: rgba(255,255,255,0.85); width: 45px; height: 45px; border-radius: 50%; backdrop-filter: blur(4px); box-shadow: var(--shadow-sm); }
         .modalSwiper .swiper-pagination { bottom: 12px !important; z-index: 50; }
@@ -367,6 +408,7 @@
         .modal-desc { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 30px; line-height: 1.8; font-weight: 400; }
         .modal-price { font-size: 1.3rem; font-weight: 500; margin-bottom: 30px; color: var(--gold-dark); border-bottom: 1px solid #F6F3EE; padding-bottom: 20px; }
         .modal-price.bespoke-style { color: var(--gold-dark); font-weight: 600; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 1.5px; }
+        .modal-price.sold-out-price { color: #888888; font-weight: 600; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 2px; }
         
         .btn-gold { 
             background-color: var(--text-primary); 
@@ -389,6 +431,16 @@
             box-shadow: var(--shadow-sm);
         }
         .btn-gold:hover { background-color: var(--gold); border-color: var(--gold); box-shadow: 0 6px 18px rgba(197, 160, 89, 0.3); }
+
+        /* Tombol Disabled untuk Sold Out */
+        .btn-gold.disabled-btn {
+            background-color: #E0E0E0 !important;
+            color: #888888 !important;
+            border-color: #CCCCCC !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+        }
+        .btn-gold.disabled-btn:hover { background-color: #E0E0E0 !important; border-color: #CCCCCC !important; }
 
         /* Wishlist Sidebar */
         .cart-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 1001; opacity: 0; pointer-events: none; transition: var(--transition); }
@@ -439,6 +491,7 @@
             .container { padding: 25px 15px 70px; } 
             header { padding: 14px 18px; } 
             header.scrolled { padding: 12px 18px; }
+            .brand-logo-img { max-height: 36px; }
             .brand-logo { font-size: 1.2rem; letter-spacing: 5px; text-indent: 5px; }
             .brand-subtitle { font-size: 0.52rem; letter-spacing: 8px; text-indent: 8px; }
             .section-header h2 { font-size: 1.45rem; letter-spacing: 5px; }
@@ -519,7 +572,11 @@
     <header id="main-header">
         <div class="header-left"></div>
         <div class="header-center">
-            <a href="#" class="brand-logo">MAISON ROSÈU</a>
+            <!-- SLOT LOGO BRAND: Ganti URL di src di bawah ini dengan link foto logo Anda -->
+            <a href="#" style="text-decoration: none;">
+                <img id="brand-logo-img" class="brand-logo-img" src="URL_LOGO_ANDA_DI_SINI" alt="MAISON ROSÈU" onerror="this.style.display='none'; document.getElementById('brand-logo-text').style.display='block';">
+                <span id="brand-logo-text" class="brand-logo" style="display: none;">MAISON ROSÈU</span>
+            </a>
             <div class="brand-subtitle">Couture</div>
         </div>
         <div class="header-right">
@@ -572,7 +629,7 @@
             <button class="close-modal-btn" onclick="closeModal()" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
             
             <div class="modal-image-side">
-                <div class="swiper modalSwiper">
+                <div class="swiper modalSwiper" id="modal-swiper-element">
                     <div class="swiper-wrapper" id="modal-swiper-wrapper"></div>
                     <div class="swiper-button-next"></div>
                     <div class="swiper-button-prev"></div>
@@ -707,14 +764,19 @@
                         isBespoke = true;
                     }
 
+                    // CHECK STATUS STOK DI KOLOM H (Index 7)
+                    let statusStok = (row.length > 7 && row[7]) ? row[7].trim().toLowerCase() : '';
+                    let isSoldOut = statusStok.includes('sold') || statusStok.includes('kosong') || statusStok.includes('habis') || statusStok.includes('out');
+
                     return {
                         id: index,
                         nama: row[0].trim(),
                         kategori: row[1] ? row[1].trim() : 'Exclusive',
                         deskripsi: row[2] ? row[2].trim() : '-',
                         statusNew: row[3] ? row[3].trim().toLowerCase() : '',
-                        harga: hargaText,
+                        harga: isSoldOut ? 'Sold Out' : hargaText,
                         isBespoke: isBespoke,
+                        isSoldOut: isSoldOut,
                         gambar: parseImageUrl(row[5]) || placeholderImg,
                         gambar2: (row.length > 6 && row[6] && row[6].trim()) ? parseImageUrl(row[6]) : null
                     };
@@ -735,6 +797,11 @@
             const product = globalProductsData.find(p => p.id === id);
             if(!product) return;
 
+            if (product.isSoldOut) {
+                showToast("Maaf, gaun ini telah Sold Out.");
+                return;
+            }
+
             const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
                 showToast("Already in your wishlist.");
@@ -751,17 +818,26 @@
             }
         };
 
-        /* WATERMARK BOLD ROSÈU */
         function createCardHTML(product) {
-            const isNew = product.statusNew && product.statusNew.includes('new') ? `<span class="badge-new">New</span>` : '';
-            const priceClass = product.isBespoke ? 'product-price bespoke-style' : 'product-price';
-            
+            let badgeHTML = '';
+            if (product.isSoldOut) {
+                badgeHTML = `<span class="badge-sold-out">Sold Out</span>`;
+            } else if (product.statusNew && product.statusNew.includes('new')) {
+                badgeHTML = `<span class="badge-new">New</span>`;
+            }
+
+            let priceClass = product.isBespoke ? 'product-price bespoke-style' : 'product-price';
+            if (product.isSoldOut) priceClass = 'product-price sold-out-price';
+
+            const soldOutCardClass = product.isSoldOut ? 'is-sold-out' : '';
+            const wishlistBtnClass = product.isSoldOut ? 'quick-wishlist-btn disabled-btn' : 'quick-wishlist-btn';
+
             return `
-                <div class="product-card" onclick="openModal(${product.id})">
+                <div class="product-card ${soldOutCardClass}" onclick="openModal(${product.id})">
                     <div class="image-container">
-                        ${isNew}
-                        <button class="quick-wishlist-btn" onclick="addDirectWishlist(event, ${product.id})" title="Add to Wishlist">
-                            <i class="fa-regular fa-heart"></i>
+                        ${badgeHTML}
+                        <button class="${wishlistBtnClass}" onclick="addDirectWishlist(event, ${product.id})" title="${product.isSoldOut ? 'Sold Out' : 'Add to Wishlist'}">
+                            <i class="${product.isSoldOut ? 'fa-solid fa-ban' : 'fa-regular fa-heart'}"></i>
                         </button>
                         <img class="product-image" src="${product.gambar}" alt="${product.nama}" loading="lazy" onerror="this.onerror=null; this.src='${placeholderImg}';">
                         <div class="invisible-shield"></div>
@@ -823,14 +899,17 @@
             else renderCatalog(globalProductsData.filter(p => p.kategori && p.kategori.toLowerCase().includes(cat.toLowerCase())));
         }
 
-        /* WATERMARK MODAL ROSÈU */
         function openModal(id) {
             const prod = globalProductsData.find(p => p.id === id);
             if(!prod) return;
             currentModalProductId = id;
 
+            const swiperElement = document.getElementById('modal-swiper-element');
             const swiperWrapper = document.getElementById('modal-swiper-wrapper');
-            if(!swiperWrapper) return;
+            if(!swiperWrapper || !swiperElement) return;
+
+            if (prod.isSoldOut) swiperElement.classList.add('is-sold-out');
+            else swiperElement.classList.remove('is-sold-out');
 
             let slidesHTML = `
                 <div class="swiper-slide">
@@ -881,8 +960,21 @@
             
             const priceEl = document.getElementById('modal-price');
             priceEl.innerText = prod.harga;
-            if(prod.isBespoke) priceEl.className = 'modal-price bespoke-style';
-            else priceEl.className = 'modal-price';
+            
+            const modalAddBtn = document.getElementById('modal-add-btn');
+            if(prod.isSoldOut) {
+                priceEl.className = 'modal-price sold-out-price';
+                modalAddBtn.className = 'btn-gold disabled-btn';
+                modalAddBtn.innerHTML = `<i class="fa-solid fa-ban"></i> Item Sold Out`;
+            } else if(prod.isBespoke) {
+                priceEl.className = 'modal-price bespoke-style';
+                modalAddBtn.className = 'btn-gold';
+                modalAddBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Add to Wishlist`;
+            } else {
+                priceEl.className = 'modal-price';
+                modalAddBtn.className = 'btn-gold';
+                modalAddBtn.innerHTML = `<i class="fa-regular fa-heart"></i> Add to Wishlist`;
+            }
 
             document.getElementById('product-modal').classList.add('active');
             document.body.style.overflow = 'hidden'; 
@@ -914,6 +1006,11 @@
             if (currentModalProductId === null) return;
             const product = globalProductsData.find(p => p.id === currentModalProductId);
             if (!product) return;
+
+            if (product.isSoldOut) {
+                showToast("Maaf, gaun ini telah Sold Out.");
+                return;
+            }
 
             const itemAda = cart.find(item => item.id === product.id);
             if(itemAda) {
