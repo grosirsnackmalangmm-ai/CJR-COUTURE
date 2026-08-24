@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAISON ROSÈU | Haute Couture Catalog</title>
     
-    <!-- Premium Fonts -->
+    <!-- Premium Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <style>
-        /* === HIGH COUTURE COLOR PALETTE & SYSTEM === */
+        /* === COLOR PALETTE & SYSTEM === */
         :root {
             --bg-color: #FAFAFA;
             --surface-color: #FFFFFF;
@@ -27,177 +26,500 @@
             --font-body: 'Montserrat', sans-serif;
             --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.03);
             --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 20px 45px rgba(0, 0, 0, 0.12);
-            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            --transition-fast: all 0.25s ease;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* === SECURITY & RESET === */
-        * { 
-            margin: 0; 
-            padding: 0; 
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
-        input, textarea { -webkit-user-select: text; user-select: text; }
-
-        body { 
-            background-color: var(--bg-color); 
-            color: var(--text-primary); 
-            font-family: var(--font-body); 
-            line-height: 1.6; 
-            overflow-x: hidden; 
-            -webkit-font-smoothing: antialiased; 
-        }
-        
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: var(--bg-color); }
-        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
-
-        /* Loader Panel */
-        #loader-panel { 
-            position: fixed; 
-            top: 0; left: 0; 
-            width: 100vw; height: 100vh; 
-            background-color: var(--surface-color); 
-            z-index: 9999; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            transition: opacity 0.6s ease, visibility 0.6s; 
-        }
-        .spinner { 
-            width: 48px; height: 48px; 
-            border: 2px solid var(--gold-accent); 
-            border-top: 2px solid var(--gold); 
-            border-radius: 50%; 
-            animation: spin 0.9s infinite linear; 
-            margin-bottom: 24px; 
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        .loader-text { 
-            font-family: var(--font-display); 
-            letter-spacing: 6px; 
-            color: var(--gold-dark); 
-            font-size: 0.75rem; 
-            text-transform: uppercase; 
-            font-weight: 600; 
         }
 
-        /* === NEW HEADER UI === */
-        header { 
-            background-color: rgba(255, 255, 255, 0.98); 
-            backdrop-filter: blur(15px); 
-            -webkit-backdrop-filter: blur(15px); 
-            padding: 15px 40px; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid rgba(197, 160, 89, 0.1); 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: var(--shadow-sm); 
-            transition: var(--transition); 
-        }
-        header.scrolled { padding: 10px 40px; }
-        
-        .header-left { display: flex; align-items: center; cursor: pointer; text-decoration: none; gap: 12px; }
-        .brand-logo-img { height: 45px; width: auto; object-fit: contain; transition: var(--transition-fast); }
-        .header-left:hover .brand-logo-img { transform: scale(1.03); }
-        
-        .brand-text-wrapper { display: flex; flex-direction: column; justify-content: center; }
-        .brand-logo { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 5px; color: var(--text-primary); font-weight: 600; line-height: 1; }
-        .brand-subtitle { font-size: 0.5rem; letter-spacing: 7.5px; color: var(--gold); text-transform: uppercase; font-weight: 600; margin-top: 4px; }
-        
-        .header-right { display: flex; align-items: center; gap: 25px; }
-        
-        .contact-wa { display: flex; align-items: center; gap: 8px; color: var(--text-primary); text-decoration: none; font-size: 0.8rem; font-weight: 500; letter-spacing: 1px; transition: var(--transition-fast); }
-        .contact-wa i { font-size: 1.1rem; color: #25D366; }
-        .contact-wa:hover { color: var(--gold); }
-
-        .cart-icon-btn { 
-            background: none; border: none; color: var(--text-primary); font-size: 1.25rem; cursor: pointer; position: relative; transition: var(--transition-fast); padding: 4px; 
-        }
-        .cart-icon-btn:hover { color: var(--gold); }
-        .cart-badge { 
-            position: absolute; top: -3px; right: -6px; background: var(--gold); color: #fff; font-size: 0.55rem; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 3px 8px rgba(197, 160, 89, 0.4); 
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container { max-width: 1440px; margin: 0 auto; padding: 50px 40px 100px; }
-        
-        /* New Arrival Section */
-        .new-arrival-section { padding: 60px 40px 30px; background: #FAF7F2; border-bottom: 1px solid rgba(197, 160, 89, 0.08); }
-        .swiper { width: 100%; padding-bottom: 50px !important; }
-        .swiper-pagination-bullet-active { background: var(--gold) !important; width: 28px; border-radius: 4px; }
-
-        /* Filter Controls */
-        .filter-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 60px; }
-        .filter-btn { 
-            background: #FFFFFF; border: 1px solid #EAE6DF; color: var(--text-muted); padding: 10px 24px; font-size: 0.72rem; letter-spacing: 1.5px; text-transform: uppercase; cursor: pointer; transition: var(--transition-fast); border-radius: 2px; font-weight: 500; font-family: var(--font-body); 
-        }
-        .filter-btn:hover, .filter-btn.active { color: #FFFFFF; border-color: var(--gold); background-color: var(--gold); }
-        .filter-btn:active { outline: 1px solid var(--gold); outline-offset: 1px; transform: scale(0.98); }
-
-        .section-header { text-align: center; margin-bottom: 45px; }
-        .section-header h2 { font-family: var(--font-display); font-size: 1.85rem; letter-spacing: 7px; text-transform: uppercase; font-weight: 500; padding-bottom: 14px; display: inline-block; position: relative; color: var(--text-primary); }
-        .section-header h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 40px; height: 1.5px; background-color: var(--gold); }
-
-        /* Catalog Layout */
-        .catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px 25px; transition: opacity 0.4s ease; }
-        
-        /* Card UI */
-        .product-card { 
-            background-color: var(--surface-color); display: flex; flex-direction: column; cursor: pointer; transition: var(--transition); position: relative; height: 100%; overflow: hidden; border: 1px solid #F4F1EA; border-radius: 2px; 
-        }
-        .product-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: var(--gold); transform: scaleX(0); transition: var(--transition); transform-origin: center; z-index: 10; }
-        .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(197, 160, 89, 0.25); }
-        .product-card:hover::after { transform: scaleX(1); }
-        .product-card:active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold); transform: scale(0.99) translateY(-2px); }
-        
-        /* Image Display */
-        .image-container { position: relative; width: 100%; aspect-ratio: 2 / 3; background-color: #F8F6F2; overflow: hidden; border-bottom: 1px solid #F4F1EA; }
-        .product-image { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1); display: block; z-index: 1; }
-        .product-card:hover .product-image { transform: scale(1.05); }
-        
-        /* EFEK SOLD OUT TENGAH */
-        .product-card.is-sold-out .product-image { opacity: 0.7; }
-        .sold-out-overlay { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            display: flex; justify-content: center; align-items: center; 
-            z-index: 7; background: rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(1.5px); -webkit-backdrop-filter: blur(1.5px); 
-        }
-        .sold-out-text { 
-            background: rgba(18, 18, 18, 0.85); color: #FFFFFF; font-family: var(--font-display); 
-            padding: 8px 24px; font-size: 0.8rem; letter-spacing: 4px; text-transform: uppercase; 
-            font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        /* === HEADER === */
+        header {
+            background-color: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            padding: 16px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow-sm);
         }
 
-        .invisible-shield { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 5; background: transparent; }
-        
+        /* Logo & Brand Text Berdampingan */
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .brand-logo-img {
+            height: 42px;
+            width: 42px;
+            object-fit: contain;
+            border-radius: 50%;
+            border: 1px solid var(--gold-accent);
+        }
+
+        .brand-text-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .brand-logo {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            letter-spacing: 4px;
+            color: var(--text-primary);
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .brand-subtitle {
+            font-size: 0.55rem;
+            letter-spacing: 6px;
+            color: var(--gold);
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        /* Header Right: WA Contact & Cart */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .contact-wa-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: #F4F4F4;
+        }
+
+        .contact-wa-btn i {
+            font-size: 1.1rem;
+            color: #25D366;
+        }
+
+        .contact-wa-btn:hover {
+            background: var(--gold-light);
+            color: var(--gold-dark);
+        }
+
+        .cart-icon-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+            padding: 4px;
+        }
+
+        .cart-icon-btn:hover {
+            color: var(--gold);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -4px;
+            right: -6px;
+            background: var(--gold);
+            color: #FFF;
+            font-size: 0.55rem;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* === CONTAINER & FILTER === */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .filter-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 45px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: var(--surface-color);
+            border: 1px solid #E5E5E5;
+            color: var(--text-muted);
+            padding: 8px 20px;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            color: #FFFFFF;
+            border-color: var(--gold);
+            background-color: var(--gold);
+        }
+
+        /* === CATALOG GRID === */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background-color: var(--surface-color);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            border: 1px solid #EEEEEE;
+            transition: var(--transition);
+            overflow: hidden;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold-accent);
+        }
+
+        /* Media Container */
+        .image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            background-color: #F5F5F5;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.04);
+        }
+
+        /* ELEGAN SOLD OUT OVERLAY (TENGAH) */
+        .sold-out-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+        }
+
+        .sold-out-badge-center {
+            background-color: rgba(18, 18, 18, 0.9);
+            color: #FFFFFF;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            padding: 10px 24px;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 1px solid var(--gold);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
         /* Wishlist Quick Action */
-        .quick-wishlist-btn { 
-            position: absolute; top: 12px; right: 12px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border: 1px solid rgba(197, 160, 89, 0.2); width: 38px; height: 38px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: var(--text-primary); font-size: 1.05rem; cursor: pointer; z-index: 99; box-shadow: 0 3px 8px rgba(0,0,0,0.06); transition: var(--transition-fast); 
+        .quick-wishlist-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-primary);
+            cursor: pointer;
+            z-index: 6;
+            transition: var(--transition);
         }
-        .quick-wishlist-btn:hover { color: var(--gold); transform: scale(1.1); background: #FFFFFF; border-color: var(--gold); }
-        .quick-wishlist-btn:active { outline: 1px solid var(--gold); transform: scale(0.95); }
 
-        .watermark-bottom { 
-            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: rgba(184, 140, 40, 0.82); letter-spacing: 9px; z-index: 6; pointer-events: none; text-shadow: 0 2px 5px rgba(255, 255, 255, 0.95); width: 100%; text-align: center; text-indent: 9px; text-transform: uppercase; 
-        }
-        .badge-new { 
-            position: absolute; top: 12px; left: 12px; background-color: var(--gold); color: #FFFFFF; font-size: 0.55rem; font-weight: 700; text-transform: uppercase; padding: 5px 12px; letter-spacing: 1.5px; z-index: 6; border-radius: 2px; 
+        .quick-wishlist-btn:hover {
+            color: var(--gold);
+            background: #FFFFFF;
         }
 
-        /* Card Content */
-        .card-details { padding: 20px 16px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; background: #FFFFFF; border-top: none; z-index: 10; }
-        .product-category { font-size: 0.6rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 6px; font-weight: 600; }
-        .product-title { font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 10px; color: var(--text-primary); letter-spacing: 0.5px; font-weight:Tentu, saya bisa bantu merapikan dan menulis ulang kodenya. Namun, sepertinya kamu belum menyertakan kode yang dimaksud di pesan tadi. 
+        /* Details */
+        .card-details {
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
 
-Silakan kirimkan (*paste*) kodenya di sini, dan beri tahu saya jika ada penyesuaian khusus yang kamu inginkan. Setelah itu, saya akan langsung mengatur ulang kodenya agar rapi, mudah dibaca, dan lengkap!
+        .product-category {
+            font-size: 0.65rem;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .product-title {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .product-price {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        /* Professional Action Button */
+        .action-btn {
+            margin-top: auto;
+            width: 100%;
+            padding: 12px;
+            font-family: var(--font-body);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            border: 1px solid var(--text-primary);
+            background: transparent;
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: var(--text-primary);
+            color: #FFFFFF;
+        }
+
+        .action-btn.disabled-btn {
+            border-color: #DDD;
+            background: #F5F5F5;
+            color: #AAA;
+            cursor: not-allowed;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            header {
+                padding: 12px 20px;
+            }
+            .contact-wa-btn span {
+                display: none;
+            }
+            .brand-logo {
+                font-size: 1.1rem;
+            }
+            .catalog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <!-- Kiri: Logo + Text Berdampingan -->
+        <a href="#" class="header-left">
+            <img src="https://via.placeholder.com/80/121212/FFFFFF?text=MR" alt="Maison Rosèu Logo" class="brand-logo-img">
+            <div class="brand-text-wrapper">
+                <span class="brand-logo">MAISON ROSÈU</span>
+                <span class="brand-subtitle">HAUTE COUTURE</span>
+            </div>
+        </a>
+
+        <!-- Kanan: Kontak WhatsApp & Wishlist -->
+        <div class="header-right">
+            <a href="https://wa.me/6281234567890" target="_blank" class="contact-wa-btn">
+                <i class="fab fa-whatsapp"></i>
+                <span>+62 812-3456-7890</span>
+            </a>
+            <button class="cart-icon-btn" title="Wishlist">
+                <i class="far fa-heart"></i>
+                <span class="cart-badge">2</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- KATALOG UTAMA -->
+    <div class="container">
+        
+        <div class="section-header">
+            <h2>Koleksi Gaun</h2>
+        </div>
+
+        <!-- Filter Tab -->
+        <div class="filter-container">
+            <button class="filter-btn active">Semua</button>
+            <button class="filter-btn">Evening Gown</button>
+            <button class="filter-btn">Bridal</button>
+            <button class="filter-btn">Cocktail</button>
+        </div>
+
+        <!-- Grid Produk -->
+        <div class="catalog-grid">
+
+            <!-- Produk 1: Tersedia -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80" alt="Rosé Silk Gown" class="product-image">
+                    <button class="quick-wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-details">
+                    <span class="product-category">Evening Gown</span>
+                    <h3 class="product-title">Rosé Silk Gown</h3>
+                    <p class="product-price">Rp 14.500.000</p>
+                    <button class="action-btn">Lihat Detail</button>
+                </div>
+            </div>
+
+            <!-- Produk 2: SOLD OUT (Teks Di Tengah, Tanpa Simbol Dilarang) -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?auto=format&fit=crop&w=800&q=80" alt="Velvet Midnight Gown" class="product-image">
+                    <div class="sold-out-overlay">
+                        <span class="sold-out-badge-center">Sold Out</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <span class="product-category">Cocktail</span>
+                    <h3 class="product-title">Velvet Midnight Gown</h3>
+                    <p class="product-price">Rp 11.200.000</p>
+                    <button class="action-btn disabled-btn" disabled>Stok Habis</button>
+                </div>
+            </div>
+
+            <!-- Produk 3: Tersedia -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80" alt="Aurelia Gold Dress" class="product-image">
+                    <button class="quick-wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-details">
+                    <span class="product-category">Bridal</span>
+                    <h3 class="product-title">Aurelia Gold Dress</h3>
+                    <p class="product-price">Rp 22.000.000</p>
+                    <button class="action-btn">Lihat Detail</button>
+                </div>
+            </div>
+
+            <!-- Produk 4: SOLD OUT (Teks Di Tengah, Tanpa Simbol Dilarang) -->
+            <div class="product-card">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?auto=format&fit=crop&w=800&q=80" alt="Celestial Lace Gown" class="product-image">
+                    <div class="sold-out-overlay">
+                        <span class="sold-out-badge-center">Sold Out</span>
+                    </div>
+                </div>
+                <div class="card-details">
+                    <span class="product-category">Evening Gown</span>
+                    <h3 class="product-title">Celestial Lace Gown</h3>
+                    <p class="product-price">Rp 18.900.000</p>
+                    <button class="action-btn disabled-btn" disabled>Stok Habis</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Tab Filter Action
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Toggle Heart Wishlist
+        const wishlistBtns = document.querySelectorAll('.quick-wishlist-btn');
+        wishlistBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const icon = btn.querySelector('i');
+                if (icon.classList.contains('far')) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    icon.style.color = '#C5A059';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    icon.style.color = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
